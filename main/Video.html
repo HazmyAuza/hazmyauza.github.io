@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Video</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+        }
+        .video-container {
+            display: flex;
+            justify-content: space-around;
+            flex-wrap: wrap;
+            margin: 20px;
+        }
+        .video-card {
+            flex: 0 1 calc(33.33% - 20px);
+            margin: 10px;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            transition: transform 0.2s;
+        }
+        .video-card:hover {
+            transform: scale(1.05);
+        }
+    </style>
+</head>
+<body>
+    <h1>List beberapa video AMV editan saya</h1>
+    <div class="video-container">
+        <div class="video-card">
+            <h2>Evangelion - Guardian Angel Edit</h2>
+            <video width="300" height="200" controls poster="/tmb/3.png">
+                <source src="/video/eva.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-card">
+            <h2>Medicine - Edit</h2>
+            <video width="300" height="200" controls poster="/tmb/2.png">
+                <source src="/video/medicine.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        <div class="video-card">
+            <h2>Genshin Impact - Moly Edit</h2>
+            <video width="300" height="200" controls poster="/tmb/1.png">
+                <source src="/video/moly.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+    </div>
+</body>
+</html>
