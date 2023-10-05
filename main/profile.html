@@ -1,80 +1,171 @@
-<!DOCTYPE html>
-<html>
 
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Profile</title>
+	<link rel="icon" type="image/png" href="https://dejpknyizje2n.cloudfront.net/marketplace/products/8-bits-pixel-cheese-sticker-35486-472cde.png">
     <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+
         body {
-            font-family: Arial, sans-serif;
             margin: 0;
-            padding: 20px;
-            background-color: #f2f2f2;
+            padding: 0;
+            background-color: #000; /* Pitch-black background */
+            overflow: hidden;
+            cursor: none; /* Hide the default cursor */
         }
 
-        h1 {
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: #00c3ff; /* White color for stars */
+            border-radius: 50%;
+            pointer-events: none;
+            opacity: 5; /* Initially hidden */
+            animation: shine linear infinite;
+        }
+
+        @keyframes shine {
+            0% {
+                opacity: 0;
+                transform: scale(1);
+            }
+            50% {
+                opacity: 1;
+                transform: scale(1.5);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(1);
+            }
+        }
+
+        .shape {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            border-radius: 50%;
+            pointer-events: none;
+            animation: scaleAndFade 1s linear forwards;
+        }
+
+        @keyframes scaleAndFade {
+            0% {
+                opacity: 1;
+                transform: scale(0);
+            }
+            100% {
+                opacity: 0;
+                transform: scale(3);
+            }
+        }
+
+        .big-text {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
             text-align: center;
-            color: #333333;
         }
-
-        .profile-container {
-          display:flex ; 
-          justify-content:center ;
-          align-items :center;  
-          height :100vh ;
-
-}
-
-.profile-info{
-background-color:#ffffff; 
-border-radius :10 px ; 
-box-shadow:-1px 3px 24px -6px rgba(0,0,0,0.75);
-padding-top :30 px ;
-padding-bottom :30 px ;
-width:400 px ;
-
-}
-
-
-.profile-info h2{
-text-align:center;
-
-}
-.profile-info p{
-margin-left:auto ; 
-margin-right:auto ; 
-text-align:left ; 
-
-}
-
+        .big-text2 {
+            position: absolute;
+            top: 55%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+        }
+        .big-text3 {
+            position: absolute;
+            top: 60%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Press Start 2P', cursive;
+            font-size: 36px;
+            font-weight: bold;
+            text-transform: uppercase;
+            color: #fff;
+            text-align: center;
+        }
+        /* Set the text selection color for Mozilla Firefox */
+        ::selection {
+            background-color: #FFC733;
+        }
         
+        /* Set the text selection color for Webkit-based browsers */
+        ::-moz-selection {
+            background-color: #FFC733;
+        }
     </style>
 </head>
-
 <body>
+    <audio loop autoplay src="https://dl.sndup.net/ww58/ROMANCEPLANET%20-%20WORLD%20AWAY.mp3" ></audio>
+    <div class="big-text">Nama: Hazmy Auza</div> <br>
+    <div class="big-text2">NIM: 211011400299</div> <br>
+    <div class="big-text3">Kelas: 05TPLE004</div>
+    <script>
+        // Function to create a new shape and add it to the body
+        function createShape(event) {
+            const shape = document.createElement('div');
+            shape.className = 'shape';
+            shape.style.left = (event.clientX - 10) + 'px';
+            shape.style.top = (event.clientY - 10) + 'px';
+            // Generate a random vibrant color (orange, red, or yellow) with reduced opacity
+            const colors = ['rgba(255, 69, 0, 0.7)', 'rgba(255, 0, 0, 0.7)', 'rgba(255, 255, 0, 0.7)'];
+            shape.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+            document.body.appendChild(shape);
 
-    <div class="profile-container">
-      
+            // Remove shape after the animation
+            shape.addEventListener('animationend', () => {
+                document.body.removeChild(shape);
+            });
+        }
 
+        // Generate new shapes on mousemove
+        window.addEventListener('mousemove', createShape);
 
-<div class="profile-info">
-<h2>Profil Saya</h2>
+        // Function to create a new star and add it to the body
+        function createStar() {
+            const star = document.createElement('div');
+            star.className = 'star';
+            star.style.left = Math.random() * 100 + 'vw';
+            star.style.top = Math.random() * 100 + 'vh';
+            star.style.animationDuration = (Math.random() * 2 + 1) + 's'; // Randomize animation duration
+            document.body.appendChild(star);
 
+            // Remove star when animation completes
+            star.addEventListener('animationend', () => {
+                document.body.removeChild(star);
+            });
+        }
 
-<p></p>
+        // Generate 250 stars on page load
+        for (let i = 0; i < 250; i++) {
+            createStar();
+        }
 
+        // Function to prevent generating more than 250 stars
+        function preventExtraStars() {
+            const totalStars = document.getElementsByClassName('star').length;
+            if (totalStars < 250) {
+                createStar();
+            }
+        }
 
-<p>Nama: Hazmy Auza</p>
-<p> NIM: 211011400299</p>
-<p>Kelas: 05TPLE004</p>
-
-
-
-</div>
-
-
-    </div>
-
+        // Generate new stars on a 500ms interval (if less than 250 stars)
+        let starInterval = setInterval(preventExtraStars, 500);
+    </script>
 </body>
-
 </html>
