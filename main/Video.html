@@ -27,29 +27,43 @@
         .video-card:hover {
             transform: scale(1.05);
         }
+        .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: #ffffff;
+      color: #000000;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none; /* Add this to remove underline */
+    }
     </style>
 </head>
 <body>
+    <header>
+        <a href="../index.html" class="back-button">Back</a>
+      </header>
     <h1>List beberapa video AMV editan saya</h1>
     <div class="video-container">
         <div class="video-card">
             <h2>Evangelion - Guardian Angel Edit</h2>
             <video width="300" height="200" controls poster="/tmb/3.png">
-                <source src="/video/Eva.mp4" type="video/mp4">
+                <source src="/video/eva.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <div class="video-card">
             <h2>Medicine - Edit</h2>
             <video width="300" height="200" controls poster="/tmb/2.png">
-                <source src="/video/Medicine.mp4" type="video/mp4">
+                <source src="/video/medicine.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
         <div class="video-card">
             <h2>Genshin Impact - Moly Edit</h2>
             <video width="300" height="200" controls poster="/tmb/1.png">
-                <source src="/video/Moly.mp4" type="video/mp4">
+                <source src="/video/moly.mp4" type="video/mp4">
                 Your browser does not support the video tag.
             </video>
         </div>
