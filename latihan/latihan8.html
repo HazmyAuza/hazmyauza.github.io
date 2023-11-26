@@ -1,0 +1,69 @@
+
+<!DOCTYPE html>
+<html>
+<body>
+<div style="text-align:center">
+ <button onclick="tekanPause()">Play/Pause</button>
+ <button onclick="menjadiBig()">Big</button>
+ <button onclick="menjadiSmall()">Small</button>
+ <button onclick="menjadiNormal()">Normal</button>
+ <br><br>
+ <video width="720" controls src="../video/beatles.mp4" id="videoku">
+    <source src="../video/beatles.mp4" type="mp4">
+    Browser anda tidak support video pada HTML5
+</video>
+</div>
+<script>
+var VideoAku = document.getElementById("videoku");
+function tekanPause() {
+ if (VideoAku.paused)
+ VideoAku.play();
+ else
+ VideoAku.pause();
+}
+function menjadiBig() {
+ VideoAku.width = 1080;
+}
+function menjadiSmall() {
+ VideoAku.width = 360;
+}
+function menjadiNormal() {
+ VideoAku.width = 720;
+}
+</script>
+</body>
+</html><!DOCTYPE html>
+<html>
+<body>
+<div style="text-align:center">
+ <button onclick="tekanPause()">Play/Pause</button>
+ <button onclick="menjadiBig()">Big</button>
+ <button onclick="menjadiSmall()">Small</button>
+ <button onclick="menjadiNormal()">Normal</button>
+ <br><br>
+ <video id="videoku" width="720">
+ <source src="VideoAA.mp4" type="video/mp4">
+ <source src="VideoBB.ogg" type="video/ogg">
+ Browser anda tidak support video HTML 5.
+ </video>
+</div>
+<script>
+var VideoAku = document.getElementById("videoku");
+function tekanPause() {
+ if (VideoAku.paused)
+ VideoAku.play();
+ else
+ VideoAku.pause();
+}
+function menjadiBig() {
+ VideoAku.width = 1080;
+}
+function menjadiSmall() {
+ VideoAku.width = 360;
+}
+function menjadiNormal() {
+ VideoAku.width = 720;
+}
+</script>
+</body>
+</html>
