@@ -3,20 +3,19 @@
 <head>
   <title>JavaScript Examples</title>
   <script type="text/javascript">
-    function tekanTeks() {
-      var namastr = document.teksForm.nama.value;
-      var alamatstr = document.teksForm.alamat.value;
+  function tekanTeks() {
+    var namastr = document.teksForm.nama.value;
+    var alamatstr = document.teksForm.alamat.value;
 
-      document.teksForm.onama.value = namastr;
-      document.teksForm.oalamat.value = alamatstr;
+    document.teksForm.nama.value = namastr;
+    document.teksForm.alamat.value = alamatstr;
 
-      alert("Lihat dulu");
+    alert("Berhasil menambahkan output!");
 
-      // Display output in a specific element
-      var outputDiv = document.getElementById("outputDiv");
-      outputDiv.innerHTML = "Nama anda: " + namastr + "<br>Alamat anda: " + alamatstr;
-    }
-
+    // Display output in a specific element
+    var outputDiv = document.getElementById("outputDiv");
+    outputDiv.innerHTML = "Nama anda: " + namastr + "<br>Alamat anda: " + alamatstr
+  }
     function radio_box(form) {
       var ket = "";
       for (i = 0; i < form.jenis.length; i++) {
