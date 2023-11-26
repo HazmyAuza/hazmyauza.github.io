@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JavaScript Examples</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      margin-top: 50px;
+    }
+
+    input {
+      padding: 5px;
+      width: 200px;
+    }
+
+    button {
+      padding: 10px;
+      margin-top: 10px;
+      cursor: pointer;
+    }
+
+    #result {
+      margin-top: 20px;
+      font-size: 18px;
+    }
+  </style>
+</head>
+<body>
+  <h2>JavaScript Examples</h2>
+
+  <h3>Temperature Conversion</h3>
+  <p>Enter the degrees in Fahrenheit:</p>
+  <input type="number" id="temperature" placeholder="Degrees Fahrenheit">
+  <button onclick="convertTemperature()">Convert</button>
+  <div id="convertedTemperature"></div>
+
+  <h3>Arithmetic Operations</h3>
+  <div id="arithmeticOperations"></div>
+
+  <h3>Greeting</h3>
+  <button onclick="displayGreeting()">Display Greeting</button>
+  <div id="greeting"></div>
+
+  <h3>String to Number Conversion</h3>
+  <div id="stringToNumberConversion"></div>
+
+  <h3>Calculator</h3>
+  <input type="number" id="value1" placeholder="Value 1">
+  <select id="operator">
+    <option value="add">Add</option>
+    <option value="subtract">Subtract</option>
+    <option value="multiply">Multiply</option>
+    <option value="divide">Divide</option>
+  </select>
+  <input type="number" id="value2" placeholder="Value 2">
+  <button onclick="calculate()">Calculate</button>
+  <div id="result"></div>
+
+  <script>
+    // Temperature Conversion
+    function convertTemperature() {
+      var degFahren = parseFloat(document.getElementById("temperature").value);
+      var degCent = 5/9 * (degFahren - 32);
+      document.getElementById("convertedTemperature").innerHTML = "Degrees Celsius: " + degCent;
+    }
+
+    // Arithmetic Operations
+    var arithmeticOperations = "";
+    var A = "100";
+    var B = "200";
+    var C = 300;
+    var D = 400;
+
+    var E = parseInt(A) + parseInt(B);
+    arithmeticOperations += "Concatenation of '100' and '200' = " + E + "<br>";
+
+    E = parseInt(B) + C;
+    arithmeticOperations += "Concatenation of '200' and 300 = " + E + "<br>";
+
+    E = C + D;
+    arithmeticOperations += "Addition of 300 and 400 = " + E + "<br>";
+
+    document.getElementById("arithmeticOperations").innerHTML = arithmeticOperations;
+
+    // Greeting
+    function displayGreeting() {
+      var greetingString = "Hello";
+      var myName = prompt("Please enter your name", "");
+      var concatString = greetingString + " " + myName;
+      document.getElementById("greeting").innerHTML = concatString;
+    }
+
+    // String to Number Conversion
+    var myString = "56.02 degrees centigrade";
+    var myInt = parseInt(myString);
+    var myFloat = parseFloat(myString);
+
+    var stringToNumberConversion = "";
+    stringToNumberConversion += "\"" + myString + "\" is " + parseInt(myString) + " as an integer" + "<br>";
+    stringToNumberConversion += "\"" + myString + "\" when converted to an integer equals " + myInt + "<br>";
+    stringToNumberConversion += "\"" + myString + "\" when converted to a floating point number equals " + myFloat + "<br>";
+
+    document.getElementById("stringToNumberConversion").innerHTML = stringToNumberConversion;
+
+    // Calculator
+    function calculate() {
+      var value1 = parseFloat(document.getElementById("value1").value);
+      var value2 = parseFloat(document.getElementById("value2").value);
+      var operator = document.getElementById("operator").value;
+      var result;
+
+      switch (operator) {
+        case "add":
+          result = value1 + value2;
+          break;
+        case "subtract":
+          result = value1 - value2;
+          break;
+        case "multiply":
+          result = value1 * value2;
+          break;
+        case "divide":
+          if (value2 !== 0) {
+            result = value1 / value2;
+          } else {
+            result = "Error: Division by zero";
+          }
+          break;
+        default:
+          result = "Error: Invalid operator";
+          break;
+      }
+
+      document.getElementById("result").innerHTML = "Result: " + result;
+    }
+  </script>
+</body>
+</html>
