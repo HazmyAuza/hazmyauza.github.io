@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>JavaScript Examples</title>
+  <script type="text/javascript">
+    function tekanTeks() {
+      var namastr = document.teksForm.nama.value;
+      var alamatstr = document.teksForm.alamat.value;
+
+      document.teksForm.onama.value = namastr;
+      document.teksForm.oalamat.value = alamatstr;
+
+      alert("Lihat dulu");
+
+      // Display output in a specific element
+      var outputDiv = document.getElementById("outputDiv");
+      outputDiv.innerHTML = "Nama anda: " + namastr + "<br>Alamat anda: " + alamatstr;
+    }
+
+    function radio_box(form) {
+      var ket = "";
+      for (i = 0; i < form.jenis.length; i++) {
+        if (form.jenis[i].checked) {
+          ket = form.jenis[i].value;
+        }
+      }
+      alert("Anda adalah seorang " + ket);
+    }
+
+    function tekanJurusan() {
+      var jurusanstr = document.jurusanForm.Jurusan.value;
+      document.jurusanForm.Ojurusan.value = jurusanstr;
+    }
+
+    function check_box(form) {
+      var ket = "";
+      var ket1 = "";
+
+      if (form.bola.checked) {
+        ket = "Nonton Bola";
+      }
+
+      if (form.tv.checked) {
+        ket1 = "Nonton TV";
+      }
+
+      alert("Hobby anda " + ket + " " + ket1);
+    }
+
+    function butCheckForm_onclick() {
+      var myForm = document.form1;
+      if (myForm.txtAge.value === "" || myForm.txtName.value === "") {
+        alert("Please complete all the form");
+        if (myForm.txtName.value === "") {
+          myForm.txtName.focus();
+        } else {
+          myForm.txtAge.focus();
+        }
+      } else {
+        alert("Thanks for completing the form " + myForm.txtName.value);
+      }
+    }
+
+    function txtAge_onblur() {
+      var txtAge = document.form1.txtAge;
+      if (isNaN(txtAge.value) == true) {
+        alert("Please enter a valid age");
+        txtAge.focus();
+        txtAge.select();
+      }
+    }
+
+    function txtName_onchange() {
+      window.status = "Hi " + document.form1.txtName.value;
+    }
+  </script>
+</head>
+<body>
+
+<!-- Example 1 -->
+<form name="teksForm">
+  <h1>Memasukkan Data Dengan Objek Teks</h1><hr>
+  <pre>
+    Nama Anda: <input type="text" size="11" name="nama"> Alamat : <input type="text" size="25" name="alamat">
+  </pre>
+  <br>
+  <input type="button" value="kirim" onclick="tekanTeks()">
+  <input type="reset" value="ulang">
+  <h3>Output</h3>
+  <div id="outputDiv"></div>
+</form>
+
+<!-- Example 2 -->
+<form name="radioForm">
+  <h1>Memasukkan Data Dengan Objek Radio</h1><hr>
+  <p>
+    <input type="radio" value="wanita" name="jenis">Wanita
+    <input type="radio" value="pria" name="jenis">Pria
+  </p>
+  <hr>
+  <p>
+    <input type="button" value="CONFIRM" onclick="radio_box(this.form)">
+    <input type="reset" value="RESET">
+  </p>
+</form>
+
+<!-- Example 3 -->
+<form name="jurusanForm">
+  <h1>Penggunaan Objek Select</h1><hr>
+  <h3>Masukan :</h3>
+  <p>Jurusan Di UNPAM :
+    <select name="Jurusan" size="1">
+      <option value="Teknik Informatika">Teknik Informatika</option>
+      <option value="Manajemen Informatika">Manajemen Informatika</option>
+      <option value="Teknik Komputer">Teknik Komputer</option>
+      <option value="Teknik Industri">Teknik Industri</option>
+      <option value="Teknik Elektro">Teknik Elektro</option>
+      <option value="Teknik Sipil">Teknik Sipil</option>
+      <option value="Teknik Arsitektur">Teknik Arsitektur</option>
+      <option value="Teknik Mesin">Teknik Mesin</option>
+    </select>
+  </p>
+  <p>
+    <input type="button" value="kirim" onclick="tekanJurusan()">
+    <input type="reset" value="ulang">
+  </p>
+  <h3>Output jurusan :</h3>
+  <input type="text" name="Ojurusan" size="30">
+</form>
+
+<!-- Example 4 -->
+<form name="checkboxForm">
+  <h1>Memasukkan Data Dengan Objek Checkbox</h1><hr>
+  <p>Hobby anda:
+    <input type="checkbox" value="ON" name="bola">Nonton Sepak Bola
+    <input type="checkbox" value="ON" name="tv">Nonton televisi
+  </p>
+  <hr>
+  <p>
+    <input type="button" value="CONFIRM" onclick="check_box(this.form)">
+    <input type="reset" value="RESET">
+  </p>
+</form>
+
+<!-- Example 5 -->
+<form name="form1">
+  Please enter the following details:
+  <p>
+    Name:
+    <br>
+    <input type="text" name="txtName" onchange="txtName_onchange()">
+    <br>
+    Age:
+    <br>
+    <input type="text" name="txtAge" onblur="txtAge_onblur()" size="3" maxlength="3">
+    <br>
+    <input type="button" value="Check Details" name="butCheckForm" onclick="butCheckForm_onclick()">
+  </p>
+</form>
+
+</body>
+</html>
