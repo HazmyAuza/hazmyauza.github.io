@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sugar Tracking</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(to bottom, #000000, #800080);
+            color: white;
+            text-align: center;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        h1, h2, p {
+            margin: 10px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        label, input {
+            margin: 5px;
+        }
+
+        ul {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        button {
+            margin-top: 10px;
+            padding: 5px;
+            cursor: pointer;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            border-radius: 4px;
+        }
+
+        button:hover {
+            background-color: #45a049;
+        }
+
+        .warning {
+            color: #FFD700; /* Yellow color for warning */
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Sugar Tracking</h1>
+
+    <form id="sugarForm">
+        <label for="day">Enter Day: </label>
+        <input type="text" id="day" required>
+
+        <label for="grams">Enter Sugar Amount (grams): </label>
+        <input type="number" id="grams" required>
+
+        <label for="time">Enter Time: </label>
+        <input type="time" id="time" required>
+
+        <button type="button" onclick="enterSugar()">Submit Sugar</button>
+    </form>
+
+    <h2>Tracking Results</h2>
+    <ul id="trackingList"></ul>
+
+    <p>TOTAL SUGAR NOW: <span id="totalSugar">0</span> grams</p>
+
+    <p id="warningMessage" class="warning"></p>
+
+    <button type="button" onclick="downloadResults()">Download Results</button>
+
+    <button type="button" onclick="saveAndClear()" id="saveAndClearBtn" disabled>Save and Clear</button>
+
+    <script>
+        let sugarData = [];
+        let totalSugar = 0;
+        let dayNumber = 1; // Initial day number
+
+        function enterSugar() {
+            const dayInput = document.getElementById('day');
+            const gramsInput = document.getElementById('grams');
+            const timeInput = document.getElementById('time');
+            const warningMessage = document.getElementById('warningMessage');
+
+            const day = dayInput.value.trim();
+            const grams = parseInt(gramsInput.value);
+            const time = timeInput.value;
+
+            if (day !== '' && !isNaN(grams) && grams > 0 && time.trim() !== '') {
+                const entry = { time, grams, day: dayNumber };
+                sugarData.push(entry);
+                updateTrackingList();
+                calculateTotalSugar();
+
+                if (totalSugar > 55) {
+                    warningMessage.textContent = 'YOU REACHED MAX RECOMMENDED SUGAR PER DAY';
+                } else {
+                    warningMessage.textContent = '';
+                }
+
+                // Save data to local storage
+                localStorage.setItem('sugarData', JSON.stringify(sugarData));
+            } else {
+                warningMessage.textContent = 'Please enter a valid day, sugar amount, and time.';
+            }
+
+            // Clear input fields
+            dayInput.value = '';
+            gramsInput.value = '';
+            timeInput.value = '';
+        }
+
+        function updateTrackingList() {
+            const trackingList = document.getElementById('trackingList');
+            trackingList.innerHTML = '';
+
+            sugarData.forEach(entry => {
+                const listItem = document.createElement('li');
+                listItem.innerHTML = `Day ${entry.day}: ${entry.grams} grams, Time: ${entry.time}`;
+                trackingList.appendChild(listItem);
+            });
+        }
+
+        function calculateTotalSugar() {
+            totalSugar = sugarData.reduce((total, entry) => total + entry.grams, 0);
+            updateTotalSugar();
+        }
+
+        function updateTotalSugar() {
+            const totalSugarElement = document.getElementById('totalSugar');
+            totalSugarElement.textContent = totalSugar;
+        }
+
+        function downloadResults() {
+            if (sugarData.length === 0) {
+                alert('No data to download.');
+                return;
+            }
+
+            const dayInput = document.getElementById('day');
+            const day = dayInput.value.trim();
+
+            const warningMessage = document.getElementById('warningMessage');
+            const content = sugarData.map(entry => `Day ${entry.day}: ${entry.grams} grams, Time: ${entry.time}`).join('\n');
+            const totalSugarText = `\nTOTAL SUGAR (Day ${dayNumber}): ${totalSugar} grams`;
+
+            // Add warning if total sugar exceeds 55 grams
+            const warningText = totalSugar > 55 ? `\nWARNING: YOU EXCEEDED MAX RECOMMENDED SUGAR PER DAY (Day ${dayNumber})` : '';
+
+            const blob = new Blob([content, totalSugarText, warningText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = `sugar_tracking_results_Day${dayNumber}.txt`;
+            document.body.appendChild(a);
+            a.click();
+
+            // Cleanup
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        }
+
+        function saveAndClear() {
+            const dayInput = document.getElementById('day');
+            const day = dayInput.value.trim();
+
+            if (day !== '') {
+                // Save data to local storage with a key including the day
+                localStorage.setItem(`sugarData_${day}`, JSON.stringify(sugarData));
+
+                // Clear current data
+                sugarData = [];
+                updateTrackingList();
+                calculateTotalSugar();
+
+                // Remove data from local storage
+                localStorage.removeItem('sugarData');
+
+                // Clear warning message if present
+                warningMessage.textContent = '';
+
+                // Provide confirmation
+                alert(`Data saved for Day ${dayNumber}. Current data cleared.`);
+
+                // Disable save and clear button
+                document.getElementById('saveAndClearBtn').disabled = true;
+
+                // Increment day number for the next day
+                dayNumber++;
+
+                // Reset day number if max sugar reached
+                if (totalSugar > 55) {
+                    dayNumber = 1;
+                }
+            } else {
+                alert('Please enter a day.');
+            }
+        }
+    </script>
+
+</body>
+</html>
