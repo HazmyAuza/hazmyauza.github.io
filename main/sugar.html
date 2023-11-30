@@ -22,12 +22,16 @@
             justify-content: center;
         }
 
-        h1, h2, p {
+        h1,
+        h2,
+        p {
             font-family: 'Playfair Display', serif;
             margin: 10px;
         }
 
         .greeting {
+            font-family: 'Playfair Display', serif;
+            margin: 10px;
             font-size: 60px;
             margin-bottom: 20px;
         }
@@ -60,7 +64,7 @@
         }
 
         button:hover {
-            background-color: #45a049;
+            background-color: #30506d;
         }
 
         .warning {
@@ -99,11 +103,25 @@
         .confirmation-dialog button:hover {
             background-color: #CC0000;
         }
+        
+    .back-button {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      padding: 10px;
+      background-color: #ff00ff00;
+      color: #fff;
+      font-weight: bold;
+      cursor: pointer;
+      text-decoration: none; /* Add this to remove underline */
+    }
     </style>
 </head>
 
 <body>
-
+    <header>
+        <a href="../index.html" class="back-button">Back</a>
+      </header>
     <div class="greeting" id="greeting"></div>
 
     <h1>Sugar Tracking</h1>
@@ -131,6 +149,7 @@
 
     <p id="warningMessage" class="warning"></p>
 
+    <button type="button" onclick="openDataInBrowser()">Open Data in Browser</button>
     <button type="button" onclick="downloadResults()">Download Results</button>
 
     <button type="button" onclick="confirmClearData()">CLEAR LOCAL DATA</button>
@@ -252,28 +271,46 @@
         }
 
         function downloadResults() {
-        if (sugarData.length === 0) {
-            alert('No data to download.');
-            return;
+            if (sugarData.length === 0) {
+                alert('No data to download.');
+                return;
+            }
+
+            const content = sugarData.map(entry => `Time: ${entry.time} | ${entry.grams} grams`).join('\n');
+            const totalSugarText = `\nTOTAL SUGAR | ${totalSugar} grams`;
+            const warningText = maxSugarWarning ? '\nWARNING: YOU EXCEEDED MAX RECOMMENDED SUGAR PER DAY' : '';
+            const createdByText = '\nCreated by Hazu';
+
+            const blob = new Blob([content, totalSugarText, warningText, createdByText], { type: 'text/plain' });
+            const url = URL.createObjectURL(blob);
+
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sugar_tracking_results.txt';
+            document.body.appendChild(a);
+            a.click();
+
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
         }
 
-        const content = sugarData.map(entry => `${entry.time}: ${entry.grams} grams`).join('\n');
-        const totalSugarText = `\nTOTAL SUGAR: ${totalSugar} grams`;
-        const warningText = maxSugarWarning ? '\nWARNING: YOU EXCEEDED MAX RECOMMENDED SUGAR PER DAY' : '';
-        const createdByText = '\nCreated by Hazu';
+        function openDataInBrowser() {
+            if (sugarData.length === 0) {
+                alert('No data to open.');
+                return;
+            }
 
-        const blob = new Blob([content, totalSugarText, warningText, createdByText], { type: 'text/plain' });
-        const url = URL.createObjectURL(blob);
+            const content = sugarData.map(entry => `Time: ${entry.time} | ${entry.grams} grams`).join('\n');
+            const totalSugarText = `\nTOTAL SUGAR | ${totalSugar} grams`;
+            const warningText = maxSugarWarning ? '\nWARNING: YOU EXCEEDED MAX RECOMMENDED SUGAR PER DAY' : '';
+            const createdByText = '\nCreated by Hazu';
 
-        const a = document.createElement('a');
-        a.href = url;
-        a.download = 'sugar_tracking_results.txt';
-        document.body.appendChild(a);
-        a.click();
+            const dataToShow = content + totalSugarText + warningText + createdByText;
 
-        document.body.removeChild(a);
-        URL.revokeObjectURL(url);
-    }
+            // Open a new window or tab and display the content
+            const newWindow = window.open('', '_blank');
+            newWindow.document.write('<pre>' + dataToShow + '</pre>');
+        }
 
         function confirmClearData() {
             const confirmationDialog = document.getElementById('confirmationDialog');
