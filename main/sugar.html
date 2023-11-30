@@ -5,19 +5,25 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sugar Tracking</title>
     <style>
-        body {
-            margin: 0;
-            padding: 0;
-            font-family: Arial, sans-serif;
-            background: linear-gradient(to bottom, #000000, #800080);
-            color: white;
-            text-align: center;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-        }
+    @import url('https://fonts.googleapis.com/css2?family=PT+Serif&family=Playfair+Display&display=swap');
+
+body, h1, h2, p, label, input, ul, button {
+    font-family: 'PT Serif', serif;
+}
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'PT Serif', serif; /* Set a default font */
+    background: linear-gradient(to bottom, #000000, #800080);
+    color: white;
+    text-align: center;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
 
         h1, h2, p {
             margin: 10px;
@@ -62,17 +68,10 @@
             color: #FFD700; /* Yellow color for warning */
         }
 
-        /* Language toggle button styles */
-        #langToggle {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            background-color: #333;
-            color: white;
-            padding: 5px 10px;
-            cursor: pointer;
-            border: none;
-            border-radius: 4px;
+        /* Delete local data button styles */
+        #deleteLocalDataButton {
+            background-color: #FF0000;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -107,9 +106,7 @@
 
     <button type="button" onclick="downloadResults()" id="downloadResultsButton">Download Results</button>
 
-    <button type="button" onclick="removeLocalData()" id="clearLocalDataButton">CLEAR LOCAL DATA</button>
-
-    <button id="langToggle" onclick="toggleLanguage()">ID / EN</button>
+    <button type="button" onclick="confirmDeleteLocalData()" id="deleteLocalDataButton">DELETE LOCAL DATA</button>
 
     <script>
         let sugarData = [];
@@ -118,13 +115,8 @@
         let userName = localStorage.getItem('userName');
         let selectedLanguage = localStorage.getItem('selectedLanguage') || 'en';
 
-        window.onload = function () {
-            const savedData = localStorage.getItem('sugarData');
-            const warning = localStorage.getItem('maxSugarWarning');
-
-            if (selectedLanguage === 'id') {
-                setLanguageToIndonesian();
-            }
+        document.addEventListener('DOMContentLoaded', function () {
+            loadDataFromLocalStorage();
 
             if (userName) {
                 document.getElementById('nameForm').style.display = 'none';
@@ -132,17 +124,17 @@
                 displayGreeting();
             }
 
-            if (savedData) {
-                sugarData = JSON.parse(savedData);
-                updateTrackingList();
-                calculateTotalSugar();
-            }
+            updateTrackingList();
+            calculateTotalSugar();
 
-            if (warning === 'true') {
-                maxSugarWarning = true;
-                displayMaxSugarWarning();
+            // Set language based on browser language or default to English
+            const browserLanguage = navigator.language.slice(0, 2);
+            if (browserLanguage === 'id') {
+                setLanguageToIndonesian();
+            } else {
+                setLanguageToEnglish();
             }
-        };
+        });
 
         function saveName() {
             const nameInput = document.getElementById('name');
@@ -188,8 +180,7 @@
                         warningMessage.textContent = '';
                     }
 
-                    localStorage.setItem('sugarData', JSON.stringify(sugarData));
-                    localStorage.setItem('maxSugarWarning', maxSugarWarning);
+                    saveDataToLocalStorage();
                 }
             } else {
                 alert('Please enter a valid sugar amount.');
@@ -197,6 +188,11 @@
 
             gramsInput.value = '';
             timeInput.value = '';
+        }
+
+        function saveDataToLocalStorage() {
+            localStorage.setItem('sugarData', JSON.stringify(sugarData));
+            localStorage.setItem('maxSugarWarning', maxSugarWarning);
         }
 
         function updateTrackingList() {
@@ -250,6 +246,14 @@
             URL.revokeObjectURL(url);
         }
 
+        function confirmDeleteLocalData() {
+            const confirmation = confirm('You are about to delete local data, which will delete all of the data you put. Are you sure you want to delete it?');
+
+            if (confirmation) {
+                removeLocalData();
+            }
+        }
+
         function removeLocalData() {
             localStorage.removeItem('userName');
             localStorage.removeItem('sugarData');
@@ -268,46 +272,28 @@
             warningMessage.textContent = 'YOU EXCEEDED MAX RECOMMENDED SUGAR PER DAY';
         }
 
-        function toggleLanguage() {
-            selectedLanguage = selectedLanguage === 'en' ? 'id' : 'en';
-            localStorage.setItem('selectedLanguage', selectedLanguage);
-            window.location.reload();
-        }
-
         function setLanguageToIndonesian() {
-            document.title = 'Pemantauan Gula';
+            // Set content in Indonesian language
             document.getElementById('sugarTrackingHeader').textContent = 'Pemantauan Gula';
-            document.getElementById('nameLabel').textContent = 'Masukkan Nama Anda: ';
-            document.getElementById('saveNameButton').textContent = 'Simpan Nama';
-            document.getElementById('gramsLabel').textContent = 'Masukkan Jumlah Gula (gram): ';
-            document.getElementById('timeLabel').textContent = 'Masukkan Waktu: ';
-            document.getElementById('submitSugarButton').textContent = 'Kirim';
+            document.getElementById('nameLabel').textContent = 'Masukkan Nama Anda:';
+            document.getElementById('gramsLabel').textContent = 'Masukkan Jumlah Gula (gram):';
+            document.getElementById('timeLabel').textContent = 'Masukkan Waktu:';
             document.getElementById('trackingResultsHeader').textContent = 'Hasil Pemantauan';
-            document.getElementById('totalSugarText').textContent = 'TOTAL GULA SAAT INI: ';
+            document.getElementById('totalSugarText').textContent = 'TOTAL GULA SAAT INI:';
             document.getElementById('downloadResultsButton').textContent = 'Unduh Hasil';
-            document.getElementById('clearLocalDataButton').textContent = 'HAPUS DATA LOKAL';
-            document.getElementById('langToggle').textContent = 'ID / EN';
+            document.getElementById('deleteLocalDataButton').textContent = 'HAPUS DATA LOKAL';
         }
 
         function setLanguageToEnglish() {
-            document.title = 'Sugar Tracking';
+            // Set content in English language
             document.getElementById('sugarTrackingHeader').textContent = 'Sugar Tracking';
-            document.getElementById('nameLabel').textContent = 'Enter Your Name: ';
-            document.getElementById('saveNameButton').textContent = 'Save Name';
-            document.getElementById('gramsLabel').textContent = 'Enter Sugar Amount (grams): ';
-            document.getElementById('timeLabel').textContent = 'Enter Time: ';
-            document.getElementById('submitSugarButton').textContent = 'Submit';
+            document.getElementById('nameLabel').textContent = 'Enter Your Name:';
+            document.getElementById('gramsLabel').textContent = 'Enter Sugar Amount (grams):';
+            document.getElementById('timeLabel').textContent = 'Enter Time:';
             document.getElementById('trackingResultsHeader').textContent = 'Tracking Results';
-            document.getElementById('totalSugarText').textContent = 'TOTAL SUGAR NOW: ';
+            document.getElementById('totalSugarText').textContent = 'TOTAL SUGAR NOW:';
             document.getElementById('downloadResultsButton').textContent = 'Download Results';
-            document.getElementById('clearLocalDataButton').textContent = 'CLEAR LOCAL DATA';
-            document.getElementById('langToggle').textContent = 'ID / EN';
-        }
-
-        if (selectedLanguage === 'id') {
-            setLanguageToIndonesian();
-        } else {
-            setLanguageToEnglish();
+            document.getElementById('deleteLocalDataButton').textContent = 'DELETE LOCAL DATA';
         }
     </script>
 
