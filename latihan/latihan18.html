@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Combined Latihan Exercises</title>
+  <script>
+    function showResult() {
+      var choice = document.getElementById("pilihan").value;
+
+      switch (choice) {
+        case "1":
+          calculate();
+          break;
+        case "2":
+          calculateArea();
+          break;
+        case "3":
+          generateSeries();
+          break;
+        default:
+          alert("Pilihan tidak valid");
+      }
+    }
+
+    function calculate() {
+      var num1 = parseFloat(prompt("Masukkan angka pertama:"));
+      var operator = prompt("Masukkan operator (+, -, *, /):");
+      var num2 = parseFloat(prompt("Masukkan angka kedua:"));
+
+      var result;
+      switch (operator) {
+        case "+":
+          result = num1 + num2;
+          break;
+        case "-":
+          result = num1 - num2;
+          break;
+        case "*":
+          result = num1 * num2;
+          break;
+        case "/":
+          result = num1 / num2;
+          break;
+        default:
+          alert("Operator tidak valid");
+          return;
+      }
+
+      alert("Hasil perhitungan: " + result);
+    }
+
+    function calculateArea() {
+      var base1 = parseFloat(prompt("Masukkan panjang sisi atas trapesium:"));
+      var base2 = parseFloat(prompt("Masukkan panjang sisi bawah trapesium:"));
+      var height = parseFloat(prompt("Masukkan tinggi trapesium:"));
+
+      var area = 0.5 * (base1 + base2) * height;
+
+      alert("Luas trapesium: " + area);
+    }
+
+    function generateSeries() {
+      var n = parseInt(prompt("Masukkan jumlah suku deret:"));
+      var sum = 0;
+
+      for (var i = 1; i <= n; i++) {
+        sum += i;
+      }
+
+      alert("Hasil deret: " + sum);
+    }
+
+    var a = 12;
+    var b = 4;
+    function perkaliandengan2(input) {
+      var hasil = input * 2;
+      return hasil;
+    }
+    document.write("dua kali dari ", b, " adalah ", perkaliandengan2(b), "<br>");
+    document.write("nilai dari a adalah ", a);
+
+    function product(a, b) {
+      return a * b;
+    }
+
+    function radio_box(form) {
+      var ket = "";
+      if (form.wanita.checked == true) {
+        ket = "wanita";
+      } else if (form.pria.checked == true) {
+        ket = "pria";
+      } else {
+        ket = "gakjelas";
+      }
+      alert("anda adalah seorang " + ket);
+    }
+
+    var myarray = new Array();
+    myarray[0] = "football";
+    myarray[1] = "baseball";
+    myarray[2] = "cricket";
+    document.write(myarray[0] + myarray[1], myarray[2]);
+
+    function konversi(F) {
+      var C;
+      C = (5 / 9) * (F - 32);
+      return C;
+    }
+    var F = new Array(212, 32, -459.15);
+    var C = new Array();
+    var Counter;
+    for (Counter = 0; Counter <= 2; Counter++) {
+      C[Counter] = konversi(F[Counter]);
+    }
+    for (Counter = 2; Counter >= 0; Counter--) {
+      document.write("Value " + Counter + " was " + F[Counter] + " derajat Fahrenhet");
+      document.write(" which is " + C[Counter] + " derajat celsius<br>");
+    }
+
+    var parents = ["jani", "tove"];
+    var children = ["cecil", "lone"];
+    var family = parents.concat(children);
+    document.write(family);
+
+    var parents = ["jani", "tove"];
+    var children = ["cecil", "lone"];
+    var brother = ["stale", "kai", "borge"];
+    var family = parents.concat(children, brother);
+    document.write(family);
+  </script>
+</head>
+<body>
+  <h1>Menu Pilihan</h1>
+  <p>Menu Pilihan :</p>
+  <p>[1] Menghitung Kalkulator</p>
+  <p>[2] Menghitung Luas Trapesium</p>
+  <p>[3] Menghitung Deret</p>
+  <p>
+    Pilihan Anda :
+    <input type="text" id="pilihan" />
+    <button onclick="showResult()">Submit</button>
+  </p>
+</body>
+</html>
