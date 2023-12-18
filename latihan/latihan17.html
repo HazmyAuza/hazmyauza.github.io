@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Combined Latihan Exercises</title>
+  </head>
+  <body>
+
+    <h1>Deret Bilangan Genap yang Habis Dibagi 3</h1>
+    <button onclick="generateSequence()">Generate Deret</button>
+    <div id="result-container"></div>
+
+    <h2>Latihan 1</h2>
+    <script type="text/javascript">
+      var myNum = 10;
+      if (myNum == 7) {
+        document.write("Lucky 7!");
+      } else {
+        document.write("You're not very lucky today...");
+      }
+    </script>
+
+    <h2>Latihan 2</h2>
+    <script type="text/javascript">
+      var d = new Date();
+      var time = d.getHours();
+      if (time < 10) {
+        document.write("Good morning!");
+      } else {
+        document.write("Good day!");
+      }
+    </script>
+
+    <h2>Latihan 3</h2>
+    <script type="text/javascript">
+      var d = new Date();
+      var theDay = d.getDay();
+
+      switch (theDay) {
+        case 5:
+          document.write("Finally Friday");
+          break;
+        case 6:
+          document.write("Super Saturday");
+          break;
+        case 0:
+          document.write("Sleepy Sunday");
+          break;
+        default:
+          document.write("I'm looking forward to this weekend!");
+      }
+    </script>
+
+    <h2>Latihan 4</h2>
+    <script>
+      var myName = prompt("Please enter your name", "budi");
+      var nb = prompt("Please enter the item name", "sabun");
+      var hs = prompt("Please enter the unit price", "5000");
+      var jb = prompt("Please enter the quantity", "10");
+
+      var hb = hs * jb;
+      var disc = 0;
+
+      if (hb > 500000) {
+        disc = (5 / 100) * hb;
+      } else if (hb > 300000) {
+        disc = (2 / 100) * hb;
+      } else {
+        disc = (0.5 / 100) * hb;
+      }
+
+      var hbb = hb - disc;
+
+      document.write(
+        "<font size=5 color='blue'> penjualan harga barang </font>"
+      );
+      document.write("<font size=4 color='sienna'><pre>");
+      document.write("", "<br>");
+      document.write("Nama barang", nb, "<br>");
+      document.write("Harga satuan", hs, "<br>");
+      document.write("Jumlah Barang", jb, "<br>");
+      document.write("Harga Barang", hb, "<br>");
+      document.write("Harga Discount", disc, "<br>");
+      document.write("Harga Barang Bersih = ", hbb, "<br>");
+      document.write("=", "<br>");
+      document.write("</font></pre>");
+      document.write("<font size=3 color='red'><blink>");
+      document.write("Created by " + myName);
+      document.write("</font></blink>");
+    </script>
+
+    <h2>Latihan 5</h2>
+    <script>
+      alert("What I Learned In College...");
+      var subject = "Humility";
+
+      switch (subject) {
+        case "Deep Thoughts":
+          alert("On Deep thoughts: A day without sunshine is like night.");
+          break;
+        case "Problem Solving":
+          alert(
+            "On Problem Solving: When the only tool you own is a hammer, every problem begins to resemble a nail. - Abraham Maslow"
+          );
+          break;
+        case "Materialism":
+          alert(
+            "On Materialism: He who dies with the most toys is, nonetheless, still dead."
+          );
+          break;
+        case "Infinity":
+          alert("On Infinity: If you had everything, where would you keep it?");
+          break;
+        case "Economics":
+          alert(
+            "On Economics: The cost of living hasn't affected its popularity."
+          );
+          break;
+        case "Revisionist History":
+          alert(
+            "On Revisionist History: What was sliced bread the greatest thing since?"
+          );
+          break;
+        case "Literature":
+          alert(
+            "On Literature: This is not a novel to be tossed aside lightly. It should be thrown with great force. - Dorothy Parker"
+          );
+          break;
+        case "Humility":
+          alert("On Humility: To err is human, to moo bovine.");
+          break;
+        case "Excuses":
+          alert(
+            "On Excuses: I can't complain, but sometimes I still do. - Joe Walsh"
+          );
+          break;
+        case "Numbers":
+          alert(
+            "On Numbers: 2 is not equal to 3 - not even for very large values of 2."
+          );
+          break;
+        default:
+          alert("I learned nothing in college");
+      }
+    </script>
+
+    <h2>Latihan 6</h2>
+    <script language="JavaScript" type="text/javascript">
+      var secretNumber = prompt("Pick a number between 1 and 5:", "");
+      secretNumber = parseInt(secretNumber);
+
+      switch (secretNumber) {
+        case 1:
+          document.write("Too low! 1");
+          break;
+        case 2:
+          document.write("Too low! 2");
+          break;
+        case 3:
+          document.write("You guessed the secret number!");
+          break;
+        case 4:
+          document.write("Too high 4!");
+          break;
+        case 5:
+          document.write("Too high! 5");
+          break;
+        default:
+          document.write("You did not enter a number between 1 and 5.");
+          break;
+      }
+
+      document.write("<br>Execution continues here");
+    </script>
+
+    <h2>Latihan 7</h2>
+    <script type="text/javascript">
+      var red = 1;
+      var result = null;
+      switch (red) {
+        case 1:
+          result = "one";
+          break;
+        case 2:
+          result = "two";
+          break;
+        default:
+          result = "uknown";
+      }
+      document.write(result);
+    </script>
+
+    <h2>Latihan 8</h2>
+    <script>
+      var i = 0;
+      for (i = 0; i <= 5; i++) {
+        document.write("the number is " + i);
+        document.write("<br>");
+      }
+    </script>
+
+    <h2>Latihan 9</h2>
+    <script type="text/javascript">
+      alert("The Student Mind During A Final Exam");
+      var thoughts = [
+        "The prof. never covered this",
+        "Actual knowledge on the subject.",
+        "The T.A.'s kinda cute!",
+        "I knew I should have read the book!",
+        "Soon this will all be behind me!",
+        "I hope the curve is really low!",
+        "PANIC ZONE!",
+        "Prayers for a miracle: flood, fire, tornado, hurricane, earthquake...",
+        "Eeny, meeny, miny, moe...",
+        "Summer break!",
+      ];
+
+      for (var i = 0; i < 10; i++) {
+        alert("Thought #" + (i + 1) + ": " + thoughts[i]);
+      }
+    </script>
+
+  </body>
+</html>
