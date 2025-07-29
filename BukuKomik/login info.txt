@@ -1,5 +1,0 @@
-Email  ||  Password
-
-Hazmy@gmail.com || admin
-Hina@yahoo.co.jp || User
-Auza@gmail.com || user
