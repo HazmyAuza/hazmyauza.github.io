@@ -1,61 +1,568 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Menu List</title>
-    <link rel="icon" type="image/x-icon" href="/pic/FF7.ico">
+    <title>Hazu</title>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
     <style>
-        @media screen and (max-width: 768px) {
-    /* Styles for screens up to 768px wide (typical for smartphones) */
-}
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
-@media screen and (min-width: 769px) and (max-width: 1024px) {
-    /* Styles for screens between 769px and 1024px wide (typical for tablets) */
-}
+        body {
+            font-family: 'Press Start 2P', monospace;
+            background: linear-gradient(45deg, #0a0a0a, #1a0033, #000a1a);
+            background-size: 400% 400%;
+            animation: gradientShift 8s ease infinite;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
 
-@media only screen and (max-width: 600px) {
-  /* Styles for screens smaller than 600px */
-}
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
 
-@media only screen and (min-width: 601px) and (max-width: 1024px) {
-  /* Styles for screens between 601px and 1024px */
-}
+        /* Cyberpunk grid background */
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: 1;
+        }
 
-@media only screen and (min-width: 1025px) {
-  /* Styles for screens larger than 1025px */
-}
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
 
+        /* Scan lines */
+        .scanlines {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                0deg,
+                transparent,
+                transparent 2px,
+                rgba(0, 255, 255, 0.05) 2px,
+                rgba(0, 255, 255, 0.05) 4px
+            );
+            animation: scanlineMove 0.1s linear infinite;
+            z-index: 3;
+            pointer-events: none;
+        }
+
+        @keyframes scanlineMove {
+            0% { transform: translateY(0px); }
+            100% { transform: translateY(4px); }
+        }
+
+        /* Matrix rain effect */
+        .matrix {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .matrix-char {
+            position: absolute;
+            color: #00ff00;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            animation: matrixFall linear infinite;
+            text-shadow: 0 0 5px #00ff00;
+        }
+
+        @keyframes matrixFall {
+            0% {
+                transform: translateY(-100px);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+
+        .container {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+        }
+
+        .quiz-button {
+            background: linear-gradient(45deg, #ff0080, #00ffff, #ff0080);
+            background-size: 200% 200%;
+            border: 3px solid #00ffff;
+            color: #000;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 24px;
+            padding: 30px 60px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 3px;
+            position: relative;
+            overflow: hidden;
+            transition: all 0.3s ease;
+            box-shadow: 
+                0 0 20px rgba(0, 255, 255, 0.5),
+                inset 0 0 20px rgba(255, 0, 128, 0.2);
+            animation: buttonGlow 2s ease-in-out infinite alternate;
+            margin-bottom: 20px;
+        }
+
+        .quiz-menu {
+            background: rgba(0, 0, 0, 0.9);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            padding: 20px;
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.5s ease, opacity 0.3s ease;
+            opacity: 0;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(255, 0, 128, 0.1);
+        }
+
+        .quiz-menu.active {
+            max-height: 400px;
+            opacity: 1;
+        }
+
+        .menu-item {
+            color: #00ffff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 14px;
+            padding: 15px 20px;
+            margin: 5px 0;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid #00ffff;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-align: left;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .menu-item::before {
+            content: '├── ';
+            color: #ff0080;
+        }
+
+        .menu-item:first-child::before {
+            content: '├── ';
+        }
+
+        .menu-item:last-child::before {
+            content: '└── ';
+        }
+
+        .menu-item:hover {
+            background: rgba(0, 255, 255, 0.2);
+            color: #ff0080;
+            transform: translateX(10px);
+            box-shadow: 0 0 15px rgba(0, 255, 255, 0.5);
+        }
+
+        .menu-item:active {
+            background: rgba(255, 0, 128, 0.3);
+            transform: translateX(5px);
+        }
+
+        @keyframes buttonGlow {
+            0% {
+                box-shadow: 
+                    0 0 20px rgba(0, 255, 255, 0.5),
+                    inset 0 0 20px rgba(255, 0, 128, 0.2);
+            }
+            100% {
+                box-shadow: 
+                    0 0 40px rgba(0, 255, 255, 0.8),
+                    inset 0 0 30px rgba(255, 0, 128, 0.4);
+            }
+        }
+
+        .quiz-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .quiz-button:hover {
+            background-position: 100% 0;
+            transform: scale(1.05);
+            border-color: #ff0080;
+            color: #fff;
+            text-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+        }
+
+        .quiz-button:hover::before {
+            left: 100%;
+        }
+
+        .quiz-button:active {
+            transform: scale(0.98);
+            box-shadow: 
+                0 0 10px rgba(0, 255, 255, 0.8),
+                inset 0 0 15px rgba(255, 0, 128, 0.6);
+        }
+
+        /* Floating particles */
+        .particle {
+            position: absolute;
+            width: 4px;
+            height: 4px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: float 6s infinite linear;
+            box-shadow: 0 0 6px #00ffff;
+        }
+
+        @keyframes float {
+            0% {
+                transform: translateY(100vh) translateX(0);
+                opacity: 0;
+            }
+            10% {
+                opacity: 1;
+            }
+            90% {
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-100px) translateX(100px);
+                opacity: 0;
+            }
+        }
+
+        .particle:nth-child(1) { left: 10%; animation-delay: 0s; }
+        .particle:nth-child(2) { left: 20%; animation-delay: 1s; background: #ff0080; box-shadow: 0 0 6px #ff0080; }
+        .particle:nth-child(3) { left: 30%; animation-delay: 2s; }
+        .particle:nth-child(4) { left: 40%; animation-delay: 3s; background: #ff0080; box-shadow: 0 0 6px #ff0080; }
+        .particle:nth-child(5) { left: 50%; animation-delay: 4s; }
+        .particle:nth-child(6) { left: 60%; animation-delay: 5s; background: #ff0080; box-shadow: 0 0 6px #ff0080; }
+        .particle:nth-child(7) { left: 70%; animation-delay: 0.5s; }
+        .particle:nth-child(8) { left: 80%; animation-delay: 1.5s; background: #ff0080; box-shadow: 0 0 6px #ff0080; }
+        .particle:nth-child(9) { left: 90%; animation-delay: 2.5s; }
+
+        @media (max-width: 768px) {
+            .quiz-button {
+                font-size: 18px;
+                padding: 25px 45px;
+                letter-spacing: 2px;
+            }
+        }
+
+        /* Background Video */
+        .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.3;
+        }
+
+        @media (max-width: 768px) {
+            .quiz-button {
+                font-size: 18px;
+                padding: 25px 45px;
+                letter-spacing: 2px;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .quiz-button {
+                font-size: 14px;
+                padding: 20px 35px;
+                letter-spacing: 1px;
+            }
+        }
     </style>
 </head>
 <body>
+    <!-- Matrix rain effect -->
+    <div class="matrix" id="matrix"></div>
     
-    <hr color="green" width="80%" size="8" align="left">
-    <nav>
-        <ul style="padding: 14px;">
-            <li style="list-style: none; display: inline;"><a href="index.html" style="font-size: 20px ; padding: 14px 20px">Home</a></li>|
-            <li style="list-style: none; display: inline;"><a href="/main/profile.html" style="font-size: 20px ; padding: 14px 20px">Profile</a></li>|
-            <li style="list-style: none; display: inline;"><a href="/main/Tentang.html" style="font-size: 20px ; padding: 14px 20px">Tentang</a></li>|
-            <li style="list-style: none; display: inline;"><a href="/main/galeri.html" style="font-size: 20px ; padding: 14px 20px">Galeri</a></li>|
-            <li style="list-style: none; display: inline;"><a href="/main/Kontak.html" style="font-size: 20px ; padding: 14px 20px">Kontak</a></li>|
-            <li style="list-style: none; display: inline;"><a href="/main/Video.html" style="font-size: 20px ; padding: 14px 20px">Video</a></li>|
-            <li style="list-style: none; display: inline;"><a href="/main/wisata.html" style="font-size: 20px ; padding: 14px 20px">Wisata Indonesia</a></li>
-            <li style="list-style: none; display: inline;"><a href="/main/latihan.html" style="font-size: 20px ; padding: 14px 20px">Latihan</a></li>
-            <li style="list-style: none; display: inline;"><a href="/iHazmy/" style="font-size: 20px ; padding: 14px 20px">Tugas BootStrap</a></li>
-            <li style="list-style: none; display: inline;"><a href="/main/sugar.html" style="font-size: 20px ; padding: 14px 20px">Sugar Tracking</a></li>
-            <li style="list-style: none; display: inline;"><a href="/Kuis/Kuis.html" style="font-size: 20px ; padding: 14px 20px">Kuis</a></li>
-        </ul>
-    </nav>
-    <hr color="green" width="80%" size="8" align="left">
-    <br>
-    <p>
-        <font size=3>Assalammualaikum.Wr.Wb.<br>
-        Apakabar semua. <br>Salam kenal ini adalah web perdanaku. <br>Web ini berisi informasi tentang kegemaranku. <br>Semoga web ini dapat menginspirasi Anda pada waktu liburan
-<a href="http://www.google.com">google</a>
-        <br>Silakan hubungi saya jika ada yang ingin didiskusikan <a
-        href="mailto:hazmyauza01@gmail.com">email</a><a href=”mailto:alamat email”></a>
-        </font>
-    </p>
-</body>
+    <!-- Scan lines -->
+    <div class="scanlines"></div>
+
+    <!-- Floating particles -->
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+    <div class="particle"></div>
+
+    <!-- Background Music -->
+    <audio id="backgroundMusic" loop autoplay>
+        <source src="../Kuis/ordinary.mp3" type="audio/mpeg">
+        <source src="background-music.ogg" type="audio/ogg">
+        Your browser does not support the audio element.
+    </audio>
+
+    <!-- Background Video -->
+    <video class="background-video" autoplay muted loop>
+        <source src="../Kuis/hanekawa.mp4" type="video/mp4">
+        <source src="background-video.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>
+
+    <div class="container">
+        <button class="quiz-button" onclick="toggleQuizMenu()">KUIS LIST</button>
+        
+        <div class="quiz-menu" id="quizMenu">
+            <div class="menu-item" onclick="selectQuiz('Bahasa Indonesia')">Bahasa Indonesia</div>
+            <div class="menu-item" onclick="selectQuiz('Test 1')">Test 1</div>
+            <div class="menu-item" onclick="selectQuiz('Test 2')">Test 2</div>
+            <div class="menu-item" onclick="selectQuiz('Test 3')">Test 3</div>
+            <div class="menu-item" onclick="selectQuiz('Test 4')">Test 4</div>
+            <div class="menu-item" onclick="selectQuiz('Test 5')">Test 5</div>
+        </div>
+    </div>
+
+    <script>
+        // Matrix rain effect
+        function createMatrix() {
+            const matrix = document.getElementById('matrix');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            for (let i = 0; i < 50; i++) {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.animationDelay = Math.random() * 2 + 's';
+                matrix.appendChild(char);
+            }
+        }
+
+        function toggleQuizMenu() {
+            const menu = document.getElementById('quizMenu');
+            const button = document.querySelector('.quiz-button');
+            
+            // Add glitch effect
+            button.style.animation = 'none';
+            let glitchCount = 0;
+            const glitchInterval = setInterval(() => {
+                button.style.transform = `translate(${Math.random() * 4 - 2}px, ${Math.random() * 4 - 2}px) scale(1.05)`;
+                button.style.filter = `hue-rotate(${Math.random() * 360}deg)`;
+                
+                glitchCount++;
+                if (glitchCount > 5) {
+                    clearInterval(glitchInterval);
+                    button.style.transform = 'scale(1.05)';
+                    button.style.filter = 'none';
+                    button.style.animation = 'buttonGlow 2s ease-in-out infinite alternate';
+                    
+                    // Toggle menu
+                    menu.classList.toggle('active');
+                }
+            }, 50);
+        }
+
+        function selectQuiz(quizName) {
+            // Add selection effect
+            const selectedItem = event.target;
+            selectedItem.style.background = 'rgba(255, 0, 128, 0.5)';
+            selectedItem.style.color = '#fff';
+            
+            // Navigate to different quiz pages based on selection
+            if (quizName === 'Bahasa Indonesia') {
+                window.location.href = '../Kuis/Kuis.html';
+            } else if (quizName === 'Test 1') {
+                window.location.href = '../Kuis/test1.html';
+            } else if (quizName === 'Test 2') {
+                window.location.href = '../Kuis/test2.html';
+            } else if (quizName === 'Test 3') {
+                window.location.href = '../Kuis/test3.html';
+            } else if (quizName === 'Test 4') {
+                window.location.href = '../Kuis/test4.html';
+            } else if (quizName === 'Test 5') {
+                window.location.href = '../Kuis/test5.html';
+            }
+        }
+
+        function createVideoTransition(callback) {
+            // Create video overlay
+            const videoOverlay = document.createElement('div');
+            videoOverlay.style.cssText = `
+                position: fixed;
+                top: 0;
+                left: 0;
+                width: 100vw;
+                height: 100vh;
+                background: #000;
+                z-index: 9999;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+            `;
+
+            // Create video element
+            const video = document.createElement('video');
+            video.style.cssText = `
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                opacity: 0;
+                transition: opacity 0.8s ease-in-out;
+            `;
+            video.autoplay = true;
+            video.muted = true;
+            video.loop = false;
+            video.playsInline = true;
+
+            // Set your MP4 video source here
+            // Replace 'your-video.mp4' with the path to your video file
+            video.src = 'transition-video.mp4'; // Change this to your video path
+
+            // Create loading text overlay
+            const loadingText = document.createElement('div');
+            loadingText.style.cssText = `
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-family: 'Press Start 2P', monospace;
+                color: #fff;
+                font-size: 24px;
+                text-shadow: 0 0 20px #00ffff;
+                text-align: center;
+                z-index: 10;
+                opacity: 0;
+                transition: opacity 0.5s ease-in-out;
+            `;
+            loadingText.innerHTML = `
+                <div style="animation: glitchText 0.3s infinite;">LOADING...</div>
+                <div style="font-size: 12px; margin-top: 20px; color: #00ffff;">CYBERPUNK PROTOCOL ACTIVE</div>
+            `;
+
+            // Add keyframes for glitch text
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes glitchText {
+                    0%, 100% { transform: translate(0); }
+                    20% { transform: translate(-2px, 2px); }
+                    40% { transform: translate(-2px, -2px); }
+                    60% { transform: translate(2px, 2px); }
+                    80% { transform: translate(2px, -2px); }
+                }
+            `;
+            document.head.appendChild(style);
+
+            videoOverlay.appendChild(video);
+            videoOverlay.appendChild(loadingText);
+            document.body.appendChild(videoOverlay);
+
+            // Animate opacity from 0 to 100%
+            setTimeout(() => {
+                videoOverlay.style.opacity = '1';
+            }, 10);
+
+            setTimeout(() => {
+                video.style.opacity = '1';
+                loadingText.style.opacity = '1';
+            }, 200);
+
+            // Handle video end event
+            video.addEventListener('ended', () => {
+                // Fade out when video ends
+                videoOverlay.style.opacity = '0';
+                setTimeout(() => {
+                    document.body.removeChild(videoOverlay);
+                    callback();
+                }, 500);
+            });
+
+            // Fallback timeout in case video doesn't load
+            setTimeout(() => {
+                if (videoOverlay.parentNode) {
+                    videoOverlay.style.opacity = '0';
+                    setTimeout(() => {
+                        if (videoOverlay.parentNode) {
+                            document.body.removeChild(videoOverlay);
+                        }
+                        callback();
+                    }, 500);
+                }
+            }, 5000);
+        }
+
+        // Auto-start music when page loads
+        const backgroundMusic = document.getElementById('backgroundMusic');
+        
+        window.addEventListener('load', () => {
+            // Try to play music automatically
+            backgroundMusic.play().catch(e => {
+                console.log('Audio autoplay blocked by browser:', e);
+                // Music will start when user interacts with the page
+                document.addEventListener('click', () => {
+                    backgroundMusic.play().catch(err => console.log('Music play failed:', err));
+                }, { once: true });
+            });
+        });
+
+        // Add random glitch effects
+        setInterval(() => {
+            if (Math.random() < 0.1) {
+                document.body.style.filter = 'hue-rotate(' + Math.random() * 360 + 'deg)';
+                setTimeout(() => {
+                    document.body.style.filter = 'none';
+                }, 100);
+            }
+        }, 2000);
+
+        // Initialize matrix effect
+        createMatrix();
+
+        // Refresh matrix characters periodically
+        setInterval(() => {
+            const matrixChars = document.querySelectorAll('.matrix-char');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            matrixChars.forEach(char => {
+                if (Math.random() < 0.1) {
+                    char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                }
+            });
+        }, 500);
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'967435a3b48fa03f',t:'MTc1Mzg3MTcyOS4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
