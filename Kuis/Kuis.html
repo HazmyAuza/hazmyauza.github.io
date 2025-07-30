@@ -2,7 +2,7 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>Hazu Quiz Menu</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap');
@@ -464,6 +464,59 @@
                 font-size: 0.7rem;
             }
         }
+		
+@media (max-width: 768px) {
+    .container {
+        padding: 20px;
+        margin: 10px;
+        max-width: 90%;
+    }
+
+    .title {
+        font-size: 1.8rem;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    .menu-link {
+        padding: 16px 18px;
+        font-size: 0.75rem;
+        text-align: center;
+    }
+
+    .arrow {
+        display: none; /* Sembunyikan panah jika terlalu kecil */
+    }
+
+    .loading-logo {
+        font-size: 2.5rem;
+    }
+
+    .loading-bar-container {
+        width: 200px;
+    }
+}
+
+@media (max-width: 480px) {
+    .title {
+        font-size: 1.5rem;
+    }
+
+    .menu-link {
+        font-size: 0.7rem;
+        padding: 14px 16px;
+    }
+
+    .loading-text {
+        font-size: 1rem;
+        text-align: center;
+    }
+
+    .loading-bar-container {
+        width: 160px;
+    }
+}
+
     </style>
 </head>
 <body>
