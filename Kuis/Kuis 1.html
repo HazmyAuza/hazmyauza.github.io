@@ -3,17 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kuis Interaktif</title>
+    <title>Kuis Kata Depan "Ke" dan "Di"</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
         body {
             font-family: 'Press Start 2P', monospace;
             image-rendering: pixelated;
-            cursor: none; /* Hide default cursor */
+            cursor: none;
         }
         
-        /* 8-bit Custom Cursor */
         .custom-cursor {
             position: fixed;
             width: 24px;
@@ -55,7 +54,6 @@
             100% { transform: scale(1.5); }
         }
         
-        /* Click Particle Effects */
         .click-particle {
             position: fixed;
             width: 8px;
@@ -75,26 +73,30 @@
                 opacity: 0;
             }
         }
+        
         .heart-bounce {
             animation: heartBeat 0.5s ease-in-out;
         }
+        
         @keyframes heartBeat {
             0% { transform: scale(1); }
             50% { transform: scale(1.2); }
             100% { transform: scale(1); }
         }
+        
         .fade-in {
             animation: fadeIn 0.5s ease-in-out;
         }
+        
         @keyframes fadeIn {
             from { opacity: 0; transform: translateY(20px); }
             to { opacity: 1; transform: translateY(0); }
         }
         
-        /* Screen Shake Effect */
         .screen-shake {
             animation: screenShake 0.4s ease-in-out;
         }
+        
         @keyframes screenShake {
             0%, 100% { transform: translateX(0); }
             10% { transform: translateX(-4px) rotate(-0.3deg); }
@@ -108,11 +110,11 @@
             90% { transform: translateX(-0.5px); }
         }
         
-        /* Glitch Effect */
         .glitch-text {
             position: relative;
             animation: glitch 0.3s infinite;
         }
+        
         .glitch-text::before,
         .glitch-text::after {
             content: attr(data-text);
@@ -122,16 +124,19 @@
             width: 100%;
             height: 100%;
         }
+        
         .glitch-text::before {
             animation: glitchTop 0.3s infinite;
             clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
             color: #ff0040;
         }
+        
         .glitch-text::after {
             animation: glitchBottom 0.3s infinite;
             clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
             color: #00ffff;
         }
+        
         @keyframes glitch {
             0%, 100% { transform: translate(0); }
             20% { transform: translate(-2px, 2px); }
@@ -139,6 +144,7 @@
             60% { transform: translate(2px, 2px); }
             80% { transform: translate(2px, -2px); }
         }
+        
         @keyframes glitchTop {
             0%, 100% { transform: translate(0); }
             20% { transform: translate(-2px, -2px); }
@@ -146,6 +152,7 @@
             60% { transform: translate(2px, -2px); }
             80% { transform: translate(2px, 2px); }
         }
+        
         @keyframes glitchBottom {
             0%, 100% { transform: translate(0); }
             20% { transform: translate(2px, 2px); }
@@ -154,7 +161,6 @@
             80% { transform: translate(-2px, -2px); }
         }
         
-        /* Matrix Rain Effect */
         .matrix-rain {
             position: fixed;
             top: 0;
@@ -165,6 +171,7 @@
             z-index: 1;
             opacity: 0.6;
         }
+        
         .matrix-char {
             position: absolute;
             color: #00ff41;
@@ -173,6 +180,7 @@
             animation: matrixFall linear infinite;
             text-shadow: 0 0 5px #00ff41;
         }
+        
         @keyframes matrixFall {
             0% {
                 transform: translateY(-100vh);
@@ -184,7 +192,6 @@
             }
         }
         
-        /* Pixel Explosion Effect */
         .pixel-explosion {
             position: fixed;
             width: 10px;
@@ -193,6 +200,7 @@
             z-index: 9997;
             animation: pixelExplode 2s ease-out forwards;
         }
+        
         @keyframes pixelExplode {
             0% {
                 transform: scale(1) rotate(0deg);
@@ -217,22 +225,17 @@
     <div id="matrixRain" class="matrix-rain"></div>
     
     <!-- Enhanced 8-bit Background Layers -->
-    
-    <!-- Animated Pixel Grid with Multiple Layers -->
     <div class="absolute inset-0 opacity-30">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
             <defs>
-                <!-- Main Grid Pattern -->
                 <pattern id="pixelGrid" width="20" height="20" patternUnits="userSpaceOnUse">
                     <rect width="20" height="20" fill="none" stroke="#00ff41" stroke-width="0.8"/>
                     <circle cx="10" cy="10" r="1" fill="#00ff41" opacity="0.6"/>
                 </pattern>
-                <!-- Secondary Grid Pattern -->
                 <pattern id="pixelGrid2" width="40" height="40" patternUnits="userSpaceOnUse">
                     <rect width="40" height="40" fill="none" stroke="#ff0080" stroke-width="0.5"/>
                     <rect x="15" y="15" width="10" height="10" fill="#ff0080" opacity="0.3"/>
                 </pattern>
-                <!-- Animated Scanlines -->
                 <pattern id="scanlines" width="100%" height="4" patternUnits="userSpaceOnUse">
                     <rect width="100%" height="2" fill="#00ffff" opacity="0.1"/>
                     <rect y="2" width="100%" height="2" fill="transparent"/>
@@ -246,53 +249,32 @@
 
     <!-- Floating 8-bit Particles -->
     <div class="absolute inset-0 overflow-hidden">
-        <!-- Large Floating Elements -->
         <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-400 animate-bounce shadow-lg" style="clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%); box-shadow: 0 0 20px #fbbf24; animation-duration: 3s;"></div>
-        
         <div class="absolute top-32 right-20 w-16 h-16 bg-red-500 animate-pulse shadow-lg" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); box-shadow: 0 0 15px #ef4444; animation-duration: 2s;"></div>
-        
         <div class="absolute bottom-20 left-32 w-18 h-18 bg-green-400 animate-bounce shadow-lg" style="clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); box-shadow: 0 0 18px #10b981; animation-duration: 2.5s;"></div>
-        
         <div class="absolute bottom-40 right-16 w-22 h-22 bg-blue-400 animate-pulse shadow-lg" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); box-shadow: 0 0 25px #3b82f6; animation-duration: 1.8s;"></div>
-
-        <!-- Medium Floating Elements -->
         <div class="absolute top-1/4 left-1/4 w-12 h-12 bg-cyan-400 animate-spin shadow-md" style="box-shadow: 0 0 12px #06b6d4; animation-duration: 4s;"></div>
-        
         <div class="absolute top-3/4 right-1/3 w-10 h-10 bg-pink-400 animate-bounce shadow-md" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); box-shadow: 0 0 10px #ec4899; animation-duration: 2.2s;"></div>
-        
         <div class="absolute top-1/2 left-1/6 w-14 h-14 bg-purple-400 animate-pulse shadow-md" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); box-shadow: 0 0 14px #a855f7; animation-duration: 3.2s;"></div>
-        
         <div class="absolute bottom-1/3 right-1/4 w-16 h-16 bg-orange-400 animate-spin shadow-md" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); box-shadow: 0 0 16px #fb923c; animation-duration: 5s;"></div>
-
-        <!-- Small Floating Pixels -->
         <div class="absolute top-20 right-1/3 w-6 h-6 bg-lime-400 animate-ping" style="box-shadow: 0 0 8px #84cc16; animation-duration: 1.5s;"></div>
-        
         <div class="absolute top-2/3 left-20 w-8 h-8 bg-indigo-400 animate-bounce" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); box-shadow: 0 0 6px #6366f1; animation-duration: 1.8s;"></div>
-        
         <div class="absolute bottom-1/4 left-2/3 w-5 h-5 bg-rose-400 animate-pulse" style="box-shadow: 0 0 5px #f43f5e; animation-duration: 2.1s;"></div>
-        
         <div class="absolute top-1/3 right-20 w-7 h-7 bg-emerald-400 animate-ping" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); box-shadow: 0 0 7px #10b981; animation-duration: 1.7s;"></div>
-        
         <div class="absolute bottom-10 right-1/2 w-9 h-9 bg-violet-400 animate-spin" style="box-shadow: 0 0 9px #8b5cf6; animation-duration: 3.5s;"></div>
-        
         <div class="absolute top-1/2 right-10 w-4 h-4 bg-amber-400 animate-bounce" style="box-shadow: 0 0 4px #f59e0b; animation-duration: 2.3s;"></div>
     </div>
 
     <!-- Animated Circuit Lines -->
     <div class="absolute inset-0 opacity-20">
         <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
-            <!-- Horizontal Circuit Lines -->
             <line x1="0" y1="20%" x2="100%" y2="20%" stroke="#00ff41" stroke-width="2" opacity="0.6" class="animate-pulse"/>
             <line x1="0" y1="40%" x2="100%" y2="40%" stroke="#ff0080" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 0.5s;"/>
             <line x1="0" y1="60%" x2="100%" y2="60%" stroke="#00ffff" stroke-width="2" opacity="0.6" class="animate-pulse" style="animation-delay: 1s;"/>
             <line x1="0" y1="80%" x2="100%" y2="80%" stroke="#ffff00" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 1.5s;"/>
-            
-            <!-- Vertical Circuit Lines -->
             <line x1="20%" y1="0" x2="20%" y2="100%" stroke="#ff4080" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 0.3s;"/>
             <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#40ff80" stroke-width="2" opacity="0.6" class="animate-pulse" style="animation-delay: 0.8s;"/>
             <line x1="80%" y1="0" x2="80%" y2="100%" stroke="#8040ff" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 1.3s;"/>
-            
-            <!-- Circuit Nodes -->
             <circle cx="20%" cy="20%" r="3" fill="#00ff41" class="animate-ping" style="animation-duration: 2s;"/>
             <circle cx="50%" cy="40%" r="4" fill="#ff0080" class="animate-ping" style="animation-duration: 2.5s; animation-delay: 0.5s;"/>
             <circle cx="80%" cy="60%" r="3" fill="#00ffff" class="animate-ping" style="animation-duration: 2.2s; animation-delay: 1s;"/>
@@ -305,12 +287,17 @@
     <div class="absolute bottom-1/4 right-1/6 w-40 h-40 rounded-full bg-gradient-to-r from-pink-400 to-red-500 opacity-15 animate-pulse blur-xl" style="animation-duration: 5s; animation-delay: 1s;"></div>
     <div class="absolute top-1/2 left-1/12 w-28 h-28 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-25 animate-pulse blur-xl" style="animation-duration: 3.5s; animation-delay: 2s;"></div>
     <div class="absolute bottom-1/6 right-1/3 w-36 h-36 rounded-full bg-gradient-to-r from-purple-400 to-violet-500 opacity-18 animate-pulse blur-xl" style="animation-duration: 4.5s; animation-delay: 0.5s;"></div>
+
     <!-- Start Screen -->
     <div id="startScreen" class="min-h-screen flex items-center justify-center p-4 relative z-10">
         <div class="bg-black border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
             <div class="mb-6">
-                <h1 id="quizTitle" class="text-2xl font-bold text-cyan-400 mb-2">🧠 Kuis Pintar</h1>
-                <p id="quizSubtitle" class="text-green-400">Uji pengetahuan Anda!</p>
+                <h1 class="text-2xl font-bold text-cyan-400 mb-2">Bahasa Indonesia</h1>
+                <p class="text-green-400">Pelajari penggunaan "ke" dan "di"</p>
+				<br>
+				<p class="text-cyan-400">-----------------------</p>
+				<br>
+				<p class="text-green-400">Learn the use of "ke" and "di"</p>
             </div>
             
             <div class="mb-6">
@@ -332,16 +319,14 @@
                 <div class="flex justify-between items-center">
                     <div>
                         <h2 class="text-lg font-bold text-cyan-400">Halo, <span id="displayName" class="text-yellow-400"></span>!</h2>
-                        <p class="text-green-400">Pertanyaan <span id="questionNumber">1</span> dari <span id="totalQuestions">5</span></p>
+                        <p class="text-green-400">Pertanyaan <span id="questionNumber">1</span> dari <span id="totalQuestions">10</span></p>
                     </div>
                     <div class="flex items-center space-x-4">
-                        <!-- Music Control Button -->
                         <button id="musicToggle" onclick="toggleMusicControl()" class="bg-blue-600 border-2 border-cyan-400 text-white px-3 py-2 hover:bg-cyan-600 transition-all duration-200 text-sm" style="box-shadow: 0 0 10px #06b6d4;">
                             🎵 ON
                         </button>
-                        <!-- Matrix Rain Status (Always Active) -->
                         <div class="bg-green-600 border-2 border-green-400 text-white px-3 py-2 text-sm animate-pulse" style="box-shadow: 0 0 10px #10b981;">
-                            Metrix ACTIVE
+						Hazu
                         </div>
                         <div class="flex items-center space-x-2">
                             <span class="text-red-400 font-medium">Nyawa:</span>
@@ -368,7 +353,7 @@
                 </div>
                 
                 <h3 id="questionText" class="text-xl font-bold text-white mb-4 text-center"></h3>
-                <p id="englishText" class="text-sm text-gray-400 mb-8 text-center italic"></p>
+                <p id="questionTranslation" class="text-sm text-gray-400 mb-8 text-center italic"></p>
                 
                 <div id="answersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
                     <!-- Answers will be inserted here -->
@@ -378,9 +363,32 @@
             <!-- Progress Bar -->
             <div class="bg-black border-4 border-blue-400 p-4" style="box-shadow: 0 0 20px #3b82f6;">
                 <div class="w-full bg-gray-800 h-4 border-2 border-white">
-                    <div id="progressBar" class="bg-green-400 h-full transition-all duration-500" style="width: 20%; box-shadow: 0 0 10px #10b981;"></div>
+                    <div id="progressBar" class="bg-green-400 h-full transition-all duration-500" style="width: 10%; box-shadow: 0 0 10px #10b981;"></div>
                 </div>
             </div>
+        </div>
+    </div>
+
+    <!-- Explanation Popup -->
+    <div id="explanationPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-black border-4 border-cyan-400 p-8 max-w-2xl w-full text-center fade-in" style="box-shadow: 0 0 30px #06b6d4;">
+            <div class="mb-6">
+                <div id="explanationIcon" class="text-6xl mb-4">✅</div>
+                <h2 id="explanationTitle" class="text-2xl font-bold text-cyan-400 mb-4">Jawaban Benar!</h2>
+                <div class="bg-gray-900 border-2 border-cyan-400 p-4 mb-4 text-left" style="box-shadow: inset 0 0 15px #06b6d4;">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-yellow-400 font-bold">💡 Penjelasan:</div>
+                        <button id="languageToggle" onclick="toggleExplanationLanguage()" class="bg-purple-600 border-2 border-purple-400 text-white px-3 py-1 hover:bg-purple-700 transition-all duration-200 text-xs" style="box-shadow: 0 0 8px #8b5cf6;">
+                            🇮🇩 ID
+                        </button>
+                    </div>
+                    <p id="explanationText" class="text-white text-sm leading-relaxed"></p>
+                </div>
+            </div>
+            
+            <button id="continueButton" onclick="continueToNextQuestion()" class="w-full bg-green-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-green-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #10b981;">
+                Lanjutkan
+            </button>
         </div>
     </div>
 
@@ -390,7 +398,7 @@
             <div class="mb-6">
                 <div class="text-6xl mb-4">💀</div>
                 <h2 class="text-2xl font-bold text-red-400 mb-2 glitch-text" data-text="GAME OVER!">GAME OVER!</h2>
-                <p class="text-white">Anda gagal karena kehabisan nyawa</p>
+                <p class="text-white">Anda gagal karena habisan nyawa</p>
                 <p class="text-gray-400 text-sm mt-2">Nyawa: 0/5 ❤️</p>
             </div>
             
@@ -413,6 +421,30 @@
             <button onclick="restartFromGameOver()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
                 Coba Lagi
             </button>
+        </div>
+    </div>
+
+    <!-- All Explanations Popup -->
+    <div id="allExplanationsPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-black border-4 border-purple-400 p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto fade-in" style="box-shadow: 0 0 30px #8b5cf6;">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-purple-400 mb-4 text-center">📖 Semua Penjelasan</h2>
+                <div class="flex justify-center mb-4">
+                    <button id="allExplanationsLanguageToggle" onclick="toggleAllExplanationsLanguage()" class="bg-cyan-600 border-2 border-cyan-400 text-white px-4 py-2 hover:bg-cyan-700 transition-all duration-200 text-sm" style="box-shadow: 0 0 8px #06b6d4;">
+                        🇮🇩 ID
+                    </button>
+                </div>
+            </div>
+            
+            <div id="allExplanationsContent" class="space-y-6">
+                <!-- Explanations will be inserted here -->
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="closeAllExplanations()" class="bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-8 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ef4444;">
+                    Tutup
+                </button>
+            </div>
         </div>
     </div>
 
@@ -448,6 +480,10 @@
                     <span>💾</span>
                     <span>Save Image</span>
                 </button>
+                <button onclick="showAllExplanations()" class="w-full bg-purple-600 border-2 border-purple-400 text-white font-semibold py-3 px-6 hover:bg-purple-700 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mb-3" style="box-shadow: 0 0 15px #8b5cf6;">
+                    <span>📖</span>
+                    <span>Explanation</span>
+                </button>
                 <button onclick="restartQuiz()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
                     Main Lagi
                 </button>
@@ -456,81 +492,89 @@
     </div>
 
     <script>
-        // ========================================
-        // KONFIGURASI KUIS - EDIT BAGIAN INI SAJA!
-        // ========================================
-        
-        // Judul Kuis (ganti sesuai tema Anda)
-        const QUIZ_TITLE = "Kuis Bahasa Indonesia";
-        const QUIZ_SUBTITLE = "Uji pengetahuan Anda!";
-        
-        // Daftar Pertanyaan (tambah sebanyak yang Anda mau!)
+        // Quiz Questions - Indonesian Grammar: "ke" and "di"
         const questions = [
             {
-                question: "Apa ibu kota Indonesia?",
-                english: "What is the capital of Indonesia?",
-                answers: ["Jakarta", "Bandung", "Surabaya", "Medan"],
-                correct: 0  // Index jawaban benar (mulai dari 0)
+                question: "Manakah kalimat yang menggunakan \"ke\" dengan benar?",
+                translation: "Which sentence uses \"ke\" correctly?",
+                answers: ["A. Ibu menyapu ke halaman.", "B. Ayah pergi ke kantor.", "C. Adik tidur ke kasur.", "D. Kucing makan ke dapur."],
+                correct: 1,
+                explanation: "Kata depan \"ke\" digunakan dalam kalimat untuk menunjukkan arah atau tujuan. Kata ini digunakan ketika seseorang atau sesuatu sedang bergerak menuju suatu tempat. Kalimat \"Ayah pergi ke kantor\" menggunakan \"ke\" secara tepat karena menunjukkan arah atau tujuan ayah dari rumah menuju kantor. Sementara kalimat lainnya keliru: \"Ibu menyapu ke halaman\" tidak tepat karena menyapu adalah aktivitas di tempat. Seharusnya \"di halaman\". \"Adik tidur ke kasur\" juga tidak benar karena tidur dilakukan di tempat, bukan menuju. Seharusnya \"di kasur\". \"Kucing makan ke dapur\" tidak sesuai, karena makan adalah kegiatan di tempat. Seharusnya \"di dapur\".",
+                explanationJp: "前置詞「ke」は文中で方向や目的地を示すために使用されます。この語は誰かや何かがある場所に向かって移動している時に使用されます。「Ayah pergi ke kantor」（父は会社に行く）という文は、父が家から会社への方向や目的地を示しているため「ke」を正しく使用しています。他の文は間違っています：「Ibu menyapu ke halaman」は掃除がその場での活動なので不適切です。「di halaman」であるべきです。「Adik tidur ke kasur」も睡眠はその場で行われるため間違いで、向かうのではありません。「di kasur」であるべきです。「Kucing makan ke dapur」は不適切で、食事はその場での活動だからです。「di dapur」であるべきです。"
             },
             {
-                question: "Berapa hasil dari 15 + 25?",
-                english: "What is the result of 15 + 25?",
-                answers: ["35", "40", "45", "50"],
-                correct: 1
+                question: "Kalimat yang menggunakan \"di\" dengan tepat adalah...",
+                translation: "The sentence that uses \"di\" correctly is...",
+                answers: ["A. Buku itu di baca.", "B. Kami bermain di taman.", "C. Kakak menulis di ke meja.", "D. Ayah pergi di kantor."],
+                correct: 1,
+                explanation: "Kata depan \"di\" dipakai untuk menunjukkan lokasi suatu kegiatan atau tempat keberadaan sesuatu. Kalimat \"Kami bermain di taman\" tepat karena menunjukkan tempat terjadinya kegiatan bermain, yaitu taman. Kalimat lain salah: \"Buku itu di baca\" salah karena \"dibaca\" seharusnya digabung sebagai bentuk pasif. \"Kakak menulis di ke meja\" tidak sesuai karena struktur kalimat kacau. \"Ayah pergi di kantor\" tidak tepat karena \"pergi\" menyatakan perpindahan, bukan lokasi, harusnya \"ke kantor\".",
+                explanationJp: "前置詞「di」は活動の場所や何かが存在する場所を示すために使用されます。「Kami bermain di taman」（私たちは公園で遊ぶ）という文は、遊ぶ活動が行われる場所、つまり公園を示しているため正しいです。他の文は間違っています：「Buku itu di baca」は「dibaca」が受動形として結合されるべきなので間違いです。「Kakak menulis di ke meja」は文構造が混乱しているため不適切です。「Ayah pergi di kantor」は「pergi」が場所ではなく移動を表すため間違いで、「ke kantor」であるべきです。"
             },
             {
-                question: "Planet terdekat dengan Matahari adalah?",
-                english: "The closest planet to the Sun is?",
-                answers: ["Venus", "Merkurius", "Mars", "Bumi"],
-                correct: 1
+                question: "Kalimat mana yang SALAH dalam penggunaan \"ke\" atau \"di\"?",
+                translation: "Which sentence is WRONG in using \"ke\" or \"di\"?",
+                answers: ["A. Nenek duduk di kursi.", "B. Kakak pergi ke sekolah.", "C. Saya membaca buku di kamar.", "D. Mereka bermain ke halaman."],
+                correct: 3,
+                explanation: "Kata kerja \"bermain\" tidak menunjukkan gerakan ke suatu tempat, melainkan aktivitas yang terjadi di suatu lokasi. Oleh karena itu, kata depan yang benar adalah \"di\", bukan \"ke\". Kalimat yang benar adalah \"Mereka bermain di halaman\". Kalimat A, B, dan C sudah benar penggunaannya: \"duduk di kursi\" menyatakan tempat duduk, \"pergi ke sekolah\" menunjukkan arah, \"membaca di kamar\" menyatakan tempat kegiatan.",
+                explanationJp: "動詞「bermain」（遊ぶ）は場所への移動を示すのではなく、ある場所で起こる活動を表します。したがって、正しい前置詞は「ke」ではなく「di」です。正しい文は「Mereka bermain di halaman」（彼らは庭で遊ぶ）です。文A、B、Cはすでに正しく使用されています：「duduk di kursi」は座る場所を示し、「pergi ke sekolah」は方向を示し、「membaca di kamar」は活動の場所を示しています。"
             },
             {
-                question: "Siapa penemu lampu pijar?",
-                english: "Who invented the light bulb?",
-                answers: ["Thomas Edison", "Albert Einstein", "Isaac Newton", "Nikola Tesla"],
-                correct: 0
+                question: "Kata depan \"ke\" digunakan untuk menunjukkan...",
+                translation: "The preposition \"ke\" is used to indicate...",
+                answers: ["A. Tempat terjadinya sesuatu", "B. Kepemilikan", "C. Arah atau tujuan", "D. Keadaan"],
+                correct: 2,
+                explanation: "\"Ke\" digunakan untuk menyatakan arah atau tujuan suatu perpindahan. Misalnya, \"berangkat ke sekolah\", \"datang ke rumah nenek\", atau \"pergi ke pasar\". Opsi lainnya tidak tepat: A menunjukkan tempat, itu digunakan dengan \"di\". B tidak relevan. D tidak berhubungan langsung dengan kata depan \"ke\".",
+                explanationJp: "「Ke」は移動の方向や目的地を表すために使用されます。例えば、「berangkat ke sekolah」（学校に出発する）、「datang ke rumah nenek」（おばあちゃんの家に来る）、「pergi ke pasar」（市場に行く）などです。他の選択肢は適切ではありません：Aは場所を示し、それは「di」と一緒に使用されます。Bは関連がありません。Dは前置詞「ke」と直接関係がありません。"
             },
             {
-                question: "Berapa jumlah benua di dunia?",
-                english: "How many continents are there in the world?",
-                answers: ["5", "6", "7", "8"],
-                correct: 2
+                question: "Manakah kalimat yang menggunakan \"di\" dan \"ke\" secara benar?",
+                translation: "Which sentence uses \"di\" and \"ke\" correctly?",
+                answers: ["A. Ibu pergi di pasar dan membeli sayur ke warung.", "B. Adik ke taman dan bermain di sana.", "C. Saya tidur di pergi ke kamar.", "D. Mereka berlari ke lalu di taman."],
+                correct: 1,
+                explanation: "Kalimat B benar: \"ke taman\" menunjukkan arah atau tujuan, \"bermain di sana\" menyatakan lokasi kegiatan. Kalimat A salah karena \"pergi\" membutuhkan kata depan \"ke\", bukan \"di\". Seharusnya \"pergi ke pasar\". Kalimat C tidak jelas secara struktur. Kalimat D tidak lengkap dan tidak logis secara tata bahasa.",
+                explanationJp: "文Bが正しいです：「ke taman」（公園へ）は方向や目的地を示し、「bermain di sana」（そこで遊ぶ）は活動の場所を表しています。文Aは「pergi」（行く）が前置詞「di」ではなく「ke」を必要とするため間違いです。「pergi ke pasar」（市場に行く）であるべきです。文Cは構造が不明確です。文Dは不完全で文法的に非論理的です。"
             },
             {
-                question: "Apa nama mata uang Jepang?",
-                english: "What is the currency of Japan?",
-                answers: ["Won", "Yuan", "Yen", "Rupiah"],
-                correct: 2
+                question: "Pilih kalimat yang benar!",
+                translation: "Choose the correct sentence!",
+                answers: ["A. Saya berjalan ke jalan.", "B. Buku itu jatuh ke meja.", "C. Kakak duduk ke sofa.", "D. Ibu tidur ke kamar."],
+                correct: 0,
+                explanation: "Kalimat A benar karena menunjukkan perpindahan atau gerakan menuju tempat, yaitu \"berjalan ke jalan\". Kalimat B terdengar janggal secara makna. Jika maksudnya buku berada di atas meja karena jatuh, maka seharusnya \"jatuh di meja\". Kalimat C dan D salah karena \"duduk\" dan \"tidur\" adalah kegiatan di tempat, bukan gerakan menuju tempat. Maka seharusnya: \"duduk di sofa\" dan \"tidur di kamar\".",
+                explanationJp: "文Aは場所への移動や動きを示しているため正しく、「berjalan ke jalan」（道路に歩く）です。文Bは意味的におかしく聞こえます。本が落ちてテーブルの上にあるという意味なら、「jatuh di meja」（テーブルに落ちた）であるべきです。文CとDは「duduk」（座る）と「tidur」（眠る）が場所への移動ではなく、その場での活動であるため間違いです。したがって「duduk di sofa」（ソファに座る）と「tidur di kamar」（部屋で眠る）であるべきです。"
             },
             {
-                question: "Siapa presiden pertama Indonesia?",
-                english: "Who was the first president of Indonesia?",
-                answers: ["Soekarno", "Soeharto", "Habibie", "Megawati"],
-                correct: 0
+                question: "Manakah kalimat yang menggunakan \"di\" untuk menyatakan lokasi?",
+                translation: "Which sentence uses \"di\" to indicate location?",
+                answers: ["A. Anak-anak bermain di halaman.", "B. Mereka ke bermain lapangan.", "C. Saya belajar ke meja.", "D. Ayah pergi di toko."],
+                correct: 0,
+                explanation: "Kalimat A benar karena menyatakan tempat terjadinya kegiatan bermain, yaitu halaman. Kalimat lainnya salah: Kalimat B salah struktur. Kalimat C seharusnya \"belajar di meja\", bukan \"ke meja\". Kalimat D seharusnya \"pergi ke toko\", karena \"pergi\" menyatakan arah, bukan lokasi.",
+                explanationJp: "文Aは遊ぶ活動が行われる場所、つまり庭を表しているため正しいです。他の文は間違っています：文Bは構造が間違っています。文Cは「ke meja」ではなく「belajar di meja」（机で勉強する）であるべきです。文Dは「pergi」が場所ではなく方向を表すため「pergi ke toko」（店に行く）であるべきです。"
             },
             {
-                question: "Berapa hasil dari 8 x 7?",
-                english: "What is the result of 8 x 7?",
-                answers: ["54", "56", "58", "60"],
-                correct: 1
+                question: "Lengkapi kalimat berikut: \"Adik berjalan ___ kamar dan duduk ___ lantai.\"",
+                translation: "Complete the sentence: \"Adik berjalan ___ kamar dan duduk ___ lantai.\"",
+                answers: ["A. di, ke", "B. ke, di", "C. ke, ke", "D. di, di"],
+                correct: 1,
+                explanation: "\"berjalan ke kamar\" menunjukkan arah dan \"duduk di lantai\" menunjukkan tempat. Jadi kombinasi yang tepat adalah \"ke, di\". Kalimat lengkapnya: \"Adik berjalan ke kamar dan duduk di lantai\".",
+                explanationJp: "「berjalan ke kamar」（部屋に歩く）は方向を示し、「duduk di lantai」（床に座る）は場所を示します。したがって正しい組み合わせは「ke, di」です。完全な文：「Adik berjalan ke kamar dan duduk di lantai」（弟/妹は部屋に歩いて行き、床に座る）。"
             },
             {
-                question: "Apa nama laut yang memisahkan Jawa dan Sumatra?",
-                english: "What is the name of the sea that separates Java and Sumatra?",
-                answers: ["Laut Jawa", "Selat Sunda", "Laut Banda", "Selat Malaka"],
-                correct: 1
+                question: "Manakah kalimat yang benar secara struktur dan penggunaan kata depan?",
+                translation: "Which sentence is correct in structure and preposition usage?",
+                answers: ["A. Kakek berdiri ke pintu.", "B. Burung terbang di langit.", "C. Dia melompat ke kursi dan duduk ke sana.", "D. Saya ke makan di meja."],
+                correct: 1,
+                explanation: "\"Burung terbang di langit\" menggunakan \"di\" dengan tepat karena menunjukkan tempat berlangsungnya kegiatan terbang. Kalimat A salah karena \"berdiri\" adalah aktivitas yang terjadi di tempat, seharusnya \"di pintu\". Kalimat C salah karena \"duduk ke sana\" tidak tepat, seharusnya \"duduk di sana\". Kalimat D salah secara struktur kalimat dan penggunaan kata depan.",
+                explanationJp: "「Burung terbang di langit」（鳥が空を飛ぶ）は飛ぶ活動が行われる場所を示しているため「di」を正しく使用しています。文Aは「berdiri」（立つ）がその場で起こる活動なので間違いで、「di pintu」（ドアのところで）であるべきです。文Cは「duduk ke sana」が間違いで、「duduk di sana」（そこに座る）であるべきです。文Dは文構造と前置詞の使用が間違っています。"
             },
             {
-                question: "Berapa jumlah provinsi di Indonesia saat ini?",
-                english: "How many provinces are there in Indonesia currently?",
-                answers: ["32", "34", "36", "38"],
-                correct: 3
+                question: "Lengkapi kalimat berikut: \"Kami pergi ___ rumah nenek, lalu makan ___ dapur.\"",
+                translation: "Complete the sentence: \"Kami pergi ___ rumah nenek, lalu makan ___ dapur.\"",
+                answers: ["A. ke, ke", "B. di, di", "C. ke, di", "D. di, ke"],
+                correct: 2,
+                explanation: "\"pergi ke rumah nenek\" menunjukkan arah dan \"makan di dapur\" menunjukkan tempat berlangsungnya kegiatan. Kalimat yang benar: \"Kami pergi ke rumah nenek, lalu makan di dapur\". Penggunaan \"ke\" dan \"di\" harus disesuaikan dengan fungsi kata kerja: Kata kerja berpindah tempat (seperti pergi, datang) → gunakan \"ke\". Kata kerja aktivitas di tempat (seperti duduk, makan) → gunakan \"di\".",
+                explanationJp: "「pergi ke rumah nenek」（おばあちゃんの家に行く）は方向を示し、「makan di dapur」（台所で食べる）は活動が行われる場所を示します。正しい文：「Kami pergi ke rumah nenek, lalu makan di dapur」（私たちはおばあちゃんの家に行き、それから台所で食べる）。「ke」と「di」の使用は動詞の機能に合わせる必要があります：移動動詞（pergi、datangなど）→「ke」を使用。場所での活動動詞（duduk、makanなど）→「di」を使用。"
             }
         ];
-        
-        // ========================================
-        // AKHIR KONFIGURASI
-        // ========================================
 
         let currentQuestion = 0;
         let hearts = 5;
@@ -539,23 +583,21 @@
         let playerName = "";
         let backgroundMusic = null;
         let questionTimer = null;
-        let timeLeft = 60; // 60 seconds per question
+        let timeLeft = 60;
+        let currentLanguage = 'id';
+        
+        // Custom Audio Files
+        let correctSound = null;
+        let wrongSound = null;
+        let successSound = null;
+        let failedSound = null;
 
-        // Initialize quiz with custom title
-        function initializeQuiz() {
-            document.getElementById('quizTitle').textContent = QUIZ_TITLE;
-            document.getElementById('quizSubtitle').textContent = QUIZ_SUBTITLE;
-        }
-
-        // Initialize when page loads
         window.onload = function() {
-            initializeQuiz();
-            initBackgroundMusic();
+            initCustomAudio();
             initCustomCursor();
             initMatrixRain();
         };
         
-        // Screen Shake Effect
         function triggerScreenShake() {
             document.body.classList.add('screen-shake');
             setTimeout(() => {
@@ -563,7 +605,6 @@
             }, 600);
         }
         
-        // Matrix Rain Effect
         function initMatrixRain() {
             const matrixContainer = document.getElementById('matrixRain');
             const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
@@ -578,7 +619,6 @@
                 
                 matrixContainer.appendChild(char);
                 
-                // Remove char after animation
                 setTimeout(() => {
                     if (char.parentNode) {
                         char.parentNode.removeChild(char);
@@ -586,34 +626,27 @@
                 }, 5000);
             }
             
-            // Create matrix chars periodically (more frequent)
             setInterval(() => {
-                // Create multiple chars at once for denser rain
                 for (let i = 0; i < 3; i++) {
                     createMatrixChar();
                 }
             }, 50);
         }
         
-        // Matrix rain is now always active - no toggle needed
-        
-        // Pixel Explosion Effect
         function createPixelExplosion(centerX, centerY) {
             const colors = ['#ff0040', '#ffff00', '#00ff41', '#00ffff', '#ff4080', '#8040ff'];
             const shapes = [
-                'polygon(0 0, 100% 0, 100% 100%, 0 100%)', // Square
-                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', // Diamond
-                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', // Hexagon
+                'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
             ];
             
-            // Create 50-80 pixels for big explosion
             const pixelCount = Math.random() * 30 + 50;
             
             for (let i = 0; i < pixelCount; i++) {
                 const pixel = document.createElement('div');
                 pixel.className = 'pixel-explosion';
                 
-                // Random color and shape
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 const shape = shapes[Math.floor(Math.random() * shapes.length)];
                 
@@ -621,14 +654,12 @@
                 pixel.style.clipPath = shape;
                 pixel.style.boxShadow = `0 0 15px ${color}`;
                 
-                // Random size
-                const size = Math.random() * 12 + 8; // 8-20px
+                const size = Math.random() * 12 + 8;
                 pixel.style.width = size + 'px';
                 pixel.style.height = size + 'px';
                 
-                // Random position around center
                 const angle = Math.random() * Math.PI * 2;
-                const distance = Math.random() * 200 + 50; // 50-250px from center
+                const distance = Math.random() * 200 + 50;
                 const startX = centerX + Math.cos(angle) * 50;
                 const startY = centerY + Math.sin(angle) * 50;
                 const endX = centerX + Math.cos(angle) * distance;
@@ -637,10 +668,8 @@
                 pixel.style.left = startX + 'px';
                 pixel.style.top = startY + 'px';
                 
-                // Add to document
                 document.body.appendChild(pixel);
                 
-                // Animate pixel
                 pixel.animate([
                     {
                         transform: `translate(0, 0) scale(1) rotate(0deg)`,
@@ -655,7 +684,6 @@
                     easing: 'ease-out'
                 });
                 
-                // Remove pixel after animation
                 setTimeout(() => {
                     if (pixel.parentNode) {
                         pixel.parentNode.removeChild(pixel);
@@ -664,56 +692,47 @@
             }
         }
 
-        // Custom 8-bit Cursor Functions
         function initCustomCursor() {
             const cursor = document.getElementById('customCursor');
             
-            // Track mouse movement
             document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX - 12 + 'px'; // Center cursor
+                cursor.style.left = e.clientX - 12 + 'px';
                 cursor.style.top = e.clientY - 12 + 'px';
             });
             
-            // Handle click effects
             document.addEventListener('mousedown', (e) => {
                 cursor.classList.add('cursor-clicking');
                 createClickParticles(e.clientX, e.clientY);
                 
-                // Remove clicking class after animation
                 setTimeout(() => {
                     cursor.classList.remove('cursor-clicking');
                 }, 200);
             });
             
-            // Hide cursor when mouse leaves window
             document.addEventListener('mouseleave', () => {
                 cursor.style.opacity = '0';
             });
             
-            // Show cursor when mouse enters window
             document.addEventListener('mouseenter', () => {
                 cursor.style.opacity = '1';
             });
         }
 
-        // Create 8-bit particle explosion on click
         function createClickParticles(x, y) {
             const colors = ['#ff0040', '#ffff00', '#00ff41', '#00ffff', '#ff4080', '#8040ff'];
             const shapes = [
-                'polygon(0 0, 100% 0, 100% 100%, 0 100%)', // Square
-                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', // Diamond
-                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', // Hexagon
-                'polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%)' // Plus
+                'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+                'polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%)'
             ];
             
-            // Create 8-12 particles
             const particleCount = Math.random() * 4 + 8;
             
             for (let i = 0; i < particleCount; i++) {
                 const particle = document.createElement('div');
                 particle.className = 'click-particle';
                 
-                // Random color and shape
                 const color = colors[Math.floor(Math.random() * colors.length)];
                 const shape = shapes[Math.floor(Math.random() * shapes.length)];
                 
@@ -721,25 +740,20 @@
                 particle.style.clipPath = shape;
                 particle.style.boxShadow = `0 0 10px ${color}`;
                 
-                // Random size
-                const size = Math.random() * 8 + 6; // 6-14px
+                const size = Math.random() * 8 + 6;
                 particle.style.width = size + 'px';
                 particle.style.height = size + 'px';
                 
-                // Position at click location
                 particle.style.left = (x - size/2) + 'px';
                 particle.style.top = (y - size/2) + 'px';
                 
-                // Random direction and distance
                 const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
-                const distance = Math.random() * 60 + 30; // 30-90px
+                const distance = Math.random() * 60 + 30;
                 const endX = x + Math.cos(angle) * distance;
                 const endY = y + Math.sin(angle) * distance;
                 
-                // Add to document
                 document.body.appendChild(particle);
                 
-                // Animate particle
                 particle.animate([
                     {
                         transform: `translate(0, 0) scale(1) rotate(0deg)`,
@@ -754,58 +768,132 @@
                     easing: 'ease-out'
                 });
                 
-                // Remove particle after animation
                 setTimeout(() => {
                     if (particle.parentNode) {
                         particle.parentNode.removeChild(particle);
                     }
                 }, 800);
             }
-            
-            // Play click sound effect (disabled)
-            // playClickSound();
         }
 
-        // 8-bit click sound effect
-        function playClickSound() {
+        function initCustomAudio() {
+            // Initialize background music
+            backgroundMusic = new Audio();
+            backgroundMusic.src = 'ryuukoi.mp3'; // Replace with your background music file
+            backgroundMusic.loop = true;
+            backgroundMusic.volume = 0.2;
+            
+            // Initialize sound effects
+            correctSound = new Audio();
+            correctSound.src = 'correct.mp3'; // Replace with your correct sound file
+            correctSound.volume = 0.2;
+            
+            wrongSound = new Audio();
+            wrongSound.src = 'wrong.mp3'; // Replace with your wrong sound file
+            wrongSound.volume = 0.6;
+            
+            successSound = new Audio();
+            successSound.src = 'success.mp3'; // Replace with your success sound file
+            successSound.volume = 0.5;
+            
+            failedSound = new Audio();
+            failedSound.src = 'failed.mp3'; // Replace with your failed sound file
+            failedSound.volume = 0.5;
+            
+            console.log('Custom audio initialized');
+        }
+
+        function playCorrectSound() {
             try {
-                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                // Quick 8-bit click sound
-                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
-                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
-                
-                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
-                
-                oscillator.start(audioContext.currentTime);
-                oscillator.stop(audioContext.currentTime + 0.1);
+                if (correctSound) {
+                    correctSound.currentTime = 0;
+                    correctSound.play();
+                }
             } catch (error) {
-                console.log('Click sound failed:', error);
+                console.log('Correct sound failed:', error);
             }
         }
 
-        function startQuiz() {
-            const nameInput = document.getElementById('playerName');
-            if (nameInput.value.trim() === '') {
-                alert('Silakan masukkan nama Anda terlebih dahulu!');
-                return;
+        function playWrongSound() {
+            try {
+                if (wrongSound) {
+                    wrongSound.currentTime = 0;
+                    wrongSound.play();
+                }
+            } catch (error) {
+                console.log('Wrong sound failed:', error);
             }
-            
-            playerName = nameInput.value.trim();
-            document.getElementById('displayName').textContent = playerName;
-            document.getElementById('startScreen').classList.add('hidden');
-            document.getElementById('quizScreen').classList.remove('hidden');
-            
-            // Start background music when quiz begins
-            playBackgroundMusic();
-            
-            showQuestion();
+        }
+
+        function playWinningSound() {
+            try {
+                if (successSound) {
+                    successSound.currentTime = 0;
+                    successSound.play();
+                }
+            } catch (error) {
+                console.log('Success sound failed:', error);
+            }
+        }
+
+        function playFailedSound() {
+            try {
+                if (failedSound) {
+                    failedSound.currentTime = 0;
+                    failedSound.play();
+                }
+            } catch (error) {
+                console.log('Failed sound failed:', error);
+            }
+        }
+
+        function playBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    backgroundMusic.play();
+                }
+            } catch (error) {
+                console.log('Background music failed:', error);
+            }
+        }
+
+        function pauseBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    backgroundMusic.pause();
+                }
+            } catch (error) {
+                console.log('Background music pause failed:', error);
+            }
+        }
+
+        function stopBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                }
+            } catch (error) {
+                console.log('Background music stop failed:', error);
+            }
+        }
+
+        function toggleBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play();
+                        return true;
+                    } else {
+                        backgroundMusic.pause();
+                        return false;
+                    }
+                }
+                return false;
+            } catch (error) {
+                console.log('Background music toggle failed:', error);
+                return false;
+            }
         }
 
         function toggleMusicControl() {
@@ -823,205 +911,28 @@
             }
         }
 
-        // MP3 Sound effects
-        function playCorrectSound() {
-            try {
-                const audio = new Audio();
-                audio.src = '../Kuis/correct.mp3'; // Ganti dengan URL MP3 Anda
-                audio.volume = 0.1;
-                audio.play().catch(e => console.log('Audio play failed:', e));
-            } catch (error) {
-                console.log('Error playing correct sound:', error);
-                // Fallback ke Web Audio API jika MP3 gagal
-                playFallbackCorrectSound();
-            }
-        }
-
-        function playWrongSound() {
-            try {
-                const audio = new Audio();
-                audio.src = '../Kuis/wrong.mp3'; // Ganti dengan URL MP3 Anda
-                audio.volume = 0.3;
-                audio.play().catch(e => console.log('Audio play failed:', e));
-            } catch (error) {
-                console.log('Error playing wrong sound:', error);
-                // Fallback ke Web Audio API jika MP3 gagal
-                playFallbackWrongSound();
-            }
-        }
-
-        function playGameOverSound() {
-            try {
-                const audio = new Audio();
-                audio.src = '../Kuis/failed.mp3'; // Ganti dengan URL MP3 Anda
-                audio.volume = 0.8;
-                audio.play().catch(e => console.log('Audio play failed:', e));
-            } catch (error) {
-                console.log('Error playing game over sound:', error);
-                // Fallback ke Web Audio API jika MP3 gagal
-                playFallbackWrongSound();
-            }
-        }
-
-        function playWinningSound() {
-            try {
-                const audio = new Audio();
-                audio.src = '../Kuis/success.mp3'; // Ganti dengan URL MP3 Anda
-                audio.volume = 0.9;
-                audio.play().catch(e => console.log('Audio play failed:', e));
-            } catch (error) {
-                console.log('Error playing winning sound:', error);
-                // Fallback ke Web Audio API jika MP3 gagal
-                playFallbackWinningSound();
-            }
-        }
-
-        // Fallback sounds menggunakan Web Audio API
-        function playFallbackCorrectSound() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
-            oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
-            oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
-            
-            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        }
-
-        function playFallbackWrongSound() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            const oscillator = audioContext.createOscillator();
-            const gainNode = audioContext.createGain();
-            
-            oscillator.connect(gainNode);
-            gainNode.connect(audioContext.destination);
-            
-            oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
-            oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
-            
-            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
-            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
-            
-            oscillator.start(audioContext.currentTime);
-            oscillator.stop(audioContext.currentTime + 0.5);
-        }
-
-        function playFallbackWinningSound() {
-            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
-            
-            // Victory fanfare dengan multiple notes
-            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
-            const durations = [0.3, 0.3, 0.3, 0.6];
-            
-            notes.forEach((frequency, index) => {
-                const oscillator = audioContext.createOscillator();
-                const gainNode = audioContext.createGain();
-                
-                oscillator.connect(gainNode);
-                gainNode.connect(audioContext.destination);
-                
-                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + index * 0.2);
-                
-                gainNode.gain.setValueAtTime(0.4, audioContext.currentTime + index * 0.2);
-                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.2 + durations[index]);
-                
-                oscillator.start(audioContext.currentTime + index * 0.2);
-                oscillator.stop(audioContext.currentTime + index * 0.2 + durations[index]);
-            });
-        }
-
-        // Background Music Functions
-        function initBackgroundMusic() {
-            try {
-                backgroundMusic = new Audio();
-                backgroundMusic.src = '../Kuis/ryuukoi.mp3'; // Ganti dengan URL MP3 musik latar Anda
-                backgroundMusic.loop = true; // Loop musik terus menerus
-                backgroundMusic.volume = 0.1; // Volume rendah agar tidak mengganggu
-                
-                // Preload musik
-                backgroundMusic.load();
-                
-                console.log('Background music initialized');
-            } catch (error) {
-                console.log('Error initializing background music:', error);
-            }
-        }
-
-        function playBackgroundMusic() {
-            if (backgroundMusic) {
-                try {
-                    backgroundMusic.currentTime = 0; // Mulai dari awal
-                    backgroundMusic.play().catch(e => {
-                        console.log('Background music autoplay blocked:', e);
-                        // Musik akan dimulai setelah user interaction pertama
-                    });
-                } catch (error) {
-                    console.log('Error playing background music:', error);
-                }
-            }
-        }
-
-        function pauseBackgroundMusic() {
-            if (backgroundMusic && !backgroundMusic.paused) {
-                backgroundMusic.pause();
-            }
-        }
-
-        function stopBackgroundMusic() {
-            if (backgroundMusic) {
-                backgroundMusic.pause();
-                backgroundMusic.currentTime = 0;
-            }
-        }
-
-        function toggleBackgroundMusic() {
-            if (backgroundMusic) {
-                if (backgroundMusic.paused) {
-                    playBackgroundMusic();
-                    return true; // Music is now playing
-                } else {
-                    pauseBackgroundMusic();
-                    return false; // Music is now paused
-                }
-            }
-            return false;
-        }
-
-        // Timer Functions
         function startQuestionTimer() {
-            timeLeft = 60; // Reset to 60 seconds
+            timeLeft = 60;
             updateTimerDisplay();
             
             questionTimer = setInterval(() => {
                 timeLeft--;
                 updateTimerDisplay();
                 
-                // Change color when time is running out
                 const timerDisplay = document.getElementById('timerDisplay');
                 const timerContainer = timerDisplay.parentElement;
                 
                 if (timeLeft <= 10) {
-                    // Red and blinking when ≤ 10 seconds
                     timerContainer.classList.remove('bg-red-600');
                     timerContainer.classList.add('bg-red-800');
                     timerDisplay.classList.add('animate-pulse');
                     timerDisplay.style.color = '#ff0000';
                 } else if (timeLeft <= 30) {
-                    // Orange when ≤ 30 seconds
                     timerContainer.classList.remove('bg-red-600');
                     timerContainer.classList.add('bg-orange-600');
                     timerDisplay.style.color = '#ffff00';
                 }
                 
-                // Time's up!
                 if (timeLeft <= 0) {
                     clearInterval(questionTimer);
                     handleTimeUp();
@@ -1044,32 +955,58 @@
         }
 
         function handleTimeUp() {
-            // Disable all answer buttons
             const buttons = document.querySelectorAll('#answersContainer button');
             buttons.forEach(btn => btn.disabled = true);
             
-            // Show correct answer
             const question = questions[currentQuestion];
             buttons[question.correct].classList.remove('bg-black', 'border-yellow-400');
             buttons[question.correct].classList.add('bg-green-600', 'border-green-400', 'text-white');
             buttons[question.correct].style.boxShadow = '0 0 15px #10b981';
             
-            // Count as wrong answer and lose heart
             wrongAnswers++;
             loseHeart();
             playWrongSound();
-            triggerScreenShake(); // Add screen shake effect
+            triggerScreenShake();
             
-            // Show "TIME UP!" message
             const timerDisplay = document.getElementById('timerDisplay');
             timerDisplay.textContent = 'TIME UP!';
             timerDisplay.style.color = '#ff0000';
             
-            // Move to next question after delay
             setTimeout(() => {
-                currentQuestion++;
-                showQuestion();
-            }, 3000);
+                showExplanation(false, question);
+            }, 2000);
+        }
+
+        function startQuiz() {
+            const nameInput = document.getElementById('playerName');
+            if (nameInput.value.trim() === '') {
+                alert('Silakan masukkan nama Anda terlebih dahulu!');
+                return;
+            }
+            
+            playerName = nameInput.value.trim();
+            document.getElementById('displayName').textContent = playerName;
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            
+            playBackgroundMusic();
+            showQuestion();
+        }
+
+        function toggleExplanationLanguage() {
+            const languageButton = document.getElementById('languageToggle');
+            const explanationText = document.getElementById('explanationText');
+            const currentQuestionData = questions[currentQuestion];
+            
+            if (currentLanguage === 'id') {
+                currentLanguage = 'jp';
+                languageButton.innerHTML = '🇯🇵 JP';
+                explanationText.textContent = currentQuestionData.explanationJp;
+            } else {
+                currentLanguage = 'id';
+                languageButton.innerHTML = '🇮🇩 ID';
+                explanationText.textContent = currentQuestionData.explanation;
+            }
         }
 
         function showQuestion() {
@@ -1082,16 +1019,14 @@
                 return;
             }
 
-            // Stop any existing timer
             stopQuestionTimer();
 
             const question = questions[currentQuestion];
             document.getElementById('questionText').textContent = question.question;
-            document.getElementById('englishText').textContent = question.english;
+            document.getElementById('questionTranslation').textContent = question.translation;
             document.getElementById('questionNumber').textContent = currentQuestion + 1;
             document.getElementById('totalQuestions').textContent = questions.length;
             
-            // Reset timer display style
             const timerDisplay = document.getElementById('timerDisplay');
             const timerContainer = timerDisplay.parentElement;
             timerContainer.className = 'bg-red-600 border-2 border-yellow-400 px-6 py-3 text-center';
@@ -1111,38 +1046,34 @@
                 container.appendChild(button);
             });
 
-            // Update progress bar
             const progress = ((currentQuestion + 1) / questions.length) * 100;
             document.getElementById('progressBar').style.width = progress + '%';
             
-            // Start the timer for this question
             startQuestionTimer();
         }
 
         function selectAnswer(selectedIndex) {
-            // Stop the timer when answer is selected
             stopQuestionTimer();
             
             const question = questions[currentQuestion];
             const buttons = document.querySelectorAll('#answersContainer button');
             
-            // Disable all buttons
             buttons.forEach(btn => btn.disabled = true);
             
+            let isCorrect = false;
+            
             if (selectedIndex === question.correct) {
-                // Correct answer
                 buttons[selectedIndex].classList.remove('bg-black', 'border-yellow-400');
                 buttons[selectedIndex].classList.add('bg-green-600', 'border-green-400', 'text-white');
                 buttons[selectedIndex].style.boxShadow = '0 0 15px #10b981';
                 correctAnswers++;
                 playCorrectSound();
+                isCorrect = true;
             } else {
-                // Wrong answer
                 buttons[selectedIndex].classList.remove('bg-black', 'border-yellow-400');
                 buttons[selectedIndex].classList.add('bg-red-600', 'border-red-400', 'text-white');
                 buttons[selectedIndex].style.boxShadow = '0 0 15px #ef4444';
                 
-                // Show correct answer
                 buttons[question.correct].classList.remove('bg-black', 'border-yellow-400');
                 buttons[question.correct].classList.add('bg-green-600', 'border-green-400', 'text-white');
                 buttons[question.correct].style.boxShadow = '0 0 15px #10b981';
@@ -1150,14 +1081,48 @@
                 wrongAnswers++;
                 loseHeart();
                 playWrongSound();
-                triggerScreenShake(); // Add screen shake effect
+                triggerScreenShake();
+                isCorrect = false;
             }
             
-            // Move to next question after delay
             setTimeout(() => {
-                currentQuestion++;
-                showQuestion();
-            }, 2000);
+                showExplanation(isCorrect, question);
+            }, 1500);
+        }
+
+        function showExplanation(isCorrect, question) {
+            const popup = document.getElementById('explanationPopup');
+            const icon = document.getElementById('explanationIcon');
+            const title = document.getElementById('explanationTitle');
+            const text = document.getElementById('explanationText');
+            const continueBtn = document.getElementById('continueButton');
+            const languageButton = document.getElementById('languageToggle');
+            
+            if (isCorrect) {
+                icon.textContent = '✅';
+                title.textContent = 'Jawaban Benar!';
+                title.className = 'text-2xl font-bold text-green-400 mb-4';
+                continueBtn.className = 'w-full bg-green-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-green-700 transform hover:scale-105 transition-all duration-200';
+                continueBtn.style.boxShadow = '0 0 15px #10b981';
+            } else {
+                icon.textContent = '❌';
+                title.textContent = 'Jawaban Salah!';
+                title.className = 'text-2xl font-bold text-red-400 mb-4';
+                continueBtn.className = 'w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200';
+                continueBtn.style.boxShadow = '0 0 15px #ef4444';
+            }
+            
+            currentLanguage = 'id';
+            languageButton.innerHTML = '🇮🇩 ID';
+            
+            text.textContent = question.explanation;
+            popup.classList.remove('hidden');
+        }
+
+        function continueToNextQuestion() {
+            document.getElementById('explanationPopup').classList.add('hidden');
+            currentQuestion++;
+            showQuestion();
         }
 
         function loseHeart() {
@@ -1175,16 +1140,13 @@
             document.getElementById('quizScreen').classList.add('hidden');
             document.getElementById('gameOverPopup').classList.remove('hidden');
             
-            // Stop timer and background music
             stopQuestionTimer();
             stopBackgroundMusic();
             
-            // Update game over statistics
             document.getElementById('gameOverCorrect').textContent = correctAnswers;
             document.getElementById('gameOverWrong').textContent = wrongAnswers;
             
-            // Play game over sound
-            playGameOverSound();
+            playFailedSound();
         }
 
         function restartFromGameOver() {
@@ -1196,11 +1158,9 @@
             document.getElementById('quizScreen').classList.add('hidden');
             document.getElementById('resultScreen').classList.remove('hidden');
             
-            // Stop timer and background music
             stopQuestionTimer();
             stopBackgroundMusic();
             
-            // Create pixel explosion at center of screen
             setTimeout(() => {
                 createPixelExplosion(window.innerWidth / 2, window.innerHeight / 2);
             }, 500);
@@ -1213,14 +1173,13 @@
             document.getElementById('wrongCount').textContent = wrongAnswers;
             document.getElementById('percentage').textContent = percentage + '%';
             
-            // Set result icon based on performance
             const resultIcon = document.getElementById('resultIcon');
             if (percentage >= 80) {
                 resultIcon.textContent = '🏆';
-                playWinningSound(); // Play victory sound for excellent performance
+                playWinningSound();
             } else if (percentage >= 60) {
                 resultIcon.textContent = '🎉';
-                playWinningSound(); // Play victory sound for good performance
+                playWinningSound();
             } else if (percentage >= 40) {
                 resultIcon.textContent = '👍';
             } else {
@@ -1228,30 +1187,13 @@
             }
         }
 
-        function shareToWhatsApp() {
-            const totalQuestions = correctAnswers + wrongAnswers;
-            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
-            
-            const message = `🧠 *Hasil Kuis Pintar Saya!*\n\n` +
-                          `👤 Nama: ${playerName}\n` +
-                          `✅ Jawaban Benar: ${correctAnswers}\n` +
-                          `❌ Jawaban Salah: ${wrongAnswers}\n` +
-                          `📊 Tingkat Kebenaran: ${percentage}%\n\n` +
-                          `Coba juga kuis ini! 🚀`;
-            
-            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
-            window.open(whatsappUrl, '_blank');
-        }
-
         function saveResultImage() {
             try {
-                // Create canvas for result image
                 const canvas = document.createElement('canvas');
                 const ctx = canvas.getContext('2d');
                 canvas.width = 800;
                 canvas.height = 600;
                 
-                // 8-bit style background gradient
                 const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
                 gradient.addColorStop(0, '#1a1a2e');
                 gradient.addColorStop(0.25, '#16213e');
@@ -1261,7 +1203,6 @@
                 ctx.fillStyle = gradient;
                 ctx.fillRect(0, 0, canvas.width, canvas.height);
                 
-                // Add 8-bit decorative elements
                 ctx.fillStyle = '#00ff41';
                 ctx.fillRect(50, 50, 20, 20);
                 ctx.fillRect(730, 530, 20, 20);
@@ -1274,25 +1215,21 @@
                 ctx.fillRect(650, 150, 25, 25);
                 ctx.fillRect(125, 450, 25, 25);
                 
-                // Title with 8-bit style
                 ctx.fillStyle = '#00ffff';
                 ctx.font = 'bold 36px monospace';
                 ctx.textAlign = 'center';
-                ctx.fillText('HASIL KUIS', canvas.width/2, 80);
+                ctx.fillText('📚 HASIL KUIS KATA DEPAN', canvas.width/2, 80);
                 
-                // Player name
                 ctx.fillStyle = '#ffff00';
                 ctx.font = 'bold 24px monospace';
                 ctx.fillText(`PLAYER: ${playerName.toUpperCase()}`, canvas.width/2, 130);
                 
-                // Results box with 8-bit border
                 ctx.fillStyle = '#000000';
                 ctx.fillRect(100, 180, 600, 300);
                 ctx.strokeStyle = '#00ffff';
                 ctx.lineWidth = 4;
                 ctx.strokeRect(100, 180, 600, 300);
                 
-                // Results text
                 ctx.fillStyle = '#00ff41';
                 ctx.font = 'bold 20px monospace';
                 ctx.fillText('=== STATISTIK GAME ===', canvas.width/2, 220);
@@ -1309,7 +1246,6 @@
                 ctx.font = 'bold 24px monospace';
                 ctx.fillText(`SKOR AKHIR: ${percentage}%`, canvas.width/2, 360);
                 
-                // Performance message
                 let message = '';
                 if (percentage >= 80) message = 'EXCELLENT! 🏆';
                 else if (percentage >= 60) message = 'GOOD JOB! 🎉';
@@ -1322,12 +1258,11 @@
                 
                 ctx.fillStyle = '#888888';
                 ctx.font = '12px monospace';
-                ctx.fillText('Created By Hazu', canvas.width/2, 450);
+                ctx.fillText('Created by Hazu', canvas.width/2, 450);
                 
-                // Download image
                 canvas.toBlob(function(blob) {
                     const link = document.createElement('a');
-                    link.download = `8bit-quiz-result-${playerName.replace(/\s+/g, '-')}.png`;
+                    link.download = `kuis-ke-1-${playerName.replace(/\s+/g, '-')}.png`;
                     link.href = URL.createObjectURL(blob);
                     document.body.appendChild(link);
                     link.click();
@@ -1341,56 +1276,89 @@
             }
         }
 
-        // Add roundRect function for older browsers
-        if (!CanvasRenderingContext2D.prototype.roundRect) {
-            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
-                this.beginPath();
-                this.moveTo(x + radius, y);
-                this.lineTo(x + width - radius, y);
-                this.quadraticCurveTo(x + width, y, x + width, y + radius);
-                this.lineTo(x + width, y + height - radius);
-                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
-                this.lineTo(x + radius, y + height);
-                this.quadraticCurveTo(x, y + height, x, y + height - radius);
-                this.lineTo(x, y + radius);
-                this.quadraticCurveTo(x, y, x + radius, y);
-                this.closePath();
-            };
+        function showAllExplanations() {
+            const popup = document.getElementById('allExplanationsPopup');
+            const content = document.getElementById('allExplanationsContent');
+            const languageButton = document.getElementById('allExplanationsLanguageToggle');
+            
+            // Reset language to Indonesian
+            currentLanguage = 'id';
+            languageButton.innerHTML = '🇮🇩 ID';
+            
+            content.innerHTML = '';
+            
+            questions.forEach((question, index) => {
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = 'bg-gray-900 border-2 border-cyan-400 p-4 mb-4';
+                explanationDiv.style.boxShadow = 'inset 0 0 15px #06b6d4';
+                
+                explanationDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-yellow-400 font-bold">📝 Pertanyaan ${index + 1}:</div>
+                    </div>
+                    <div class="text-white text-sm mb-3">${question.question}</div>
+                    <div class="text-gray-400 text-xs mb-3 italic">${question.translation}</div>
+                    <div class="text-green-400 font-bold mb-2">✅ Jawaban Benar: ${question.answers[question.correct]}</div>
+                    <div class="text-cyan-400 font-bold mb-2">💡 Penjelasan:</div>
+                    <div class="explanation-text text-white text-sm leading-relaxed">${question.explanation}</div>
+                `;
+                
+                content.appendChild(explanationDiv);
+            });
+            
+            popup.classList.remove('hidden');
+        }
+
+        function toggleAllExplanationsLanguage() {
+            const languageButton = document.getElementById('allExplanationsLanguageToggle');
+            const explanationTexts = document.querySelectorAll('.explanation-text');
+            
+            if (currentLanguage === 'id') {
+                currentLanguage = 'jp';
+                languageButton.innerHTML = '🇯🇵 JP';
+                explanationTexts.forEach((text, index) => {
+                    text.textContent = questions[index].explanationJp;
+                });
+            } else {
+                currentLanguage = 'id';
+                languageButton.innerHTML = '🇮🇩 ID';
+                explanationTexts.forEach((text, index) => {
+                    text.textContent = questions[index].explanation;
+                });
+            }
+        }
+
+        function closeAllExplanations() {
+            document.getElementById('allExplanationsPopup').classList.add('hidden');
         }
 
         function restartQuiz() {
-            // Reset all variables
             currentQuestion = 0;
             hearts = 5;
             correctAnswers = 0;
             wrongAnswers = 0;
             
-            // Stop timer and background music
             stopQuestionTimer();
             stopBackgroundMusic();
             
-            // Reset music button
             const musicButton = document.getElementById('musicToggle');
             if (musicButton) {
-                musicButton.innerHTML = '🎵 ON';
+                musicButton.innerHTML = 'ON';
                 musicButton.classList.remove('bg-red-600');
                 musicButton.classList.add('bg-blue-600');
             }
             
-            // Reset hearts display
             const heartsContainer = document.getElementById('hearts');
             Array.from(heartsContainer.children).forEach(heart => {
                 heart.textContent = '❤️';
                 heart.classList.remove('heart-bounce');
             });
             
-            // Show start screen
             document.getElementById('resultScreen').classList.add('hidden');
             document.getElementById('startScreen').classList.remove('hidden');
             
-            // Clear name input
             document.getElementById('playerName').value = '';
         }
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9670eafbb0e40a9d',t:'MTc1MzgzNzIxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9671e5b4023ca03f',t:'MTc1Mzg0NzQ4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
