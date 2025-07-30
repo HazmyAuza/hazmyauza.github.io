@@ -828,7 +828,7 @@
             try {
                 const audio = new Audio();
                 audio.src = '../Kuis/correct.mp3'; // Ganti dengan URL MP3 Anda
-                audio.volume = 0.7;
+                audio.volume = 0.1;
                 audio.play().catch(e => console.log('Audio play failed:', e));
             } catch (error) {
                 console.log('Error playing correct sound:', error);
@@ -841,7 +841,7 @@
             try {
                 const audio = new Audio();
                 audio.src = '../Kuis/wrong.mp3'; // Ganti dengan URL MP3 Anda
-                audio.volume = 0.7;
+                audio.volume = 0.3;
                 audio.play().catch(e => console.log('Audio play failed:', e));
             } catch (error) {
                 console.log('Error playing wrong sound:', error);
@@ -944,7 +944,7 @@
                 backgroundMusic = new Audio();
                 backgroundMusic.src = '../Kuis/ryuukoi.mp3'; // Ganti dengan URL MP3 musik latar Anda
                 backgroundMusic.loop = true; // Loop musik terus menerus
-                backgroundMusic.volume = 0.3; // Volume rendah agar tidak mengganggu
+                backgroundMusic.volume = 0.1; // Volume rendah agar tidak mengganggu
                 
                 // Preload musik
                 backgroundMusic.load();
