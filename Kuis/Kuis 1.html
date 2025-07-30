@@ -191,7 +191,16 @@
                 opacity: 0;
             }
         }
-        
+                .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.3;
+        }
         .pixel-explosion {
             position: fixed;
             width: 10px;
@@ -217,8 +226,16 @@
         }
     </style>
 </head>
-<body class="min-h-screen relative overflow-hidden" style="background: linear-gradient(45deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);">
-    <!-- Custom 8-bit Cursor -->
+<body class="min-h-screen relative overflow-hidden" style="background: linear-gradient(45deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);"> 
+   
+       <video class="background-video" autoplay muted loop>
+        <source src="meteor.mp4" type="video/mp4">
+        <source src="background-video.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>  
+   
+   
+   <!-- Custom 8-bit Cursor -->
     <div id="customCursor" class="custom-cursor cursor-pointer"></div>
     
     <!-- Matrix Rain Effect -->
@@ -398,7 +415,7 @@
             <div class="mb-6">
                 <div class="text-6xl mb-4">💀</div>
                 <h2 class="text-2xl font-bold text-red-400 mb-2 glitch-text" data-text="GAME OVER!">GAME OVER!</h2>
-                <p class="text-white">Anda gagal karena kehabisan nyawa</p>
+                <p class="text-white">Anda gagal karena habisan nyawa</p>
                 <p class="text-gray-400 text-sm mt-2">Nyawa: 0/5 ❤️</p>
             </div>
             
