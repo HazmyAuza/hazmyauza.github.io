@@ -1,0 +1,1396 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Interaktif</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        body {
+            font-family: 'Press Start 2P', monospace;
+            image-rendering: pixelated;
+            cursor: none; /* Hide default cursor */
+        }
+        
+        /* 8-bit Custom Cursor */
+        .custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-pointer {
+            background: linear-gradient(45deg, 
+                #ff0040 0%, #ff0040 25%, 
+                #ffff00 25%, #ffff00 50%, 
+                #00ff41 50%, #00ff41 75%, 
+                #00ffff 75%, #00ffff 100%);
+            clip-path: polygon(0 0, 70% 0, 100% 30%, 100% 100%, 30% 100%, 0 70%);
+            animation: cursorGlow 1s ease-in-out infinite alternate;
+        }
+        
+        .cursor-clicking {
+            transform: scale(1.5);
+            animation: cursorClick 0.2s ease-out;
+        }
+        
+        @keyframes cursorGlow {
+            0% { 
+                box-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040, 0 0 30px #ff0040;
+                filter: brightness(1);
+            }
+            100% { 
+                box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff, 0 0 35px #00ffff;
+                filter: brightness(1.2);
+            }
+        }
+        
+        @keyframes cursorClick {
+            0% { transform: scale(1.5); }
+            50% { transform: scale(2); }
+            100% { transform: scale(1.5); }
+        }
+        
+        /* Click Particle Effects */
+        .click-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 9998;
+            animation: particleExplode 0.8s ease-out forwards;
+        }
+        
+        @keyframes particleExplode {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        .heart-bounce {
+            animation: heartBeat 0.5s ease-in-out;
+        }
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Screen Shake Effect */
+        .screen-shake {
+            animation: screenShake 0.4s ease-in-out;
+        }
+        @keyframes screenShake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-4px) rotate(-0.3deg); }
+            20% { transform: translateX(4px) rotate(0.3deg); }
+            30% { transform: translateX(-3px) rotate(-0.2deg); }
+            40% { transform: translateX(3px) rotate(0.2deg); }
+            50% { transform: translateX(-2px) rotate(-0.1deg); }
+            60% { transform: translateX(2px) rotate(0.1deg); }
+            70% { transform: translateX(-1px); }
+            80% { transform: translateX(1px); }
+            90% { transform: translateX(-0.5px); }
+        }
+        
+        /* Glitch Effect */
+        .glitch-text {
+            position: relative;
+            animation: glitch 0.3s infinite;
+        }
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        .glitch-text::before {
+            animation: glitchTop 0.3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+            color: #ff0040;
+        }
+        .glitch-text::after {
+            animation: glitchBottom 0.3s infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+            color: #00ffff;
+        }
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        @keyframes glitchTop {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, -2px); }
+            40% { transform: translate(-2px, 2px); }
+            60% { transform: translate(2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+        }
+        @keyframes glitchBottom {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+        }
+        
+        /* Matrix Rain Effect */
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+        .matrix-char {
+            position: absolute;
+            color: #00ff41;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            animation: matrixFall linear infinite;
+            text-shadow: 0 0 5px #00ff41;
+        }
+        @keyframes matrixFall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+        
+        /* Pixel Explosion Effect */
+        .pixel-explosion {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9997;
+            animation: pixelExplode 2s ease-out forwards;
+        }
+        @keyframes pixelExplode {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-hidden" style="background: linear-gradient(45deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);">
+    <!-- Custom 8-bit Cursor -->
+    <div id="customCursor" class="custom-cursor cursor-pointer"></div>
+    
+    <!-- Matrix Rain Effect -->
+    <div id="matrixRain" class="matrix-rain"></div>
+    
+    <!-- Enhanced 8-bit Background Layers -->
+    
+    <!-- Animated Pixel Grid with Multiple Layers -->
+    <div class="absolute inset-0 opacity-30">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <!-- Main Grid Pattern -->
+                <pattern id="pixelGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <rect width="20" height="20" fill="none" stroke="#00ff41" stroke-width="0.8"/>
+                    <circle cx="10" cy="10" r="1" fill="#00ff41" opacity="0.6"/>
+                </pattern>
+                <!-- Secondary Grid Pattern -->
+                <pattern id="pixelGrid2" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <rect width="40" height="40" fill="none" stroke="#ff0080" stroke-width="0.5"/>
+                    <rect x="15" y="15" width="10" height="10" fill="#ff0080" opacity="0.3"/>
+                </pattern>
+                <!-- Animated Scanlines -->
+                <pattern id="scanlines" width="100%" height="4" patternUnits="userSpaceOnUse">
+                    <rect width="100%" height="2" fill="#00ffff" opacity="0.1"/>
+                    <rect y="2" width="100%" height="2" fill="transparent"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#pixelGrid)" />
+            <rect width="100%" height="100%" fill="url(#pixelGrid2)" />
+            <rect width="100%" height="100%" fill="url(#scanlines)" class="animate-pulse" />
+        </svg>
+    </div>
+
+    <!-- Floating 8-bit Particles -->
+    <div class="absolute inset-0 overflow-hidden">
+        <!-- Large Floating Elements -->
+        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-400 animate-bounce shadow-lg" style="clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%); box-shadow: 0 0 20px #fbbf24; animation-duration: 3s;"></div>
+        
+        <div class="absolute top-32 right-20 w-16 h-16 bg-red-500 animate-pulse shadow-lg" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); box-shadow: 0 0 15px #ef4444; animation-duration: 2s;"></div>
+        
+        <div class="absolute bottom-20 left-32 w-18 h-18 bg-green-400 animate-bounce shadow-lg" style="clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); box-shadow: 0 0 18px #10b981; animation-duration: 2.5s;"></div>
+        
+        <div class="absolute bottom-40 right-16 w-22 h-22 bg-blue-400 animate-pulse shadow-lg" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); box-shadow: 0 0 25px #3b82f6; animation-duration: 1.8s;"></div>
+
+        <!-- Medium Floating Elements -->
+        <div class="absolute top-1/4 left-1/4 w-12 h-12 bg-cyan-400 animate-spin shadow-md" style="box-shadow: 0 0 12px #06b6d4; animation-duration: 4s;"></div>
+        
+        <div class="absolute top-3/4 right-1/3 w-10 h-10 bg-pink-400 animate-bounce shadow-md" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); box-shadow: 0 0 10px #ec4899; animation-duration: 2.2s;"></div>
+        
+        <div class="absolute top-1/2 left-1/6 w-14 h-14 bg-purple-400 animate-pulse shadow-md" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); box-shadow: 0 0 14px #a855f7; animation-duration: 3.2s;"></div>
+        
+        <div class="absolute bottom-1/3 right-1/4 w-16 h-16 bg-orange-400 animate-spin shadow-md" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); box-shadow: 0 0 16px #fb923c; animation-duration: 5s;"></div>
+
+        <!-- Small Floating Pixels -->
+        <div class="absolute top-20 right-1/3 w-6 h-6 bg-lime-400 animate-ping" style="box-shadow: 0 0 8px #84cc16; animation-duration: 1.5s;"></div>
+        
+        <div class="absolute top-2/3 left-20 w-8 h-8 bg-indigo-400 animate-bounce" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); box-shadow: 0 0 6px #6366f1; animation-duration: 1.8s;"></div>
+        
+        <div class="absolute bottom-1/4 left-2/3 w-5 h-5 bg-rose-400 animate-pulse" style="box-shadow: 0 0 5px #f43f5e; animation-duration: 2.1s;"></div>
+        
+        <div class="absolute top-1/3 right-20 w-7 h-7 bg-emerald-400 animate-ping" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); box-shadow: 0 0 7px #10b981; animation-duration: 1.7s;"></div>
+        
+        <div class="absolute bottom-10 right-1/2 w-9 h-9 bg-violet-400 animate-spin" style="box-shadow: 0 0 9px #8b5cf6; animation-duration: 3.5s;"></div>
+        
+        <div class="absolute top-1/2 right-10 w-4 h-4 bg-amber-400 animate-bounce" style="box-shadow: 0 0 4px #f59e0b; animation-duration: 2.3s;"></div>
+    </div>
+
+    <!-- Animated Circuit Lines -->
+    <div class="absolute inset-0 opacity-20">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <!-- Horizontal Circuit Lines -->
+            <line x1="0" y1="20%" x2="100%" y2="20%" stroke="#00ff41" stroke-width="2" opacity="0.6" class="animate-pulse"/>
+            <line x1="0" y1="40%" x2="100%" y2="40%" stroke="#ff0080" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 0.5s;"/>
+            <line x1="0" y1="60%" x2="100%" y2="60%" stroke="#00ffff" stroke-width="2" opacity="0.6" class="animate-pulse" style="animation-delay: 1s;"/>
+            <line x1="0" y1="80%" x2="100%" y2="80%" stroke="#ffff00" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 1.5s;"/>
+            
+            <!-- Vertical Circuit Lines -->
+            <line x1="20%" y1="0" x2="20%" y2="100%" stroke="#ff4080" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 0.3s;"/>
+            <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#40ff80" stroke-width="2" opacity="0.6" class="animate-pulse" style="animation-delay: 0.8s;"/>
+            <line x1="80%" y1="0" x2="80%" y2="100%" stroke="#8040ff" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 1.3s;"/>
+            
+            <!-- Circuit Nodes -->
+            <circle cx="20%" cy="20%" r="3" fill="#00ff41" class="animate-ping" style="animation-duration: 2s;"/>
+            <circle cx="50%" cy="40%" r="4" fill="#ff0080" class="animate-ping" style="animation-duration: 2.5s; animation-delay: 0.5s;"/>
+            <circle cx="80%" cy="60%" r="3" fill="#00ffff" class="animate-ping" style="animation-duration: 2.2s; animation-delay: 1s;"/>
+            <circle cx="20%" cy="80%" r="4" fill="#ffff00" class="animate-ping" style="animation-duration: 2.8s; animation-delay: 1.5s;"/>
+        </svg>
+    </div>
+
+    <!-- Glowing Orbs -->
+    <div class="absolute top-1/6 left-1/5 w-32 h-32 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 opacity-20 animate-pulse blur-xl" style="animation-duration: 4s;"></div>
+    <div class="absolute bottom-1/4 right-1/6 w-40 h-40 rounded-full bg-gradient-to-r from-pink-400 to-red-500 opacity-15 animate-pulse blur-xl" style="animation-duration: 5s; animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-1/12 w-28 h-28 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-25 animate-pulse blur-xl" style="animation-duration: 3.5s; animation-delay: 2s;"></div>
+    <div class="absolute bottom-1/6 right-1/3 w-36 h-36 rounded-full bg-gradient-to-r from-purple-400 to-violet-500 opacity-18 animate-pulse blur-xl" style="animation-duration: 4.5s; animation-delay: 0.5s;"></div>
+    <!-- Start Screen -->
+    <div id="startScreen" class="min-h-screen flex items-center justify-center p-4 relative z-10">
+        <div class="bg-black border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
+            <div class="mb-6">
+                <h1 id="quizTitle" class="text-2xl font-bold text-cyan-400 mb-2">🧠 Kuis Pintar</h1>
+                <p id="quizSubtitle" class="text-green-400">Uji pengetahuan Anda!</p>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-left text-yellow-400 font-medium mb-2">Masukkan Nama Anda:</label>
+                <input type="text" id="playerName" class="w-full px-4 py-3 bg-black border-2 border-green-400 text-white focus:border-cyan-400 focus:outline-none transition-colors" placeholder="Nama Anda..." style="box-shadow: inset 0 0 10px #00ff41;">
+            </div>
+            
+            <button onclick="startQuiz()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
+                Mulai Kuis
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quizScreen" class="min-h-screen p-4 hidden relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="bg-black border-4 border-purple-400 p-6 mb-6" style="box-shadow: 0 0 20px #8b5cf6;">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-lg font-bold text-cyan-400">Halo, <span id="displayName" class="text-yellow-400"></span>!</h2>
+                        <p class="text-green-400">Pertanyaan <span id="questionNumber">1</span> dari <span id="totalQuestions">5</span></p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <!-- Music Control Button -->
+                        <button id="musicToggle" onclick="toggleMusicControl()" class="bg-blue-600 border-2 border-cyan-400 text-white px-3 py-2 hover:bg-cyan-600 transition-all duration-200 text-sm" style="box-shadow: 0 0 10px #06b6d4;">
+                            🎵 ON
+                        </button>
+                        <!-- Matrix Rain Status (Always Active) -->
+                        <div class="bg-green-600 border-2 border-green-400 text-white px-3 py-2 text-sm animate-pulse" style="box-shadow: 0 0 10px #10b981;">
+                            Metrix ACTIVE
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-400 font-medium">Nyawa:</span>
+                            <div id="hearts" class="flex space-x-1">
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-black border-4 border-green-400 p-8 mb-6 fade-in" style="box-shadow: 0 0 20px #10b981;">
+                <!-- Timer Display -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-red-600 border-2 border-yellow-400 px-6 py-3 text-center" style="box-shadow: 0 0 15px #ff0040;">
+                        <div class="text-yellow-400 text-sm font-bold">WAKTU TERSISA</div>
+                        <div id="timerDisplay" class="text-white text-2xl font-bold">01:00</div>
+                    </div>
+                </div>
+                
+                <h3 id="questionText" class="text-xl font-bold text-white mb-4 text-center"></h3>
+                <p id="englishText" class="text-sm text-gray-400 mb-8 text-center italic"></p>
+                
+                <div id="answersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answers will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-black border-4 border-blue-400 p-4" style="box-shadow: 0 0 20px #3b82f6;">
+                <div class="w-full bg-gray-800 h-4 border-2 border-white">
+                    <div id="progressBar" class="bg-green-400 h-full transition-all duration-500" style="width: 20%; box-shadow: 0 0 10px #10b981;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Game Over Popup -->
+    <div id="gameOverPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-black border-4 border-red-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 30px #ef4444;">
+            <div class="mb-6">
+                <div class="text-6xl mb-4">💀</div>
+                <h2 class="text-2xl font-bold text-red-400 mb-2 glitch-text" data-text="GAME OVER!">GAME OVER!</h2>
+                <p class="text-white">Anda gagal karena kehabisan nyawa</p>
+                <p class="text-gray-400 text-sm mt-2">Nyawa: 0/5 ❤️</p>
+            </div>
+            
+            <div class="bg-gray-900 border-2 border-red-400 p-4 mb-6" style="box-shadow: inset 0 0 15px #ef4444;">
+                <div class="text-center">
+                    <div class="text-lg font-bold text-yellow-400 mb-2">Statistik Terakhir:</div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-green-400" id="gameOverCorrect">0</div>
+                            <div class="text-xs text-green-400">Benar</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-red-400" id="gameOverWrong">0</div>
+                            <div class="text-xs text-red-400">Salah</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="restartFromGameOver()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
+                Coba Lagi
+            </button>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="resultScreen" class="min-h-screen flex items-center justify-center p-4 hidden relative z-10">
+        <div class="bg-black border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
+            <div class="mb-6">
+                <div id="resultIcon" class="text-6xl mb-4">🎉</div>
+                <h2 class="text-2xl font-bold text-cyan-400 mb-2">Kuis Selesai!</h2>
+                <p class="text-green-400">Terima kasih <span id="finalName" class="font-semibold text-yellow-400"></span></p>
+            </div>
+            
+            <div class="bg-gray-900 border-2 border-cyan-400 p-6 mb-6" style="box-shadow: inset 0 0 15px #00ff41;">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600" id="correctCount">0</div>
+                        <div class="text-sm text-green-400">Benar</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-600" id="wrongCount">0</div>
+                        <div class="text-sm text-gray-600">Salah</div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-1" id="percentage">0%</div>
+                    <div class="text-sm text-gray-600">Tingkat Kebenaran</div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="saveResultImage()" class="w-full bg-blue-600 border-2 border-cyan-400 text-white font-semibold py-3 px-6 hover:bg-cyan-600 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mb-3" style="box-shadow: 0 0 15px #06b6d4;">
+                    <span>💾</span>
+                    <span>Save Image</span>
+                </button>
+                <button onclick="restartQuiz()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
+                    Main Lagi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ========================================
+        // KONFIGURASI KUIS - EDIT BAGIAN INI SAJA!
+        // ========================================
+        
+        // Judul Kuis (ganti sesuai tema Anda)
+        const QUIZ_TITLE = "Kuis Bahasa Indonesia";
+        const QUIZ_SUBTITLE = "Uji pengetahuan Anda!";
+        
+        // Daftar Pertanyaan (tambah sebanyak yang Anda mau!)
+        const questions = [
+            {
+                question: "Apa ibu kota Indonesia?",
+                english: "What is the capital of Indonesia?",
+                answers: ["Jakarta", "Bandung", "Surabaya", "Medan"],
+                correct: 0  // Index jawaban benar (mulai dari 0)
+            },
+            {
+                question: "Berapa hasil dari 15 + 25?",
+                english: "What is the result of 15 + 25?",
+                answers: ["35", "40", "45", "50"],
+                correct: 1
+            },
+            {
+                question: "Planet terdekat dengan Matahari adalah?",
+                english: "The closest planet to the Sun is?",
+                answers: ["Venus", "Merkurius", "Mars", "Bumi"],
+                correct: 1
+            },
+            {
+                question: "Siapa penemu lampu pijar?",
+                english: "Who invented the light bulb?",
+                answers: ["Thomas Edison", "Albert Einstein", "Isaac Newton", "Nikola Tesla"],
+                correct: 0
+            },
+            {
+                question: "Berapa jumlah benua di dunia?",
+                english: "How many continents are there in the world?",
+                answers: ["5", "6", "7", "8"],
+                correct: 2
+            },
+            {
+                question: "Apa nama mata uang Jepang?",
+                english: "What is the currency of Japan?",
+                answers: ["Won", "Yuan", "Yen", "Rupiah"],
+                correct: 2
+            },
+            {
+                question: "Siapa presiden pertama Indonesia?",
+                english: "Who was the first president of Indonesia?",
+                answers: ["Soekarno", "Soeharto", "Habibie", "Megawati"],
+                correct: 0
+            },
+            {
+                question: "Berapa hasil dari 8 x 7?",
+                english: "What is the result of 8 x 7?",
+                answers: ["54", "56", "58", "60"],
+                correct: 1
+            },
+            {
+                question: "Apa nama laut yang memisahkan Jawa dan Sumatra?",
+                english: "What is the name of the sea that separates Java and Sumatra?",
+                answers: ["Laut Jawa", "Selat Sunda", "Laut Banda", "Selat Malaka"],
+                correct: 1
+            },
+            {
+                question: "Berapa jumlah provinsi di Indonesia saat ini?",
+                english: "How many provinces are there in Indonesia currently?",
+                answers: ["32", "34", "36", "38"],
+                correct: 3
+            }
+        ];
+        
+        // ========================================
+        // AKHIR KONFIGURASI
+        // ========================================
+
+        let currentQuestion = 0;
+        let hearts = 5;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let playerName = "";
+        let backgroundMusic = null;
+        let questionTimer = null;
+        let timeLeft = 60; // 60 seconds per question
+
+        // Initialize quiz with custom title
+        function initializeQuiz() {
+            document.getElementById('quizTitle').textContent = QUIZ_TITLE;
+            document.getElementById('quizSubtitle').textContent = QUIZ_SUBTITLE;
+        }
+
+        // Initialize when page loads
+        window.onload = function() {
+            initializeQuiz();
+            initBackgroundMusic();
+            initCustomCursor();
+            initMatrixRain();
+        };
+        
+        // Screen Shake Effect
+        function triggerScreenShake() {
+            document.body.classList.add('screen-shake');
+            setTimeout(() => {
+                document.body.classList.remove('screen-shake');
+            }, 600);
+        }
+        
+        // Matrix Rain Effect
+        function initMatrixRain() {
+            const matrixContainer = document.getElementById('matrixRain');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            function createMatrixChar() {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.animationDelay = Math.random() * 2 + 's';
+                
+                matrixContainer.appendChild(char);
+                
+                // Remove char after animation
+                setTimeout(() => {
+                    if (char.parentNode) {
+                        char.parentNode.removeChild(char);
+                    }
+                }, 5000);
+            }
+            
+            // Create matrix chars periodically (more frequent)
+            setInterval(() => {
+                // Create multiple chars at once for denser rain
+                for (let i = 0; i < 3; i++) {
+                    createMatrixChar();
+                }
+            }, 50);
+        }
+        
+        // Matrix rain is now always active - no toggle needed
+        
+        // Pixel Explosion Effect
+        function createPixelExplosion(centerX, centerY) {
+            const colors = ['#ff0040', '#ffff00', '#00ff41', '#00ffff', '#ff4080', '#8040ff'];
+            const shapes = [
+                'polygon(0 0, 100% 0, 100% 100%, 0 100%)', // Square
+                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', // Diamond
+                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', // Hexagon
+            ];
+            
+            // Create 50-80 pixels for big explosion
+            const pixelCount = Math.random() * 30 + 50;
+            
+            for (let i = 0; i < pixelCount; i++) {
+                const pixel = document.createElement('div');
+                pixel.className = 'pixel-explosion';
+                
+                // Random color and shape
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                pixel.style.background = color;
+                pixel.style.clipPath = shape;
+                pixel.style.boxShadow = `0 0 15px ${color}`;
+                
+                // Random size
+                const size = Math.random() * 12 + 8; // 8-20px
+                pixel.style.width = size + 'px';
+                pixel.style.height = size + 'px';
+                
+                // Random position around center
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 50; // 50-250px from center
+                const startX = centerX + Math.cos(angle) * 50;
+                const startY = centerY + Math.sin(angle) * 50;
+                const endX = centerX + Math.cos(angle) * distance;
+                const endY = centerY + Math.sin(angle) * distance;
+                
+                pixel.style.left = startX + 'px';
+                pixel.style.top = startY + 'px';
+                
+                // Add to document
+                document.body.appendChild(pixel);
+                
+                // Animate pixel
+                pixel.animate([
+                    {
+                        transform: `translate(0, 0) scale(1) rotate(0deg)`,
+                        opacity: 1
+                    },
+                    {
+                        transform: `translate(${endX - startX}px, ${endY - startY}px) scale(0) rotate(${Math.random() * 720}deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 2000,
+                    easing: 'ease-out'
+                });
+                
+                // Remove pixel after animation
+                setTimeout(() => {
+                    if (pixel.parentNode) {
+                        pixel.parentNode.removeChild(pixel);
+                    }
+                }, 2000);
+            }
+        }
+
+        // Custom 8-bit Cursor Functions
+        function initCustomCursor() {
+            const cursor = document.getElementById('customCursor');
+            
+            // Track mouse movement
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 12 + 'px'; // Center cursor
+                cursor.style.top = e.clientY - 12 + 'px';
+            });
+            
+            // Handle click effects
+            document.addEventListener('mousedown', (e) => {
+                cursor.classList.add('cursor-clicking');
+                createClickParticles(e.clientX, e.clientY);
+                
+                // Remove clicking class after animation
+                setTimeout(() => {
+                    cursor.classList.remove('cursor-clicking');
+                }, 200);
+            });
+            
+            // Hide cursor when mouse leaves window
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
+            
+            // Show cursor when mouse enters window
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+            });
+        }
+
+        // Create 8-bit particle explosion on click
+        function createClickParticles(x, y) {
+            const colors = ['#ff0040', '#ffff00', '#00ff41', '#00ffff', '#ff4080', '#8040ff'];
+            const shapes = [
+                'polygon(0 0, 100% 0, 100% 100%, 0 100%)', // Square
+                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)', // Diamond
+                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)', // Hexagon
+                'polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%)' // Plus
+            ];
+            
+            // Create 8-12 particles
+            const particleCount = Math.random() * 4 + 8;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'click-particle';
+                
+                // Random color and shape
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                particle.style.background = color;
+                particle.style.clipPath = shape;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                
+                // Random size
+                const size = Math.random() * 8 + 6; // 6-14px
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                // Position at click location
+                particle.style.left = (x - size/2) + 'px';
+                particle.style.top = (y - size/2) + 'px';
+                
+                // Random direction and distance
+                const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
+                const distance = Math.random() * 60 + 30; // 30-90px
+                const endX = x + Math.cos(angle) * distance;
+                const endY = y + Math.sin(angle) * distance;
+                
+                // Add to document
+                document.body.appendChild(particle);
+                
+                // Animate particle
+                particle.animate([
+                    {
+                        transform: `translate(0, 0) scale(1) rotate(0deg)`,
+                        opacity: 1
+                    },
+                    {
+                        transform: `translate(${endX - x}px, ${endY - y}px) scale(0) rotate(${Math.random() * 360}deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 800,
+                    easing: 'ease-out'
+                });
+                
+                // Remove particle after animation
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 800);
+            }
+            
+            // Play click sound effect (disabled)
+            // playClickSound();
+        }
+
+        // 8-bit click sound effect
+        function playClickSound() {
+            try {
+                const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                // Quick 8-bit click sound
+                oscillator.frequency.setValueAtTime(800, audioContext.currentTime);
+                oscillator.frequency.exponentialRampToValueAtTime(400, audioContext.currentTime + 0.1);
+                
+                gainNode.gain.setValueAtTime(0.1, audioContext.currentTime);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.1);
+                
+                oscillator.start(audioContext.currentTime);
+                oscillator.stop(audioContext.currentTime + 0.1);
+            } catch (error) {
+                console.log('Click sound failed:', error);
+            }
+        }
+
+        function startQuiz() {
+            const nameInput = document.getElementById('playerName');
+            if (nameInput.value.trim() === '') {
+                alert('Silakan masukkan nama Anda terlebih dahulu!');
+                return;
+            }
+            
+            playerName = nameInput.value.trim();
+            document.getElementById('displayName').textContent = playerName;
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            
+            // Start background music when quiz begins
+            playBackgroundMusic();
+            
+            showQuestion();
+        }
+
+        function toggleMusicControl() {
+            const musicButton = document.getElementById('musicToggle');
+            const isPlaying = toggleBackgroundMusic();
+            
+            if (isPlaying) {
+                musicButton.innerHTML = '🎵 ON';
+                musicButton.classList.remove('bg-red-600');
+                musicButton.classList.add('bg-blue-600');
+            } else {
+                musicButton.innerHTML = '🔇 OFF';
+                musicButton.classList.remove('bg-blue-600');
+                musicButton.classList.add('bg-red-600');
+            }
+        }
+
+        // MP3 Sound effects
+        function playCorrectSound() {
+            try {
+                const audio = new Audio();
+                audio.src = '../Kuis/correct.mp3'; // Ganti dengan URL MP3 Anda
+                audio.volume = 0.7;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            } catch (error) {
+                console.log('Error playing correct sound:', error);
+                // Fallback ke Web Audio API jika MP3 gagal
+                playFallbackCorrectSound();
+            }
+        }
+
+        function playWrongSound() {
+            try {
+                const audio = new Audio();
+                audio.src = '../Kuis/wrong.mp3'; // Ganti dengan URL MP3 Anda
+                audio.volume = 0.7;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            } catch (error) {
+                console.log('Error playing wrong sound:', error);
+                // Fallback ke Web Audio API jika MP3 gagal
+                playFallbackWrongSound();
+            }
+        }
+
+        function playGameOverSound() {
+            try {
+                const audio = new Audio();
+                audio.src = '../Kuis/failed.mp3'; // Ganti dengan URL MP3 Anda
+                audio.volume = 0.8;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            } catch (error) {
+                console.log('Error playing game over sound:', error);
+                // Fallback ke Web Audio API jika MP3 gagal
+                playFallbackWrongSound();
+            }
+        }
+
+        function playWinningSound() {
+            try {
+                const audio = new Audio();
+                audio.src = '../Kuis/success.mp3'; // Ganti dengan URL MP3 Anda
+                audio.volume = 0.9;
+                audio.play().catch(e => console.log('Audio play failed:', e));
+            } catch (error) {
+                console.log('Error playing winning sound:', error);
+                // Fallback ke Web Audio API jika MP3 gagal
+                playFallbackWinningSound();
+            }
+        }
+
+        // Fallback sounds menggunakan Web Audio API
+        function playFallbackCorrectSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(523.25, audioContext.currentTime); // C5
+            oscillator.frequency.setValueAtTime(659.25, audioContext.currentTime + 0.1); // E5
+            oscillator.frequency.setValueAtTime(783.99, audioContext.currentTime + 0.2); // G5
+            
+            gainNode.gain.setValueAtTime(0.3, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function playFallbackWrongSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            const oscillator = audioContext.createOscillator();
+            const gainNode = audioContext.createGain();
+            
+            oscillator.connect(gainNode);
+            gainNode.connect(audioContext.destination);
+            
+            oscillator.frequency.setValueAtTime(100, audioContext.currentTime);
+            oscillator.frequency.exponentialRampToValueAtTime(50, audioContext.currentTime + 0.5);
+            
+            gainNode.gain.setValueAtTime(0.5, audioContext.currentTime);
+            gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + 0.5);
+            
+            oscillator.start(audioContext.currentTime);
+            oscillator.stop(audioContext.currentTime + 0.5);
+        }
+
+        function playFallbackWinningSound() {
+            const audioContext = new (window.AudioContext || window.webkitAudioContext)();
+            
+            // Victory fanfare dengan multiple notes
+            const notes = [523.25, 659.25, 783.99, 1046.50]; // C5, E5, G5, C6
+            const durations = [0.3, 0.3, 0.3, 0.6];
+            
+            notes.forEach((frequency, index) => {
+                const oscillator = audioContext.createOscillator();
+                const gainNode = audioContext.createGain();
+                
+                oscillator.connect(gainNode);
+                gainNode.connect(audioContext.destination);
+                
+                oscillator.frequency.setValueAtTime(frequency, audioContext.currentTime + index * 0.2);
+                
+                gainNode.gain.setValueAtTime(0.4, audioContext.currentTime + index * 0.2);
+                gainNode.gain.exponentialRampToValueAtTime(0.01, audioContext.currentTime + index * 0.2 + durations[index]);
+                
+                oscillator.start(audioContext.currentTime + index * 0.2);
+                oscillator.stop(audioContext.currentTime + index * 0.2 + durations[index]);
+            });
+        }
+
+        // Background Music Functions
+        function initBackgroundMusic() {
+            try {
+                backgroundMusic = new Audio();
+                backgroundMusic.src = '../Kuis/ryuukoi.mp3'; // Ganti dengan URL MP3 musik latar Anda
+                backgroundMusic.loop = true; // Loop musik terus menerus
+                backgroundMusic.volume = 0.3; // Volume rendah agar tidak mengganggu
+                
+                // Preload musik
+                backgroundMusic.load();
+                
+                console.log('Background music initialized');
+            } catch (error) {
+                console.log('Error initializing background music:', error);
+            }
+        }
+
+        function playBackgroundMusic() {
+            if (backgroundMusic) {
+                try {
+                    backgroundMusic.currentTime = 0; // Mulai dari awal
+                    backgroundMusic.play().catch(e => {
+                        console.log('Background music autoplay blocked:', e);
+                        // Musik akan dimulai setelah user interaction pertama
+                    });
+                } catch (error) {
+                    console.log('Error playing background music:', error);
+                }
+            }
+        }
+
+        function pauseBackgroundMusic() {
+            if (backgroundMusic && !backgroundMusic.paused) {
+                backgroundMusic.pause();
+            }
+        }
+
+        function stopBackgroundMusic() {
+            if (backgroundMusic) {
+                backgroundMusic.pause();
+                backgroundMusic.currentTime = 0;
+            }
+        }
+
+        function toggleBackgroundMusic() {
+            if (backgroundMusic) {
+                if (backgroundMusic.paused) {
+                    playBackgroundMusic();
+                    return true; // Music is now playing
+                } else {
+                    pauseBackgroundMusic();
+                    return false; // Music is now paused
+                }
+            }
+            return false;
+        }
+
+        // Timer Functions
+        function startQuestionTimer() {
+            timeLeft = 60; // Reset to 60 seconds
+            updateTimerDisplay();
+            
+            questionTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                // Change color when time is running out
+                const timerDisplay = document.getElementById('timerDisplay');
+                const timerContainer = timerDisplay.parentElement;
+                
+                if (timeLeft <= 10) {
+                    // Red and blinking when ≤ 10 seconds
+                    timerContainer.classList.remove('bg-red-600');
+                    timerContainer.classList.add('bg-red-800');
+                    timerDisplay.classList.add('animate-pulse');
+                    timerDisplay.style.color = '#ff0000';
+                } else if (timeLeft <= 30) {
+                    // Orange when ≤ 30 seconds
+                    timerContainer.classList.remove('bg-red-600');
+                    timerContainer.classList.add('bg-orange-600');
+                    timerDisplay.style.color = '#ffff00';
+                }
+                
+                // Time's up!
+                if (timeLeft <= 0) {
+                    clearInterval(questionTimer);
+                    handleTimeUp();
+                }
+            }, 1000);
+        }
+
+        function stopQuestionTimer() {
+            if (questionTimer) {
+                clearInterval(questionTimer);
+                questionTimer = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = display;
+        }
+
+        function handleTimeUp() {
+            // Disable all answer buttons
+            const buttons = document.querySelectorAll('#answersContainer button');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            // Show correct answer
+            const question = questions[currentQuestion];
+            buttons[question.correct].classList.remove('bg-black', 'border-yellow-400');
+            buttons[question.correct].classList.add('bg-green-600', 'border-green-400', 'text-white');
+            buttons[question.correct].style.boxShadow = '0 0 15px #10b981';
+            
+            // Count as wrong answer and lose heart
+            wrongAnswers++;
+            loseHeart();
+            playWrongSound();
+            triggerScreenShake(); // Add screen shake effect
+            
+            // Show "TIME UP!" message
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.textContent = 'TIME UP!';
+            timerDisplay.style.color = '#ff0000';
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 3000);
+        }
+
+        function showQuestion() {
+            if (hearts <= 0) {
+                showGameOver();
+                return;
+            }
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
+            }
+
+            // Stop any existing timer
+            stopQuestionTimer();
+
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('englishText').textContent = question.english;
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            // Reset timer display style
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerContainer = timerDisplay.parentElement;
+            timerContainer.className = 'bg-red-600 border-2 border-yellow-400 px-6 py-3 text-center';
+            timerContainer.style.boxShadow = '0 0 15px #ff0040';
+            timerDisplay.classList.remove('animate-pulse');
+            timerDisplay.style.color = '#ffffff';
+            
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+            
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'bg-black border-2 border-yellow-400 text-white hover:bg-yellow-600 hover:text-black p-4 text-left font-medium transition-all duration-200 transform hover:scale-105';
+                button.style.boxShadow = '0 0 10px #fbbf24';
+                button.textContent = answer;
+                button.onclick = () => selectAnswer(index);
+                container.appendChild(button);
+            });
+
+            // Update progress bar
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            // Start the timer for this question
+            startQuestionTimer();
+        }
+
+        function selectAnswer(selectedIndex) {
+            // Stop the timer when answer is selected
+            stopQuestionTimer();
+            
+            const question = questions[currentQuestion];
+            const buttons = document.querySelectorAll('#answersContainer button');
+            
+            // Disable all buttons
+            buttons.forEach(btn => btn.disabled = true);
+            
+            if (selectedIndex === question.correct) {
+                // Correct answer
+                buttons[selectedIndex].classList.remove('bg-black', 'border-yellow-400');
+                buttons[selectedIndex].classList.add('bg-green-600', 'border-green-400', 'text-white');
+                buttons[selectedIndex].style.boxShadow = '0 0 15px #10b981';
+                correctAnswers++;
+                playCorrectSound();
+            } else {
+                // Wrong answer
+                buttons[selectedIndex].classList.remove('bg-black', 'border-yellow-400');
+                buttons[selectedIndex].classList.add('bg-red-600', 'border-red-400', 'text-white');
+                buttons[selectedIndex].style.boxShadow = '0 0 15px #ef4444';
+                
+                // Show correct answer
+                buttons[question.correct].classList.remove('bg-black', 'border-yellow-400');
+                buttons[question.correct].classList.add('bg-green-600', 'border-green-400', 'text-white');
+                buttons[question.correct].style.boxShadow = '0 0 15px #10b981';
+                
+                wrongAnswers++;
+                loseHeart();
+                playWrongSound();
+                triggerScreenShake(); // Add screen shake effect
+            }
+            
+            // Move to next question after delay
+            setTimeout(() => {
+                currentQuestion++;
+                showQuestion();
+            }, 2000);
+        }
+
+        function loseHeart() {
+            hearts--;
+            const heartsContainer = document.getElementById('hearts');
+            const heartElements = heartsContainer.children;
+            
+            if (hearts >= 0 && hearts < heartElements.length) {
+                heartElements[heartElements.length - 1 - (4 - hearts)].textContent = '💔';
+                heartElements[heartElements.length - 1 - (4 - hearts)].classList.add('heart-bounce');
+            }
+        }
+
+        function showGameOver() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('gameOverPopup').classList.remove('hidden');
+            
+            // Stop timer and background music
+            stopQuestionTimer();
+            stopBackgroundMusic();
+            
+            // Update game over statistics
+            document.getElementById('gameOverCorrect').textContent = correctAnswers;
+            document.getElementById('gameOverWrong').textContent = wrongAnswers;
+            
+            // Play game over sound
+            playGameOverSound();
+        }
+
+        function restartFromGameOver() {
+            document.getElementById('gameOverPopup').classList.add('hidden');
+            restartQuiz();
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            
+            // Stop timer and background music
+            stopQuestionTimer();
+            stopBackgroundMusic();
+            
+            // Create pixel explosion at center of screen
+            setTimeout(() => {
+                createPixelExplosion(window.innerWidth / 2, window.innerHeight / 2);
+            }, 500);
+            
+            const totalQuestions = correctAnswers + wrongAnswers;
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            
+            document.getElementById('finalName').textContent = playerName;
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('wrongCount').textContent = wrongAnswers;
+            document.getElementById('percentage').textContent = percentage + '%';
+            
+            // Set result icon based on performance
+            const resultIcon = document.getElementById('resultIcon');
+            if (percentage >= 80) {
+                resultIcon.textContent = '🏆';
+                playWinningSound(); // Play victory sound for excellent performance
+            } else if (percentage >= 60) {
+                resultIcon.textContent = '🎉';
+                playWinningSound(); // Play victory sound for good performance
+            } else if (percentage >= 40) {
+                resultIcon.textContent = '👍';
+            } else {
+                resultIcon.textContent = '💪';
+            }
+        }
+
+        function shareToWhatsApp() {
+            const totalQuestions = correctAnswers + wrongAnswers;
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            
+            const message = `🧠 *Hasil Kuis Pintar Saya!*\n\n` +
+                          `👤 Nama: ${playerName}\n` +
+                          `✅ Jawaban Benar: ${correctAnswers}\n` +
+                          `❌ Jawaban Salah: ${wrongAnswers}\n` +
+                          `📊 Tingkat Kebenaran: ${percentage}%\n\n` +
+                          `Coba juga kuis ini! 🚀`;
+            
+            const whatsappUrl = `https://wa.me/?text=${encodeURIComponent(message)}`;
+            window.open(whatsappUrl, '_blank');
+        }
+
+        function saveResultImage() {
+            try {
+                // Create canvas for result image
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 800;
+                canvas.height = 600;
+                
+                // 8-bit style background gradient
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, '#1a1a2e');
+                gradient.addColorStop(0.25, '#16213e');
+                gradient.addColorStop(0.5, '#0f3460');
+                gradient.addColorStop(0.75, '#533483');
+                gradient.addColorStop(1, '#e94560');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                // Add 8-bit decorative elements
+                ctx.fillStyle = '#00ff41';
+                ctx.fillRect(50, 50, 20, 20);
+                ctx.fillRect(730, 530, 20, 20);
+                
+                ctx.fillStyle = '#ff0040';
+                ctx.fillRect(700, 80, 15, 15);
+                ctx.fillRect(80, 520, 15, 15);
+                
+                ctx.fillStyle = '#ffff00';
+                ctx.fillRect(650, 150, 25, 25);
+                ctx.fillRect(125, 450, 25, 25);
+                
+                // Title with 8-bit style
+                ctx.fillStyle = '#00ffff';
+                ctx.font = 'bold 36px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('HASIL KUIS', canvas.width/2, 80);
+                
+                // Player name
+                ctx.fillStyle = '#ffff00';
+                ctx.font = 'bold 24px monospace';
+                ctx.fillText(`PLAYER: ${playerName.toUpperCase()}`, canvas.width/2, 130);
+                
+                // Results box with 8-bit border
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(100, 180, 600, 300);
+                ctx.strokeStyle = '#00ffff';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(100, 180, 600, 300);
+                
+                // Results text
+                ctx.fillStyle = '#00ff41';
+                ctx.font = 'bold 20px monospace';
+                ctx.fillText('=== STATISTIK GAME ===', canvas.width/2, 220);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '18px monospace';
+                ctx.fillText(`JAWABAN BENAR: ${correctAnswers}`, canvas.width/2, 270);
+                ctx.fillText(`JAWABAN SALAH: ${wrongAnswers}`, canvas.width/2, 310);
+                
+                const totalQuestions = correctAnswers + wrongAnswers;
+                const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+                
+                ctx.fillStyle = '#ffff00';
+                ctx.font = 'bold 24px monospace';
+                ctx.fillText(`SKOR AKHIR: ${percentage}%`, canvas.width/2, 360);
+                
+                // Performance message
+                let message = '';
+                if (percentage >= 80) message = 'EXCELLENT! 🏆';
+                else if (percentage >= 60) message = 'GOOD JOB! 🎉';
+                else if (percentage >= 40) message = 'NOT BAD! 👍';
+                else message = 'KEEP TRYING! 💪';
+                
+                ctx.fillStyle = '#ff0040';
+                ctx.font = 'bold 16px monospace';
+                ctx.fillText(message, canvas.width/2, 400);
+                
+                ctx.fillStyle = '#888888';
+                ctx.font = '12px monospace';
+                ctx.fillText('Created By Hazu', canvas.width/2, 450);
+                
+                // Download image
+                canvas.toBlob(function(blob) {
+                    const link = document.createElement('a');
+                    link.download = `8bit-quiz-result-${playerName.replace(/\s+/g, '-')}.png`;
+                    link.href = URL.createObjectURL(blob);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                });
+                
+            } catch (error) {
+                console.error('Error saving image:', error);
+                alert('Maaf, terjadi kesalahan saat menyimpan gambar. Silakan coba lagi.');
+            }
+        }
+
+        // Add roundRect function for older browsers
+        if (!CanvasRenderingContext2D.prototype.roundRect) {
+            CanvasRenderingContext2D.prototype.roundRect = function(x, y, width, height, radius) {
+                this.beginPath();
+                this.moveTo(x + radius, y);
+                this.lineTo(x + width - radius, y);
+                this.quadraticCurveTo(x + width, y, x + width, y + radius);
+                this.lineTo(x + width, y + height - radius);
+                this.quadraticCurveTo(x + width, y + height, x + width - radius, y + height);
+                this.lineTo(x + radius, y + height);
+                this.quadraticCurveTo(x, y + height, x, y + height - radius);
+                this.lineTo(x, y + radius);
+                this.quadraticCurveTo(x, y, x + radius, y);
+                this.closePath();
+            };
+        }
+
+        function restartQuiz() {
+            // Reset all variables
+            currentQuestion = 0;
+            hearts = 5;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            
+            // Stop timer and background music
+            stopQuestionTimer();
+            stopBackgroundMusic();
+            
+            // Reset music button
+            const musicButton = document.getElementById('musicToggle');
+            if (musicButton) {
+                musicButton.innerHTML = '🎵 ON';
+                musicButton.classList.remove('bg-red-600');
+                musicButton.classList.add('bg-blue-600');
+            }
+            
+            // Reset hearts display
+            const heartsContainer = document.getElementById('hearts');
+            Array.from(heartsContainer.children).forEach(heart => {
+                heart.textContent = '❤️';
+                heart.classList.remove('heart-bounce');
+            });
+            
+            // Show start screen
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            
+            // Clear name input
+            document.getElementById('playerName').value = '';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9670eafbb0e40a9d',t:'MTc1MzgzNzIxNC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
