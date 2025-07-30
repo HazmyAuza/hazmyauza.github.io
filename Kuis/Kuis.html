@@ -2,8 +2,8 @@
 <html lang="id">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Hazu Quiz Menu</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazu: Bahasa Indonesia Menu</title>
     <style>
         @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap');
         
@@ -91,26 +91,26 @@
                 0 0 30px rgba(0, 255, 255, 0.5),
                 inset 0 0 30px rgba(255, 0, 255, 0.1);
             backdrop-filter: blur(10px);
-            max-width: 500px;
-            width: 90%;
+            max-width: 750px;
+            width: 100%;
         }
         
         .title {
             text-align: center;
-            color: #eab105;
+            color: #b7940a;
             font-size: 2.5rem;
             font-weight: 900;
             margin-bottom: 30px;
             text-shadow: 
                 0 0 10px #00ffff,
-                0 0 20px #00ffff,
+                0 0 20px #b7940a,
                 0 0 30px #00ffff;
             animation: titleGlow 2s ease-in-out infinite alternate;
         }
         
         @keyframes titleGlow {
-            from { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
-            to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff; }
+            from { text-shadow: 0 0 10px #b7940a, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+            to { text-shadow: 0 0 20px #00ffff, 0 0 30px #b7940a, 0 0 40px #b7940a; }
         }
         
         .menu-list {
@@ -123,6 +123,12 @@
         .menu-item {
             position: relative;
             overflow: hidden;
+        }
+        
+        .menu-row {
+            display: flex;
+            gap: 48px;
+            align-items: center;
         }
         
         .menu-link {
@@ -143,6 +149,7 @@
                 0 4px 15px rgba(255, 0, 255, 0.3),
                 inset 0 0 20px rgba(255, 0, 255, 0.1);
             overflow: hidden;
+            flex: 1;
         }
         
         /* Loading Bar Effect */
@@ -285,6 +292,84 @@
             object-fit: cover;
         }
         
+        /* Material Button Styles */
+        .materi-btn {
+            padding: 20px 20px;
+            background: linear-gradient(45deg, #003366, #006699);
+            border: 2px solid #00ffff;
+            border-radius: 10px;
+            color: #ffffff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 
+                0 4px 15px rgba(0, 255, 255, 0.3),
+                inset 0 0 20px rgba(0, 255, 255, 0.1);
+            overflow: hidden;
+            min-width: 120px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+        }
+        
+        .materi-btn::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .materi-btn:hover::before {
+            opacity: 1;
+            animation: hologram 1.5s ease-in-out infinite;
+        }
+        
+        .materi-btn:hover {
+            background: linear-gradient(45deg, #006699, #0099cc);
+            border-color: #ff00ff;
+            color: #ff00ff;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(255, 0, 255, 0.5),
+                inset 0 0 30px rgba(255, 0, 255, 0.2);
+            text-shadow: 0 0 10px #ff00ff;
+        }
+        
+        .materi-btn:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+        
+        .materi-icon {
+            font-size: 1rem;
+            filter: drop-shadow(0 0 5px #00ffff);
+        }
+        
+        .materi-btn:hover .materi-icon {
+            filter: drop-shadow(0 0 10px #ff00ff);
+            animation: bounce 0.6s ease-in-out infinite alternate;
+        }
+        
+        @keyframes bounce {
+            from { transform: translateY(0); }
+            to { transform: translateY(-3px); }
+        }
+        
         /* Arrow indicator */
         .menu-link .arrow {
             position: absolute;
@@ -326,9 +411,9 @@
         .loading-logo {
             font-size: 4rem;
             font-weight: 900;
-            color: #00ffff;
+            color: #b7940a;
             text-shadow: 
-                0 0 20px #00ffff,
+                0 0 20px ##b7940a,
                 0 0 40px #00ffff,
                 0 0 60px #00ffff;
             margin-bottom: 40px;
@@ -337,11 +422,11 @@
         
         @keyframes logoGlow {
             from { 
-                text-shadow: 0 0 20px #eab105, 0 0 40px #00ffff, 0 0 60px #00ffff;
+                text-shadow: 0 0 20px #b7940a, 0 0 40px #b7940a, 0 0 60px #00ffff;
                 transform: scale(1);
             }
             to { 
-                text-shadow: 0 0 30px #eab105, 0 0 60px #00ffff, 0 0 90px #00ffff;
+                text-shadow: 0 0 30px #00ffff, 0 0 60px #00ffff, 0 0 90px #00ffff;
                 transform: scale(1.05);
             }
         }
@@ -435,6 +520,145 @@
             opacity: 1;
         }
 
+        /* Modal Styles */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            backdrop-filter: blur(10px);
+            z-index: 15000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+        
+        .modal-content {
+            background: linear-gradient(135deg, #1a0033 0%, #330066 50%, #1a0033 100%);
+            border: 3px solid #00ffff;
+            border-radius: 20px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            position: relative;
+            box-shadow: 
+                0 0 50px rgba(0, 255, 255, 0.8),
+                inset 0 0 50px rgba(255, 0, 255, 0.2);
+            transform: scale(0.8) translateY(50px);
+            transition: all 0.3s ease;
+        }
+        
+        .modal-overlay.active .modal-content {
+            transform: scale(1) translateY(0);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            border-bottom: 2px solid #ff00ff;
+            padding-bottom: 20px;
+        }
+        
+        .modal-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.5rem;
+            color: #00ffff;
+            text-shadow: 0 0 20px #00ffff;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        .close-btn {
+            background: none;
+            border: 2px solid #ff00ff;
+            color: #ff00ff;
+            font-size: 1.5rem;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .close-btn:hover {
+            background: #ff00ff;
+            color: #000;
+            transform: rotate(90deg);
+            box-shadow: 0 0 20px #ff00ff;
+        }
+        
+        .language-toggle {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 20px;
+            justify-content: center;
+        }
+        
+        .lang-btn {
+            padding: 10px 20px;
+            background: linear-gradient(45deg, #003366, #006699);
+            border: 2px solid #00ffff;
+            border-radius: 25px;
+            color: #ffffff;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.7rem;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .lang-btn.active {
+            background: linear-gradient(45deg, #ff00ff, #ff3399);
+            border-color: #ff00ff;
+            box-shadow: 0 0 20px rgba(255, 0, 255, 0.5);
+        }
+        
+        .lang-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 255, 255, 0.3);
+        }
+        
+        .modal-text {
+            font-family: 'Orbitron', monospace;
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #ffffff;
+            text-align: justify;
+            margin-bottom: 20px;
+        }
+        
+        .modal-text h3 {
+            color: #00ffff;
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .modal-text ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        .modal-text li {
+            margin-bottom: 8px;
+            color: #cccccc;
+        }
+        
         /* Responsive design */
         @media (max-width: 768px) {
             .container {
@@ -452,6 +676,21 @@
                 font-size: 0.8rem;
                 letter-spacing: 1px;
             }
+            
+            .materi-btn {
+                padding: 18px 15px;
+                font-size: 0.7rem;
+                min-width: 100px;
+            }
+            
+            .modal-content {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .modal-title {
+                font-size: 1.2rem;
+            }
         }
         
         @media (max-width: 480px) {
@@ -464,59 +703,6 @@
                 font-size: 0.7rem;
             }
         }
-		
-@media (max-width: 768px) {
-    .container {
-        padding: 20px;
-        margin: 10px;
-        max-width: 90%;
-    }
-
-    .title {
-        font-size: 1.8rem;
-        margin-bottom: 20px;
-        text-align: center;
-    }
-
-    .menu-link {
-        padding: 16px 18px;
-        font-size: 0.75rem;
-        text-align: center;
-    }
-
-    .arrow {
-        display: none; /* Sembunyikan panah jika terlalu kecil */
-    }
-
-    .loading-logo {
-        font-size: 2.5rem;
-    }
-
-    .loading-bar-container {
-        width: 200px;
-    }
-}
-
-@media (max-width: 480px) {
-    .title {
-        font-size: 1.5rem;
-    }
-
-    .menu-link {
-        font-size: 0.7rem;
-        padding: 14px 16px;
-    }
-
-    .loading-text {
-        font-size: 1rem;
-        text-align: center;
-    }
-
-    .loading-bar-container {
-        width: 160px;
-    }
-}
-
     </style>
 </head>
 <body>
@@ -562,39 +748,87 @@
             Your browser does not support the audio element.
         </audio>
         
+        <!-- Material Modal -->
+        <div class="modal-overlay" id="materiModal">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h2 class="modal-title" id="modalTitle">MATERI Bahasa Indonesia</h2>
+                    <button class="close-btn" onclick="closeMateriModal()">×</button>
+                </div>
+                
+                <div class="language-toggle">
+                    <button class="lang-btn active" id="idBtn" onclick="switchLanguage('id')">INDONESIA</button>
+                    <button class="lang-btn" id="jpBtn" onclick="switchLanguage('jp')">日本語</button>
+                </div>
+                
+                <div class="modal-text" id="modalText">
+                    <!-- Content will be loaded here -->
+                </div>
+            </div>
+        </div>
+        
         <div class="container">
-        <h1 class="title" id="terminalTitle">Menu List</h1>
+        <h1 class="title" id="terminalTitle">Bahasa Indonesia</h1>
         <ul class="menu-list">
             <li class="menu-item">
-                <a href="Kuis 1.html" class="menu-link">
-                    <span class="menu-text">Bahasa Indonesia Tema:
-					Ke,Di.</span>
-                    <span class="arrow">▶</span>
-                </a>
+                <div class="menu-row">
+                    <a href="Kuis 1.html" class="menu-link">
+                        <span class="menu-text">Bahasa Indonesia Tema: Ke dan Di.</span>
+                        <span class="arrow">▶</span>
+                    </a>
+                    <button class="materi-btn" onclick="openMateriModal(1)">
+                        <span class="materi-text">Materi</span>
+                        <span class="materi-icon">📚</span>
+                    </button>
+                </div>
             </li>
             <li class="menu-item">
-                <a href="Kuis 2.html" class="menu-link">
-                    <span class="menu-text">Kuis 2</span>
-                    <span class="arrow">▶</span>
-                </a>
+                <div class="menu-row">
+                    <a href="Kuis 2.html" class="menu-link">
+                        <span class="menu-text">Bahasa Indonesia Imbuhan: Ter-.</span>
+                        <span class="arrow">▶</span>
+                    </a>
+                    <button class="materi-btn" onclick="openMateriModal(2)">
+                        <span class="materi-text">Materi</span>
+                        <span class="materi-icon">📚</span>
+                    </button>
+                </div>
             </li>
             <li class="menu-item">
-                <a href="Kuis 3.html" class="menu-link">
-                    <span class="menu-text">Kuis 3</span>
-                    <span class="arrow">▶</span>
-                </a>
+                <div class="menu-row">
+                    <a href="Kuis 3.html" class="menu-link">
+                        <span class="menu-text">Kuis 3</span>
+                        <span class="arrow">▶</span>
+                    </a>
+                    <button class="materi-btn" onclick="openMateriModal(3)">
+                        <span class="materi-text">Materi</span>
+                        <span class="materi-icon">📚</span>
+                    </button>
+                </div>
             </li>
             <li class="menu-item">
-                <a href="Kuis 4.html" class="menu-link">
-                    <span class="menu-text">Kuis 4</span>
-                    <span class="arrow">▶</span>
-                </a>
+                <div class="menu-row">
+                    <a href="Kuis 4.html" class="menu-link">
+                        <span class="menu-text">Kuis 4</span>
+                        <span class="arrow">▶</span>
+                    </a>
+                    <button class="materi-btn" onclick="openMateriModal(4)">
+                        <span class="materi-text">Materi</span>
+                        <span class="materi-icon">📚</span>
+                    </button>
+                </div>
             </li>
             <li class="menu-item">
-                <a href="Kuis 5.html" class="menu-link">
-                    <span class="menu-text">Kuis 5</span>
-                    <span class="arrow">▶</span>
-                </a>
+                <div class="menu-row">
+                    <a href="Kuis 5.html" class="menu-link">
+                        <span class="menu-text">Kuis 5</span>
+                        <span class="arrow">▶</span>
+                    </a>
+                    <button class="materi-btn" onclick="openMateriModal(5)">
+                        <span class="materi-text">Materi</span>
+                        <span class="materi-icon">📚</span>
+                    </button>
+                </div>
             </li>
         </ul>
         </div>
@@ -629,7 +863,7 @@
                 mainContent.classList.add('show');
                 initializeMainContent();
             }, 500);
-        }, 3200);
+        }, 4000);
         
         // Initialize main content functions
         function initializeMainContent() {
@@ -720,7 +954,7 @@
                     glitchVideo.addEventListener('ended', navigateToPage, { once: true });
                     
                     // Fallback timeout in case video doesn't end properly
-                    setTimeout(navigateToPage, 2200);
+                    setTimeout(navigateToPage, 3000);
                 });
             });
             
@@ -741,6 +975,401 @@
             }, 2000);
         }
         
+        // Material Modal System
+        let currentLanguage = 'id';
+        let currentQuizNumber = 1;
+        
+        const materiData = {
+1: {
+    id: {
+        title: "Bahasa Indonesia - Kata Depan 'ke' dan 'di'",
+        content: `
+            <h3>📘 Penggunaan Kata Depan <em>ke</em> dan <em>di</em></h3>
+            <p>Kata depan <strong>"ke"</strong> dan <strong>"di"</strong> adalah bagian penting dari tata bahasa Bahasa Indonesia yang digunakan untuk menunjukkan tempat atau arah. Meskipun mirip, keduanya memiliki penggunaan yang berbeda:</p>
+
+            <h3>🔹 Kata depan <em>ke</em></h3>
+            <p>Digunakan untuk menyatakan arah, tujuan, atau perpindahan dari satu tempat ke tempat lain.</p>
+            <ul>
+                <li>Contoh: Saya pergi <strong>ke</strong> sekolah.</li>
+                <li>Contoh: Mereka berjalan <strong>ke</strong> taman.</li>
+            </ul>
+
+            <h3>🔹 Kata depan <em>di</em></h3>
+            <p>Digunakan untuk menyatakan lokasi atau tempat keberadaan yang tidak menunjukkan perpindahan.</p>
+            <ul>
+                <li>Contoh: Buku itu ada <strong>di</strong> meja.</li>
+                <li>Contoh: Ibu memasak <strong>di</strong> dapur.</li>
+            </ul>
+
+            <h3>⚠️ Contoh Kesalahan Umum</h3>
+            <ul>
+                <li>"Adik tidur <strong>ke</strong> kasur." ❌ → "Adik tidur <strong>di</strong> kasur." ✅</li>
+                <li>"Ibu menyapu <strong>ke</strong> halaman." ❌ → "Ibu menyapu <strong>di</strong> halaman." ✅</li>
+            </ul>
+
+            <p><strong>Kesimpulan:</strong> Gunakan <strong>"ke"</strong> untuk arah atau tujuan, dan <strong>"di"</strong> untuk lokasi atau posisi diam.</p>
+        `
+    },
+    jp: {
+        title: "インドネシア語の前置詞『ke』と『di』の使い方",
+        content: `
+            <h3>📘 前置詞 <em>ke</em> と <em>di</em> の使い方</h3>
+            <p>インドネシア語の前置詞 <strong>「ke」</strong> と <strong>「di」</strong> は場所を表す言葉ですが、用途が異なります。違いを理解することは文法の正確さにとって重要です。</p>
+
+            <h3>🔹 前置詞 <em>ke</em></h3>
+            <p>方向・目的地を表します。動作の移動先を示すときに使います。</p>
+            <ul>
+                <li>例: Saya pergi <strong>ke</strong> sekolah（私は学校へ行きます）</li>
+                <li>例: Mereka berjalan <strong>ke</strong> taman（彼らは公園へ歩いていきます）</li>
+            </ul>
+
+            <h3>🔹 前置詞 <em>di</em></h3>
+            <p>位置・存在する場所を表します。動いていないときに使います。</p>
+            <ul>
+                <li>例: Buku itu ada <strong>di</strong> meja（その本は机の上にあります）</li>
+                <li>例: Ibu memasak <strong>di</strong> dapur（お母さんは台所で料理をしています）</li>
+            </ul>
+
+            <h3>⚠️ よくある間違い</h3>
+            <ul>
+                <li>"Adik tidur <strong>ke</strong> kasur" ❌ → 正しくは: "Adik tidur <strong>di</strong> kasur" ✅</li>
+                <li>"Ibu menyapu <strong>ke</strong> halaman" ❌ → 正しくは: "Ibu menyapu <strong>di</strong> halaman" ✅</li>
+            </ul>
+
+            <p><strong>まとめ:</strong> <strong>「ke」</strong> は「〜へ」、<strong>「di」</strong> は「〜で」または「〜に」と訳され、文脈に応じて使い分けます。</p>
+        `
+    }
+},
+  "2": {
+    "id": {
+      "title": "Bahasa Indonesia - IMBUHAN TER-",
+      "content": `
+        <h3>📘 Pengertian Imbuhan <em>'ter-'</em></h3>
+        <p>Imbuhan <strong><em>ter-</em></strong> adalah salah satu imbuhan dalam Bahasa Indonesia yang digunakan untuk membentuk kata kerja atau kata sifat yang menunjukkan keadaan, hasil, kemampuan, atau ketidaksengajaan.</p>
+
+        <h3>🔍 Fungsi Imbuhan <em>ter-</em></h3>
+        <ul>
+          <li><strong>Keadaan:</strong> Menunjukkan kondisi atau posisi sesuatu. Contoh: <em>terbuka</em>, <em>terikat</em>.</li>
+          <li><strong>Hasil:</strong> Menunjukkan hasil dari suatu tindakan. Contoh: <em>terselesaikan</em>, <em>terbakar</em>.</li>
+          <li><strong>Ketidaksengajaan:</strong> Menyatakan bahwa suatu peristiwa terjadi tanpa disengaja. Contoh: <em>terjatuh</em>, <em>tertidur</em>.</li>
+          <li><strong>Kemampuan:</strong> Menyiratkan bahwa sesuatu bisa dilakukan. Contoh: <em>terbaca</em>, <em>terangkat</em>.</li>
+        </ul>
+
+        <h3>📝 Contoh Kalimat:</h3>
+        <ul>
+          <li>Buku itu <strong>terbuka</strong> di atas meja. (Keadaan)</li>
+          <li>Soal ini <strong>terjawab</strong> dengan mudah. (Kemampuan)</li>
+          <li>Saya <strong>tertidur</strong> saat belajar. (Ketidaksengajaan)</li>
+          <li>Lukisan itu <strong>terjual</strong> dengan harga tinggi. (Hasil)</li>
+        </ul>
+
+        <h3>🎯 Kesimpulan</h3>
+        <p>Imbuhan <strong><em>ter-</em></strong> sangat penting dalam Bahasa Indonesia karena memberikan makna tambahan pada kata dasar, terutama dalam menggambarkan kondisi, hasil, atau tindakan yang tidak disengaja. Pemahaman terhadap penggunaannya dapat meningkatkan ketepatan berbahasa dalam tulisan maupun lisan.</p>
+      `
+    },
+    "jp": {
+      "title": "クイズ2の教材 - 接頭辞 『ter-』",
+      "content": `
+        <h3>📘 接頭辞<em>ter-</em>の意味</h3>
+        <p><strong><em>ter-</em></strong>は、インドネシア語の接頭辞の一つで、状態、結果、可能性、または意図しない行為を表すために使用されます。</p>
+
+        <h3>🔍 <em>ter-</em>の主な使い方</h3>
+        <ul>
+          <li><strong>状態:</strong> 物や人のある状態を示す（例：<em>terbuka</em> 開いている、<em>terikat</em> 縛られている）</li>
+          <li><strong>結果:</strong> 何かの行為の結果（例：<em>terselesaikan</em> 解決された、<em>terbakar</em> 燃えた）</li>
+          <li><strong>偶発（意図しない）:</strong> 偶然起こったこと（例：<em>terjatuh</em> 転んだ、<em>tertidur</em> 寝てしまった）</li>
+          <li><strong>可能性:</strong> 〜できる（例：<em>terbaca</em> 読まれる、<em>terangkat</em> 持ち上がる）</li>
+        </ul>
+
+        <h3>📝 文の例:</h3>
+        <ul>
+          <li>Buku itu <strong>terbuka</strong> di atas meja.（その本は机の上に開かれている）</li>
+          <li>Soal ini <strong>terjawab</strong> dengan mudah.（この問題は簡単に解ける）</li>
+          <li>Saya <strong>tertidur</strong> saat belajar.（勉強中に寝てしまった）</li>
+          <li>Lukisan itu <strong>terjual</strong> dengan harga tinggi.（その絵は高値で売れた）</li>
+        </ul>
+
+        <h3>🎯 まとめ</h3>
+        <p><strong><em>ter-</em></strong>は、基本語に意味を加えることで、状態、結果、可能性、偶発的な行為などを表す便利な接頭辞です。適切に使うことで、インドネシア語の表現力が向上します。</p>
+      `
+    }
+  },
+            3: {
+                id: {
+                    title: "MATERI KUIS 3 - JARINGAN KOMPUTER",
+                    content: `
+                        <h3>🌐 Pengenalan Jaringan Komputer</h3>
+                        <p>Jaringan komputer adalah kumpulan perangkat yang terhubung untuk berbagi data, sumber daya, dan layanan. Internet adalah jaringan komputer terbesar di dunia.</p>
+                        
+                        <h3>🔗 Jenis-jenis Jaringan:</h3>
+                        <ul>
+                            <li><strong>LAN (Local Area Network):</strong> Jaringan lokal dalam area terbatas</li>
+                            <li><strong>WAN (Wide Area Network):</strong> Jaringan yang mencakup area geografis luas</li>
+                            <li><strong>MAN (Metropolitan Area Network):</strong> Jaringan dalam satu kota</li>
+                            <li><strong>Internet:</strong> Jaringan global yang menghubungkan seluruh dunia</li>
+                        </ul>
+                        
+                        <h3>📡 Protokol Jaringan:</h3>
+                        <ul>
+                            <li><strong>TCP/IP:</strong> Protokol dasar internet</li>
+                            <li><strong>HTTP/HTTPS:</strong> Protokol web untuk transfer data</li>
+                            <li><strong>FTP:</strong> File Transfer Protocol</li>
+                            <li><strong>DNS:</strong> Domain Name System</li>
+                        </ul>
+                        
+                        <h3>🛡️ Keamanan Jaringan:</h3>
+                        <p>Firewall, enkripsi, VPN, dan sistem autentikasi adalah komponen penting untuk melindungi data dan privasi dalam jaringan komputer.</p>
+                        
+                        <h3>🚀 Teknologi Terkini:</h3>
+                        <p>5G, IPv6, Cloud Computing, dan Edge Computing adalah teknologi jaringan yang sedang berkembang pesat.</p>
+                    `
+                },
+                jp: {
+                    title: "クイズ3の教材 - コンピュータネットワーク",
+                    content: `
+                        <h3>🌐 コンピュータネットワークの紹介</h3>
+                        <p>コンピュータネットワークは、データ、リソース、サービスを共有するために接続されたデバイスの集合です。インターネットは世界最大のコンピュータネットワークです。</p>
+                        
+                        <h3>🔗 ネットワークの種類：</h3>
+                        <ul>
+                            <li><strong>LAN（ローカルエリアネットワーク）:</strong> 限定されたエリア内のローカルネットワーク</li>
+                            <li><strong>WAN（ワイドエリアネットワーク）:</strong> 広い地理的エリアをカバーするネットワーク</li>
+                            <li><strong>MAN（メトロポリタンエリアネットワーク）:</strong> 一つの都市内のネットワーク</li>
+                            <li><strong>インターネット:</strong> 全世界を接続するグローバルネットワーク</li>
+                        </ul>
+                        
+                        <h3>📡 ネットワークプロトコル：</h3>
+                        <ul>
+                            <li><strong>TCP/IP:</strong> インターネットの基本プロトコル</li>
+                            <li><strong>HTTP/HTTPS:</strong> データ転送用のWebプロトコル</li>
+                            <li><strong>FTP:</strong> ファイル転送プロトコル</li>
+                            <li><strong>DNS:</strong> ドメインネームシステム</li>
+                        </ul>
+                        
+                        <h3>🛡️ ネットワークセキュリティ：</h3>
+                        <p>ファイアウォール、暗号化、VPN、認証システムは、コンピュータネットワークでデータとプライバシーを保護するための重要なコンポーネントです。</p>
+                        
+                        <h3>🚀 最新技術：</h3>
+                        <p>5G、IPv6、クラウドコンピューティング、エッジコンピューティングは急速に発展しているネットワーク技術です。</p>
+                    `
+                }
+            },
+            4: {
+                id: {
+                    title: "MATERI KUIS 4 - KEAMANAN SIBER",
+                    content: `
+                        <h3>🛡️ Pengenalan Keamanan Siber</h3>
+                        <p>Keamanan siber adalah praktik melindungi sistem, jaringan, dan program dari serangan digital. Dengan meningkatnya ketergantungan pada teknologi, keamanan siber menjadi sangat penting.</p>
+                        
+                        <h3>⚠️ Jenis-jenis Ancaman Siber:</h3>
+                        <ul>
+                            <li><strong>Malware:</strong> Virus, worm, trojan, ransomware</li>
+                            <li><strong>Phishing:</strong> Penipuan untuk mencuri informasi pribadi</li>
+                            <li><strong>DDoS Attack:</strong> Serangan untuk melumpuhkan server</li>
+                            <li><strong>Social Engineering:</strong> Manipulasi psikologis untuk mendapatkan akses</li>
+                            <li><strong>Data Breach:</strong> Pencurian data sensitif</li>
+                        </ul>
+                        
+                        <h3>🔐 Metode Perlindungan:</h3>
+                        <ul>
+                            <li><strong>Enkripsi:</strong> Mengamankan data dengan kode rahasia</li>
+                            <li><strong>Firewall:</strong> Barrier untuk melindungi jaringan</li>
+                            <li><strong>Antivirus:</strong> Software untuk mendeteksi malware</li>
+                            <li><strong>Two-Factor Authentication:</strong> Verifikasi ganda untuk akses</li>
+                            <li><strong>Regular Updates:</strong> Pembaruan sistem secara berkala</li>
+                        </ul>
+                        
+                        <h3>👤 Peran Manusia:</h3>
+                        <p>Faktor manusia adalah elemen terpenting dalam keamanan siber. Edukasi dan kesadaran pengguna sangat crucial untuk mencegah serangan siber.</p>
+                        
+                        <h3>🎯 Best Practices:</h3>
+                        <ul>
+                            <li>Gunakan password yang kuat dan unik</li>
+                            <li>Backup data secara teratur</li>
+                            <li>Hati-hati dengan email dan link mencurigakan</li>
+                            <li>Update software secara berkala</li>
+                        </ul>
+                    `
+                },
+                jp: {
+                    title: "クイズ4の教材 - サイバーセキュリティ",
+                    content: `
+                        <h3>🛡️ サイバーセキュリティの紹介</h3>
+                        <p>サイバーセキュリティは、デジタル攻撃からシステム、ネットワーク、プログラムを保護する実践です。技術への依存度が高まるにつれ、サイバーセキュリティは非常に重要になっています。</p>
+                        
+                        <h3>⚠️ サイバー脅威の種類：</h3>
+                        <ul>
+                            <li><strong>マルウェア:</strong> ウイルス、ワーム、トロイの木馬、ランサムウェア</li>
+                            <li><strong>フィッシング:</strong> 個人情報を盗むための詐欺</li>
+                            <li><strong>DDoS攻撃:</strong> サーバーを麻痺させる攻撃</li>
+                            <li><strong>ソーシャルエンジニアリング:</strong> アクセスを得るための心理的操作</li>
+                            <li><strong>データ侵害:</strong> 機密データの盗難</li>
+                        </ul>
+                        
+                        <h3>🔐 保護方法：</h3>
+                        <ul>
+                            <li><strong>暗号化:</strong> 秘密コードでデータを保護</li>
+                            <li><strong>ファイアウォール:</strong> ネットワークを保護するバリア</li>
+                            <li><strong>アンチウイルス:</strong> マルウェアを検出するソフトウェア</li>
+                            <li><strong>二要素認証:</strong> アクセスのための二重検証</li>
+                            <li><strong>定期更新:</strong> システムの定期的な更新</li>
+                        </ul>
+                        
+                        <h3>👤 人間の役割：</h3>
+                        <p>人的要因はサイバーセキュリティにおいて最も重要な要素です。ユーザーの教育と意識は、サイバー攻撃を防ぐために非常に重要です。</p>
+                        
+                        <h3>🎯 ベストプラクティス：</h3>
+                        <ul>
+                            <li>強力でユニークなパスワードを使用</li>
+                            <li>定期的なデータバックアップ</li>
+                            <li>疑わしいメールやリンクに注意</li>
+                            <li>ソフトウェアの定期的な更新</li>
+                        </ul>
+                    `
+                }
+            },
+            5: {
+                id: {
+                    title: "MATERI KUIS 5 - ARTIFICIAL INTELLIGENCE",
+                    content: `
+                        <h3>🤖 Pengenalan Artificial Intelligence</h3>
+                        <p>Artificial Intelligence (AI) adalah teknologi yang memungkinkan mesin untuk meniru kecerdasan manusia. AI dapat belajar, bernalar, dan membuat keputusan seperti manusia.</p>
+                        
+                        <h3>🧠 Jenis-jenis AI:</h3>
+                        <ul>
+                            <li><strong>Narrow AI:</strong> AI yang dirancang untuk tugas spesifik (Siri, Google Translate)</li>
+                            <li><strong>General AI:</strong> AI dengan kecerdasan setara manusia (masih dalam pengembangan)</li>
+                            <li><strong>Super AI:</strong> AI yang melebihi kecerdasan manusia (konsep futuristik)</li>
+                        </ul>
+                        
+                        <h3>⚙️ Teknologi Pendukung AI:</h3>
+                        <ul>
+                            <li><strong>Machine Learning:</strong> Kemampuan mesin untuk belajar dari data</li>
+                            <li><strong>Deep Learning:</strong> Neural network dengan banyak layer</li>
+                            <li><strong>Natural Language Processing:</strong> Pemahaman bahasa manusia</li>
+                            <li><strong>Computer Vision:</strong> Kemampuan mesin untuk "melihat"</li>
+                        </ul>
+                        
+                        <h3>🌟 Aplikasi AI dalam Kehidupan:</h3>
+                        <ul>
+                            <li><strong>Healthcare:</strong> Diagnosis medis, drug discovery</li>
+                            <li><strong>Transportation:</strong> Self-driving cars, traffic optimization</li>
+                            <li><strong>Finance:</strong> Fraud detection, algorithmic trading</li>
+                            <li><strong>Entertainment:</strong> Recommendation systems, game AI</li>
+                            <li><strong>Education:</strong> Personalized learning, intelligent tutoring</li>
+                        </ul>
+                        
+                        <h3>⚖️ Etika dan Tantangan AI:</h3>
+                        <p>Bias dalam algoritma, privasi data, dampak terhadap pekerjaan, dan pengambilan keputusan otomatis adalah isu-isu penting yang perlu dipertimbangkan dalam pengembangan AI.</p>
+                        
+                        <h3>🚀 Masa Depan AI:</h3>
+                        <p>AI akan terus berkembang dan mengintegrasikan lebih dalam ke berbagai aspek kehidupan, dari smart cities hingga personalized medicine.</p>
+                    `
+                },
+                jp: {
+                    title: "クイズ5の教材 - 人工知能",
+                    content: `
+                        <h3>🤖 人工知能の紹介</h3>
+                        <p>人工知能（AI）は、機械が人間の知能を模倣することを可能にする技術です。AIは人間のように学習し、推論し、決定を下すことができます。</p>
+                        
+                        <h3>🧠 AIの種類：</h3>
+                        <ul>
+                            <li><strong>狭いAI:</strong> 特定のタスク用に設計されたAI（Siri、Google翻訳）</li>
+                            <li><strong>汎用AI:</strong> 人間と同等の知能を持つAI（開発中）</li>
+                            <li><strong>超AI:</strong> 人間の知能を超えるAI（未来的概念）</li>
+                        </ul>
+                        
+                        <h3>⚙️ AIを支える技術：</h3>
+                        <ul>
+                            <li><strong>機械学習:</strong> データから学習する機械の能力</li>
+                            <li><strong>深層学習:</strong> 多層のニューラルネットワーク</li>
+                            <li><strong>自然言語処理:</strong> 人間の言語の理解</li>
+                            <li><strong>コンピュータビジョン:</strong> 機械が「見る」能力</li>
+                        </ul>
+                        
+                        <h3>🌟 生活におけるAIの応用：</h3>
+                        <ul>
+                            <li><strong>ヘルスケア:</strong> 医療診断、薬物発見</li>
+                            <li><strong>交通:</strong> 自動運転車、交通最適化</li>
+                            <li><strong>金融:</strong> 詐欺検出、アルゴリズム取引</li>
+                            <li><strong>エンターテイメント:</strong> 推薦システム、ゲームAI</li>
+                            <li><strong>教育:</strong> パーソナライズド学習、インテリジェント指導</li>
+                        </ul>
+                        
+                        <h3>⚖️ AIの倫理と課題：</h3>
+                        <p>アルゴリズムのバイアス、データプライバシー、雇用への影響、自動意思決定は、AI開発において考慮すべき重要な問題です。</p>
+                        
+                        <h3>🚀 AIの未来：</h3>
+                        <p>AIは継続的に発展し、スマートシティからパーソナライズド医療まで、生活の様々な側面により深く統合されていくでしょう。</p>
+                    `
+                }
+            }
+        };
+        
+        function openMateriModal(quizNumber) {
+            currentQuizNumber = quizNumber;
+            const modal = document.getElementById('materiModal');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            
+            // Load content based on current language
+            const data = materiData[quizNumber][currentLanguage];
+            modalTitle.textContent = data.title;
+            modalText.innerHTML = data.content;
+            
+            // Show modal
+            modal.classList.add('active');
+            
+            // Prevent body scroll
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeMateriModal() {
+            const modal = document.getElementById('materiModal');
+            modal.classList.remove('active');
+            
+            // Restore body scroll
+            document.body.style.overflow = 'auto';
+        }
+        
+        function switchLanguage(lang) {
+            currentLanguage = lang;
+            
+            // Update button states
+            const idBtn = document.getElementById('idBtn');
+            const jpBtn = document.getElementById('jpBtn');
+            
+            if (lang === 'id') {
+                idBtn.classList.add('active');
+                jpBtn.classList.remove('active');
+            } else {
+                jpBtn.classList.add('active');
+                idBtn.classList.remove('active');
+            }
+            
+            // Update content
+            const modalTitle = document.getElementById('modalTitle');
+            const modalText = document.getElementById('modalText');
+            const data = materiData[currentQuizNumber][currentLanguage];
+            
+            modalTitle.textContent = data.title;
+            modalText.innerHTML = data.content;
+        }
+        
+        // Close modal when clicking outside
+        document.getElementById('materiModal').addEventListener('click', function(e) {
+            if (e.target === this) {
+                closeMateriModal();
+            }
+        });
+        
+        // Close modal with Escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeMateriModal();
+            }
+        });
+        
         // Music Control
         const bgMusic = document.getElementById('bgMusic');
         
@@ -751,5 +1380,5 @@
             }
         }, { once: true });
     </script>
-<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96714777345fce2a',t:'MTc1Mzg0MTAwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9674b40766fca03f',t:'MTc1Mzg3NjkwNi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
 </html>
