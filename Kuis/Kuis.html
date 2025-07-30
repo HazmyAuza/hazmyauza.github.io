@@ -1,0 +1,702 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hazu Quiz Menu</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Press+Start+2P&display=swap');
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Orbitron', monospace;
+            background: 
+                linear-gradient(135deg, rgba(10,10,10,0.4) 0%, rgba(26,0,51,0.3) 50%, rgba(0,10,26,0.4) 100%),
+                url('noctis.jpg') no-repeat center center fixed;
+            background-size: cover;
+            background-blend-mode: screen;
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow-x: hidden;
+            position: relative;
+        }
+        
+        /* Animated background grid */
+        body::before {
+            content: '';
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                linear-gradient(rgba(0, 255, 255, 0.1) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.1) 1px, transparent 1px);
+            background-size: 50px 50px;
+            animation: gridMove 20s linear infinite;
+            z-index: -1;
+        }
+        
+        /* Particle Canvas */
+        #particleCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -2;
+            pointer-events: none;
+        }
+        
+        /* Scan Lines Effect */
+        .scan-lines {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(
+                transparent 50%,
+                rgba(0, 255, 255, 0.03) 50%
+            );
+            background-size: 100% 4px;
+            animation: scanlines 0.1s linear infinite;
+            z-index: 10;
+            pointer-events: none;
+        }
+        
+        @keyframes scanlines {
+            0% { transform: translateY(0); }
+            100% { transform: translateY(4px); }
+        }
+        
+        @keyframes gridMove {
+            0% { transform: translate(0, 0); }
+            100% { transform: translate(50px, 50px); }
+        }
+        
+        .container {
+            background: rgba(0, 0, 0, 0.8);
+            border: 2px solid #00ffff;
+            border-radius: 15px;
+            padding: 40px;
+            box-shadow: 
+                0 0 30px rgba(0, 255, 255, 0.5),
+                inset 0 0 30px rgba(255, 0, 255, 0.1);
+            backdrop-filter: blur(10px);
+            max-width: 500px;
+            width: 90%;
+        }
+        
+        .title {
+            text-align: center;
+            color: #eab105;
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 30px;
+            text-shadow: 
+                0 0 10px #00ffff,
+                0 0 20px #00ffff,
+                0 0 30px #00ffff;
+            animation: titleGlow 2s ease-in-out infinite alternate;
+        }
+        
+        @keyframes titleGlow {
+            from { text-shadow: 0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff; }
+            to { text-shadow: 0 0 20px #00ffff, 0 0 30px #00ffff, 0 0 40px #00ffff; }
+        }
+        
+        .menu-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .menu-item {
+            position: relative;
+            overflow: hidden;
+        }
+        
+        .menu-link {
+            display: block;
+            padding: 20px 25px;
+            background: linear-gradient(45deg, #1a0033, #330066);
+            border: 2px solid #ff00ff;
+            border-radius: 10px;
+            color: #ffffff;
+            text-decoration: none;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            transition: all 0.3s ease;
+            position: relative;
+            box-shadow: 
+                0 4px 15px rgba(255, 0, 255, 0.3),
+                inset 0 0 20px rgba(255, 0, 255, 0.1);
+            overflow: hidden;
+        }
+        
+        /* Loading Bar Effect */
+        .menu-link::after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: -100%;
+            width: 100%;
+            height: 3px;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+            transition: left 0.5s ease;
+        }
+        
+        .menu-link:hover::after {
+            left: 0;
+        }
+        
+        /* Holographic Effect */
+        .menu-link::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(
+                45deg,
+                transparent 30%,
+                rgba(0, 255, 255, 0.1) 50%,
+                transparent 70%
+            );
+            transform: rotate(45deg);
+            transition: all 0.6s ease;
+            opacity: 0;
+        }
+        
+        .menu-link:hover::before {
+            opacity: 1;
+            animation: hologram 1.5s ease-in-out infinite;
+        }
+        
+        @keyframes hologram {
+            0%, 100% { transform: rotate(45deg) translateX(-100%); }
+            50% { transform: rotate(45deg) translateX(100%); }
+        }
+        
+
+        
+        .menu-link:hover {
+            background: linear-gradient(45deg, #330066, #660099);
+            border-color: #00ffff;
+            color: #00ffff;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 
+                0 8px 25px rgba(0, 255, 255, 0.5),
+                inset 0 0 30px rgba(0, 255, 255, 0.2);
+            text-shadow: 0 0 10px #00ffff;
+        }
+        
+        .menu-link:active {
+            transform: translateY(-1px) scale(1.01);
+        }
+        
+        /* Glitch effect on hover */
+        .menu-link:hover {
+            animation: glitch 0.3s ease-in-out;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translateY(-3px) scale(1.02); }
+            20% { transform: translateY(-3px) scale(1.02) skew(2deg); }
+            40% { transform: translateY(-3px) scale(1.02) skew(-2deg); }
+            60% { transform: translateY(-3px) scale(1.02) skew(1deg); }
+            80% { transform: translateY(-3px) scale(1.02) skew(-1deg); }
+        }
+        
+        /* Glitch Transition Effect */
+        .glitch-transition {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: #000;
+            z-index: 9999;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .glitch-transition.active {
+            opacity: 1;
+            animation: glitchTransition 0.5s ease-in-out;
+        }
+        
+        @keyframes glitchTransition {
+            0% { 
+                background: #000;
+                transform: translateX(0);
+            }
+            25% { 
+                background: #ff00ff;
+                transform: translateX(-10px) skew(5deg);
+            }
+            50% { 
+                background: #00ffff;
+                transform: translateX(10px) skew(-5deg);
+            }
+            75% { 
+                background: #ff00ff;
+                transform: translateX(-5px) skew(2deg);
+            }
+            100% { 
+                background: #000;
+                transform: translateX(0);
+            }
+        }
+        
+        /* Video Overlay Styles */
+        .video-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 10000;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        
+        .video-overlay.active {
+            opacity: 1;
+        }
+        
+        .video-overlay video {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        
+        /* Arrow indicator */
+        .menu-link .arrow {
+            position: absolute;
+            right: 25px;
+            top: 50%;
+            transform: translateY(-50%);
+            font-size: 1rem;
+            color: #ff00ff;
+            transition: all 0.3s ease;
+            z-index: 2;
+        }
+        
+        .menu-link:hover .arrow {
+            color: #00ffff;
+            transform: translateY(-50%) translateX(5px);
+        }
+        
+        /* Loading Screen Styles */
+        .loading-screen {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, #0a0a0a 0%, #1a0033 50%, #000a1a 100%);
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            z-index: 10000;
+            transition: opacity 0.5s ease-out;
+        }
+        
+        .loading-screen.fade-out {
+            opacity: 0;
+            pointer-events: none;
+        }
+        
+        .loading-logo {
+            font-size: 4rem;
+            font-weight: 900;
+            color: #00ffff;
+            text-shadow: 
+                0 0 20px #00ffff,
+                0 0 40px #00ffff,
+                0 0 60px #00ffff;
+            margin-bottom: 40px;
+            animation: logoGlow 1.5s ease-in-out infinite alternate;
+        }
+        
+        @keyframes logoGlow {
+            from { 
+                text-shadow: 0 0 20px #eab105, 0 0 40px #00ffff, 0 0 60px #00ffff;
+                transform: scale(1);
+            }
+            to { 
+                text-shadow: 0 0 30px #eab105, 0 0 60px #00ffff, 0 0 90px #00ffff;
+                transform: scale(1.05);
+            }
+        }
+        
+        .loading-bar-container {
+            width: 300px;
+            height: 6px;
+            background: rgba(0, 255, 255, 0.2);
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 20px;
+            border: 1px solid #00ffff;
+            box-shadow: 0 0 20px rgba(0, 255, 255, 0.3);
+        }
+        
+        .loading-bar {
+            height: 100%;
+            background: linear-gradient(90deg, #00ffff, #ff00ff, #00ffff);
+            border-radius: 3px;
+            width: 0%;
+            animation: loadingProgress 4s ease-out forwards;
+            box-shadow: 0 0 10px rgba(0, 255, 255, 0.8);
+        }
+        
+        @keyframes loadingProgress {
+            0% { width: 0%; }
+            100% { width: 100%; }
+        }
+        
+        .loading-text {
+            color: #ffffff;
+            font-size: 1.2rem;
+            font-weight: 400;
+            letter-spacing: 3px;
+            animation: loadingDots 1.5s infinite;
+        }
+        
+        @keyframes loadingDots {
+            0%, 20% { content: 'LOADING'; }
+            40% { content: 'LOADING.'; }
+            60% { content: 'LOADING..'; }
+            80%, 100% { content: 'LOADING...'; }
+        }
+        
+        .loading-text::after {
+            content: '';
+            animation: loadingDotsAfter 1.5s infinite;
+        }
+        
+        @keyframes loadingDotsAfter {
+            0%, 20% { content: ''; }
+            40% { content: '.'; }
+            60% { content: '..'; }
+            80%, 100% { content: '...'; }
+        }
+        
+        .loading-particles {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            overflow: hidden;
+        }
+        
+        .loading-particle {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: #00ffff;
+            border-radius: 50%;
+            animation: floatParticle 3s infinite ease-in-out;
+            box-shadow: 0 0 6px #00ffff;
+        }
+        
+        @keyframes floatParticle {
+            0%, 100% { 
+                transform: translateY(0) translateX(0) scale(1);
+                opacity: 0.3;
+            }
+            50% { 
+                transform: translateY(-20px) translateX(10px) scale(1.5);
+                opacity: 1;
+            }
+        }
+        
+        .main-content {
+            opacity: 0;
+            transition: opacity 0.5s ease-in;
+        }
+        
+        .main-content.show {
+            opacity: 1;
+        }
+
+        /* Responsive design */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 20px;
+                margin: 20px;
+            }
+            
+            .title {
+                font-size: 2rem;
+                margin-bottom: 25px;
+            }
+            
+            .menu-link {
+                padding: 18px 20px;
+                font-size: 0.8rem;
+                letter-spacing: 1px;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            .title {
+                font-size: 1.8rem;
+            }
+            
+            .menu-link {
+                padding: 16px 18px;
+                font-size: 0.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Music -->
+    <audio id="bgMusic" loop autoplay>
+        <source src="ff15.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
+    </audio>
+    
+    <!-- Loading Screen -->
+    <div class="loading-screen" id="loadingScreen">
+        <div class="loading-particles" id="loadingParticles"></div>
+        <div class="loading-logo">Hazu</div>
+        <div class="loading-bar-container">
+            <div class="loading-bar"></div>
+        </div>
+        <div class="loading-text">LOADING</div>
+    </div>
+    
+    <!-- Main Content -->
+    <div class="main-content" id="mainContent">
+        <!-- Particle Effects Canvas -->
+        <canvas id="particleCanvas"></canvas>
+        
+        <!-- Scan Lines Effect -->
+        <div class="scan-lines"></div>
+        
+        <!-- Glitch Transition -->
+        <div class="glitch-transition" id="glitchTransition"></div>
+        
+        <!-- Glitch Video Overlay -->
+        <div class="video-overlay" id="videoOverlay">
+            <video id="glitchVideo" muted>
+                <source src="glitch.mp4" type="video/mp4">
+                Your browser does not support the video tag.
+            </video>
+        </div>
+        
+        <!-- Glitch Audio -->
+        <audio id="glitchAudio" preload="auto">
+            <source src="glitch.mp3" type="audio/mpeg">
+            <source src="glitch.wav" type="audio/wav">
+            Your browser does not support the audio element.
+        </audio>
+        
+        <div class="container">
+        <h1 class="title" id="terminalTitle">Menu List</h1>
+        <ul class="menu-list">
+            <li class="menu-item">
+                <a href="Kuis 1.html" class="menu-link">
+                    <span class="menu-text">Bahasa Indonesia Tema:
+					Ke,Di.</span>
+                    <span class="arrow">▶</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="Kuis 2.html" class="menu-link">
+                    <span class="menu-text">Kuis 2</span>
+                    <span class="arrow">▶</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="Kuis 3.html" class="menu-link">
+                    <span class="menu-text">Kuis 3</span>
+                    <span class="arrow">▶</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="Kuis 4.html" class="menu-link">
+                    <span class="menu-text">Kuis 4</span>
+                    <span class="arrow">▶</span>
+                </a>
+            </li>
+            <li class="menu-item">
+                <a href="Kuis 5.html" class="menu-link">
+                    <span class="menu-text">Kuis 5</span>
+                    <span class="arrow">▶</span>
+                </a>
+            </li>
+        </ul>
+        </div>
+    </div>
+
+    <script>
+        // Loading Screen Logic
+        const loadingScreen = document.getElementById('loadingScreen');
+        const mainContent = document.getElementById('mainContent');
+        const loadingParticles = document.getElementById('loadingParticles');
+        
+        // Create loading particles
+        function createLoadingParticles() {
+            for (let i = 0; i < 20; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'loading-particle';
+                particle.style.left = Math.random() * 100 + '%';
+                particle.style.top = Math.random() * 100 + '%';
+                particle.style.animationDelay = Math.random() * 3 + 's';
+                loadingParticles.appendChild(particle);
+            }
+        }
+        
+        // Initialize loading screen
+        createLoadingParticles();
+        
+        // Show main content after 4 seconds
+        setTimeout(() => {
+            loadingScreen.classList.add('fade-out');
+            setTimeout(() => {
+                loadingScreen.style.display = 'none';
+                mainContent.classList.add('show');
+                initializeMainContent();
+            }, 500);
+        }, 3200);
+        
+        // Initialize main content functions
+        function initializeMainContent() {
+            // Particle System
+            const canvas = document.getElementById('particleCanvas');
+            const ctx = canvas.getContext('2d');
+            
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            
+            const particles = [];
+            const matrixChars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            class Particle {
+                constructor() {
+                    this.x = Math.random() * canvas.width;
+                    this.y = Math.random() * canvas.height;
+                    this.speed = Math.random() * 2 + 0.5;
+                    this.char = matrixChars[Math.floor(Math.random() * matrixChars.length)];
+                    this.opacity = Math.random() * 0.5 + 0.2;
+                }
+                
+                update() {
+                    this.y += this.speed;
+                    if (this.y > canvas.height) {
+                        this.y = -20;
+                        this.x = Math.random() * canvas.width;
+                    }
+                }
+                
+                draw() {
+                    ctx.fillStyle = `rgba(0, 255, 255, ${this.opacity})`;
+                    ctx.font = '14px Orbitron';
+                    ctx.fillText(this.char, this.x, this.y);
+                }
+            }
+            
+            // Create particles
+            for (let i = 0; i < 50; i++) {
+                particles.push(new Particle());
+            }
+            
+            function animateParticles() {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                particles.forEach(particle => {
+                    particle.update();
+                    particle.draw();
+                });
+                
+                requestAnimationFrame(animateParticles);
+            }
+            
+            animateParticles();
+            
+            // Title is already visible, no typing animation needed
+            
+            // Glitch Video Transition Effect
+            const menuLinks = document.querySelectorAll('.menu-link');
+            const videoOverlay = document.getElementById('videoOverlay');
+            const glitchVideo = document.getElementById('glitchVideo');
+            const glitchAudio = document.getElementById('glitchAudio');
+            
+            menuLinks.forEach(link => {
+                link.addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const href = this.getAttribute('href');
+                    
+                    // Show video overlay
+                    videoOverlay.classList.add('active');
+                    
+                    // Play the glitch video and audio simultaneously
+                    glitchVideo.currentTime = 0;
+                    glitchAudio.currentTime = 0;
+                    
+                    // Play both video and audio
+                    glitchVideo.play();
+                    glitchAudio.play().catch(e => console.log('Glitch audio play failed:', e));
+                    
+                    // Navigate after video ends or after 3 seconds (whichever comes first)
+                    const navigateToPage = () => {
+                        // Stop audio if still playing
+                        glitchAudio.pause();
+                        glitchAudio.currentTime = 0;
+                        window.location.href = href;
+                    };
+                    
+                    glitchVideo.addEventListener('ended', navigateToPage, { once: true });
+                    
+                    // Fallback timeout in case video doesn't end properly
+                    setTimeout(navigateToPage, 2200);
+                });
+            });
+            
+            // Resize canvas on window resize
+            window.addEventListener('resize', () => {
+                canvas.width = window.innerWidth;
+                canvas.height = window.innerHeight;
+            });
+            
+            // Add random glitch effect to title
+            setInterval(() => {
+                if (Math.random() < 0.1) {
+                    title.style.textShadow = '2px 0 #ff00ff, -2px 0 #00ffff';
+                    setTimeout(() => {
+                        title.style.textShadow = '0 0 10px #00ffff, 0 0 20px #00ffff, 0 0 30px #00ffff';
+                    }, 100);
+                }
+            }, 2000);
+        }
+        
+        // Music Control
+        const bgMusic = document.getElementById('bgMusic');
+        
+        // Try to play music (modern browsers require user interaction)
+        document.addEventListener('click', function() {
+            if (bgMusic.paused) {
+                bgMusic.play().catch(e => console.log('Audio play failed:', e));
+            }
+        }, { once: true });
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'96714777345fce2a',t:'MTc1Mzg0MTAwMi4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
