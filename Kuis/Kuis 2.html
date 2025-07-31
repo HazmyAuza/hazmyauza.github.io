@@ -1,0 +1,1431 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kuis Kata imbuhan ter-</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap');
+        body {
+            font-family: 'Press Start 2P', monospace;
+            image-rendering: pixelated;
+            cursor: none;
+        }
+        
+        .custom-cursor {
+            position: fixed;
+            width: 24px;
+            height: 24px;
+            pointer-events: none;
+            z-index: 9999;
+            transition: transform 0.1s ease;
+        }
+        
+        .cursor-pointer {
+            background: linear-gradient(45deg, 
+                #ff0040 0%, #ff0040 25%, 
+                #ffff00 25%, #ffff00 50%, 
+                #00ff41 50%, #00ff41 75%, 
+                #00ffff 75%, #00ffff 100%);
+            clip-path: polygon(0 0, 70% 0, 100% 30%, 100% 100%, 30% 100%, 0 70%);
+            animation: cursorGlow 1s ease-in-out infinite alternate;
+        }
+        
+        .cursor-clicking {
+            transform: scale(1.5);
+            animation: cursorClick 0.2s ease-out;
+        }
+        
+        @keyframes cursorGlow {
+            0% { 
+                box-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040, 0 0 30px #ff0040;
+                filter: brightness(1);
+            }
+            100% { 
+                box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff, 0 0 35px #00ffff;
+                filter: brightness(1.2);
+            }
+        }
+        
+        @keyframes cursorClick {
+            0% { transform: scale(1.5); }
+            50% { transform: scale(2); }
+            100% { transform: scale(1.5); }
+        }
+        
+        .click-particle {
+            position: fixed;
+            width: 8px;
+            height: 8px;
+            pointer-events: none;
+            z-index: 9998;
+            animation: particleExplode 0.8s ease-out forwards;
+        }
+        
+        @keyframes particleExplode {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+        
+        .heart-bounce {
+            animation: heartBeat 0.5s ease-in-out;
+        }
+        
+        @keyframes heartBeat {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); }
+        }
+        
+        .fade-in {
+            animation: fadeIn 0.5s ease-in-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .screen-shake {
+            animation: screenShake 0.4s ease-in-out;
+        }
+        
+        @keyframes screenShake {
+            0%, 100% { transform: translateX(0); }
+            10% { transform: translateX(-4px) rotate(-0.3deg); }
+            20% { transform: translateX(4px) rotate(0.3deg); }
+            30% { transform: translateX(-3px) rotate(-0.2deg); }
+            40% { transform: translateX(3px) rotate(0.2deg); }
+            50% { transform: translateX(-2px) rotate(-0.1deg); }
+            60% { transform: translateX(2px) rotate(0.1deg); }
+            70% { transform: translateX(-1px); }
+            80% { transform: translateX(1px); }
+            90% { transform: translateX(-0.5px); }
+        }
+        
+        .glitch-text {
+            position: relative;
+            animation: glitch 0.3s infinite;
+        }
+        
+        .glitch-text::before,
+        .glitch-text::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        
+        .glitch-text::before {
+            animation: glitchTop 0.3s infinite;
+            clip-path: polygon(0 0, 100% 0, 100% 33%, 0 33%);
+            color: #ff0040;
+        }
+        
+        .glitch-text::after {
+            animation: glitchBottom 0.3s infinite;
+            clip-path: polygon(0 67%, 100% 67%, 100% 100%, 0 100%);
+            color: #00ffff;
+        }
+        
+        @keyframes glitch {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, 2px); }
+            40% { transform: translate(-2px, -2px); }
+            60% { transform: translate(2px, 2px); }
+            80% { transform: translate(2px, -2px); }
+        }
+        
+        @keyframes glitchTop {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(-2px, -2px); }
+            40% { transform: translate(-2px, 2px); }
+            60% { transform: translate(2px, -2px); }
+            80% { transform: translate(2px, 2px); }
+        }
+        
+        @keyframes glitchBottom {
+            0%, 100% { transform: translate(0); }
+            20% { transform: translate(2px, 2px); }
+            40% { transform: translate(2px, -2px); }
+            60% { transform: translate(-2px, 2px); }
+            80% { transform: translate(-2px, -2px); }
+        }
+        
+        .matrix-rain {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.6;
+        }
+        
+        .matrix-char {
+            position: absolute;
+            color: #00ff41;
+            font-family: 'Press Start 2P', monospace;
+            font-size: 12px;
+            animation: matrixFall linear infinite;
+            text-shadow: 0 0 5px #00ff41;
+        }
+        
+        @keyframes matrixFall {
+            0% {
+                transform: translateY(-100vh);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(100vh);
+                opacity: 0;
+            }
+        }
+                .background-video {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+            z-index: 0;
+            opacity: 0.3;
+        }
+        .pixel-explosion {
+            position: fixed;
+            width: 10px;
+            height: 10px;
+            pointer-events: none;
+            z-index: 9997;
+            animation: pixelExplode 2s ease-out forwards;
+        }
+        
+        @keyframes pixelExplode {
+            0% {
+                transform: scale(1) rotate(0deg);
+                opacity: 1;
+            }
+            50% {
+                transform: scale(1.5) rotate(180deg);
+                opacity: 0.8;
+            }
+            100% {
+                transform: scale(0) rotate(360deg);
+                opacity: 0;
+            }
+        }
+    </style>
+</head>
+<body class="min-h-screen relative overflow-hidden" style="background: linear-gradient(45deg, #1a1a2e 0%, #16213e 25%, #0f3460 50%, #533483 75%, #e94560 100%);"> 
+   
+       <video class="background-video" autoplay muted loop>
+        <source src="meteor.mp4" type="video/mp4">
+        <source src="background-video.webm" type="video/webm">
+        Your browser does not support the video tag.
+    </video>  
+   
+   
+   <!-- Custom 8-bit Cursor -->
+    <div id="customCursor" class="custom-cursor cursor-pointer"></div>
+    
+    <!-- Matrix Rain Effect -->
+    <div id="matrixRain" class="matrix-rain"></div>
+    
+    <!-- Enhanced 8-bit Background Layers -->
+    <div class="absolute inset-0 opacity-30">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <pattern id="pixelGrid" width="20" height="20" patternUnits="userSpaceOnUse">
+                    <rect width="20" height="20" fill="none" stroke="#00ff41" stroke-width="0.8"/>
+                    <circle cx="10" cy="10" r="1" fill="#00ff41" opacity="0.6"/>
+                </pattern>
+                <pattern id="pixelGrid2" width="40" height="40" patternUnits="userSpaceOnUse">
+                    <rect width="40" height="40" fill="none" stroke="#ff0080" stroke-width="0.5"/>
+                    <rect x="15" y="15" width="10" height="10" fill="#ff0080" opacity="0.3"/>
+                </pattern>
+                <pattern id="scanlines" width="100%" height="4" patternUnits="userSpaceOnUse">
+                    <rect width="100%" height="2" fill="#00ffff" opacity="0.1"/>
+                    <rect y="2" width="100%" height="2" fill="transparent"/>
+                </pattern>
+            </defs>
+            <rect width="100%" height="100%" fill="url(#pixelGrid)" />
+            <rect width="100%" height="100%" fill="url(#pixelGrid2)" />
+            <rect width="100%" height="100%" fill="url(#scanlines)" class="animate-pulse" />
+        </svg>
+    </div>
+
+    <!-- Floating 8-bit Particles -->
+    <div class="absolute inset-0 overflow-hidden">
+        <div class="absolute top-10 left-10 w-20 h-20 bg-yellow-400 animate-bounce shadow-lg" style="clip-path: polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%); box-shadow: 0 0 20px #fbbf24; animation-duration: 3s;"></div>
+        <div class="absolute top-32 right-20 w-16 h-16 bg-red-500 animate-pulse shadow-lg" style="clip-path: polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%); box-shadow: 0 0 15px #ef4444; animation-duration: 2s;"></div>
+        <div class="absolute bottom-20 left-32 w-18 h-18 bg-green-400 animate-bounce shadow-lg" style="clip-path: polygon(20% 0%, 80% 0%, 100% 20%, 100% 80%, 80% 100%, 20% 100%, 0% 80%, 0% 20%); box-shadow: 0 0 18px #10b981; animation-duration: 2.5s;"></div>
+        <div class="absolute bottom-40 right-16 w-22 h-22 bg-blue-400 animate-pulse shadow-lg" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); box-shadow: 0 0 25px #3b82f6; animation-duration: 1.8s;"></div>
+        <div class="absolute top-1/4 left-1/4 w-12 h-12 bg-cyan-400 animate-spin shadow-md" style="box-shadow: 0 0 12px #06b6d4; animation-duration: 4s;"></div>
+        <div class="absolute top-3/4 right-1/3 w-10 h-10 bg-pink-400 animate-bounce shadow-md" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); box-shadow: 0 0 10px #ec4899; animation-duration: 2.2s;"></div>
+        <div class="absolute top-1/2 left-1/6 w-14 h-14 bg-purple-400 animate-pulse shadow-md" style="clip-path: polygon(30% 0%, 70% 0%, 100% 30%, 100% 70%, 70% 100%, 30% 100%, 0% 70%, 0% 30%); box-shadow: 0 0 14px #a855f7; animation-duration: 3.2s;"></div>
+        <div class="absolute bottom-1/3 right-1/4 w-16 h-16 bg-orange-400 animate-spin shadow-md" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%); box-shadow: 0 0 16px #fb923c; animation-duration: 5s;"></div>
+        <div class="absolute top-20 right-1/3 w-6 h-6 bg-lime-400 animate-ping" style="box-shadow: 0 0 8px #84cc16; animation-duration: 1.5s;"></div>
+        <div class="absolute top-2/3 left-20 w-8 h-8 bg-indigo-400 animate-bounce" style="clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%); box-shadow: 0 0 6px #6366f1; animation-duration: 1.8s;"></div>
+        <div class="absolute bottom-1/4 left-2/3 w-5 h-5 bg-rose-400 animate-pulse" style="box-shadow: 0 0 5px #f43f5e; animation-duration: 2.1s;"></div>
+        <div class="absolute top-1/3 right-20 w-7 h-7 bg-emerald-400 animate-ping" style="clip-path: polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%); box-shadow: 0 0 7px #10b981; animation-duration: 1.7s;"></div>
+        <div class="absolute bottom-10 right-1/2 w-9 h-9 bg-violet-400 animate-spin" style="box-shadow: 0 0 9px #8b5cf6; animation-duration: 3.5s;"></div>
+        <div class="absolute top-1/2 right-10 w-4 h-4 bg-amber-400 animate-bounce" style="box-shadow: 0 0 4px #f59e0b; animation-duration: 2.3s;"></div>
+    </div>
+
+    <!-- Animated Circuit Lines -->
+    <div class="absolute inset-0 opacity-20">
+        <svg width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">
+            <line x1="0" y1="20%" x2="100%" y2="20%" stroke="#00ff41" stroke-width="2" opacity="0.6" class="animate-pulse"/>
+            <line x1="0" y1="40%" x2="100%" y2="40%" stroke="#ff0080" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 0.5s;"/>
+            <line x1="0" y1="60%" x2="100%" y2="60%" stroke="#00ffff" stroke-width="2" opacity="0.6" class="animate-pulse" style="animation-delay: 1s;"/>
+            <line x1="0" y1="80%" x2="100%" y2="80%" stroke="#ffff00" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 1.5s;"/>
+            <line x1="20%" y1="0" x2="20%" y2="100%" stroke="#ff4080" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 0.3s;"/>
+            <line x1="50%" y1="0" x2="50%" y2="100%" stroke="#40ff80" stroke-width="2" opacity="0.6" class="animate-pulse" style="animation-delay: 0.8s;"/>
+            <line x1="80%" y1="0" x2="80%" y2="100%" stroke="#8040ff" stroke-width="1.5" opacity="0.5" class="animate-pulse" style="animation-delay: 1.3s;"/>
+            <circle cx="20%" cy="20%" r="3" fill="#00ff41" class="animate-ping" style="animation-duration: 2s;"/>
+            <circle cx="50%" cy="40%" r="4" fill="#ff0080" class="animate-ping" style="animation-duration: 2.5s; animation-delay: 0.5s;"/>
+            <circle cx="80%" cy="60%" r="3" fill="#00ffff" class="animate-ping" style="animation-duration: 2.2s; animation-delay: 1s;"/>
+            <circle cx="20%" cy="80%" r="4" fill="#ffff00" class="animate-ping" style="animation-duration: 2.8s; animation-delay: 1.5s;"/>
+        </svg>
+    </div>
+
+    <!-- Glowing Orbs -->
+    <div class="absolute top-1/6 left-1/5 w-32 h-32 rounded-full bg-gradient-to-r from-cyan-400 to-blue-500 opacity-20 animate-pulse blur-xl" style="animation-duration: 4s;"></div>
+    <div class="absolute bottom-1/4 right-1/6 w-40 h-40 rounded-full bg-gradient-to-r from-pink-400 to-red-500 opacity-15 animate-pulse blur-xl" style="animation-duration: 5s; animation-delay: 1s;"></div>
+    <div class="absolute top-1/2 left-1/12 w-28 h-28 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 opacity-25 animate-pulse blur-xl" style="animation-duration: 3.5s; animation-delay: 2s;"></div>
+    <div class="absolute bottom-1/6 right-1/3 w-36 h-36 rounded-full bg-gradient-to-r from-purple-400 to-violet-500 opacity-18 animate-pulse blur-xl" style="animation-duration: 4.5s; animation-delay: 0.5s;"></div>
+
+    <!-- Start Screen -->
+    <div id="startScreen" class="min-h-screen flex items-center justify-center p-4 relative z-10">
+        <div class="bg-black border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
+            <div class="mb-6">
+                <h1 class="text-2xl font-bold text-cyan-400 mb-2">Bahasa Indonesia</h1>
+<p class="text-green-400">Pelajari penggunaan imbuhan "ter-" dalam kalimat bahasa Indonesia</p>
+<br>
+<p class="text-cyan-400">-----------------------</p>
+<br>
+<p class="text-green-400">Learn the use of the prefix "ter-" in Indonesian sentences</p>
+            </div>
+            
+            <div class="mb-6">
+                <label class="block text-left text-yellow-400 font-medium mb-2">Masukkan Nama Anda:</label>
+                <input type="text" id="playerName" class="w-full px-4 py-3 bg-black border-2 border-green-400 text-white focus:border-cyan-400 focus:outline-none transition-colors" placeholder="Nama Anda..." style="box-shadow: inset 0 0 10px #00ff41;">
+            </div>
+            
+            <button onclick="startQuiz()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
+                Mulai Kuis
+            </button>
+        </div>
+    </div>
+
+    <!-- Quiz Screen -->
+    <div id="quizScreen" class="min-h-screen p-4 hidden relative z-10">
+        <div class="max-w-4xl mx-auto">
+            <!-- Header -->
+            <div class="bg-black border-4 border-purple-400 p-6 mb-6" style="box-shadow: 0 0 20px #8b5cf6;">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h2 class="text-lg font-bold text-cyan-400">Halo, <span id="displayName" class="text-yellow-400"></span>!</h2>
+                        <p class="text-green-400">Pertanyaan <span id="questionNumber">1</span> dari <span id="totalQuestions">10</span></p>
+                    </div>
+                    <div class="flex items-center space-x-4">
+                        <button id="musicToggle" onclick="toggleMusicControl()" class="bg-blue-600 border-2 border-cyan-400 text-white px-3 py-2 hover:bg-cyan-600 transition-all duration-200 text-sm" style="box-shadow: 0 0 10px #06b6d4;">
+                            🎵 ON
+                        </button>
+                        <div class="bg-green-600 border-2 border-green-400 text-white px-3 py-2 text-sm animate-pulse" style="box-shadow: 0 0 10px #10b981;">
+						Hazu
+                        </div>
+                        <div class="flex items-center space-x-2">
+                            <span class="text-red-400 font-medium">Nyawa:</span>
+                            <div id="hearts" class="flex space-x-1">
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                                <span class="text-2xl">❤️</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question Card -->
+            <div class="bg-black border-4 border-green-400 p-8 mb-6 fade-in" style="box-shadow: 0 0 20px #10b981;">
+                <!-- Timer Display -->
+                <div class="flex justify-center mb-6">
+                    <div class="bg-red-600 border-2 border-yellow-400 px-6 py-3 text-center" style="box-shadow: 0 0 15px #ff0040;">
+                        <div class="text-yellow-400 text-sm font-bold">WAKTU TERSISA</div>
+                        <div id="timerDisplay" class="text-white text-2xl font-bold">01:00</div>
+                    </div>
+                </div>
+                
+                <h3 id="questionText" class="text-xl font-bold text-white mb-4 text-center"></h3>
+                <p id="questionTranslation" class="text-sm text-gray-400 mb-8 text-center italic"></p>
+                
+                <div id="answersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <!-- Answers will be inserted here -->
+                </div>
+            </div>
+
+            <!-- Progress Bar -->
+            <div class="bg-black border-4 border-blue-400 p-4" style="box-shadow: 0 0 20px #3b82f6;">
+                <div class="w-full bg-gray-800 h-4 border-2 border-white">
+                    <div id="progressBar" class="bg-green-400 h-full transition-all duration-500" style="width: 10%; box-shadow: 0 0 10px #10b981;"></div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Explanation Popup -->
+    <div id="explanationPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-black border-4 border-cyan-400 p-8 max-w-2xl w-full text-center fade-in" style="box-shadow: 0 0 30px #06b6d4;">
+            <div class="mb-6">
+                <div id="explanationIcon" class="text-6xl mb-4">✅</div>
+                <h2 id="explanationTitle" class="text-2xl font-bold text-cyan-400 mb-4">Jawaban Benar!</h2>
+                <div class="bg-gray-900 border-2 border-cyan-400 p-4 mb-4 text-left" style="box-shadow: inset 0 0 15px #06b6d4;">
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-yellow-400 font-bold">💡 Penjelasan:</div>
+                        <button id="languageToggle" onclick="toggleExplanationLanguage()" class="bg-purple-600 border-2 border-purple-400 text-white px-3 py-1 hover:bg-purple-700 transition-all duration-200 text-xs" style="box-shadow: 0 0 8px #8b5cf6;">
+                            🇮🇩 ID
+                        </button>
+                    </div>
+                    <p id="explanationText" class="text-white text-sm leading-relaxed"></p>
+                </div>
+            </div>
+            
+            <button id="continueButton" onclick="continueToNextQuestion()" class="w-full bg-green-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-green-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #10b981;">
+                Lanjutkan
+            </button>
+        </div>
+    </div>
+
+    <!-- Game Over Popup -->
+    <div id="gameOverPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-black border-4 border-red-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 30px #ef4444;">
+            <div class="mb-6">
+                <div class="text-6xl mb-4">💀</div>
+                <h2 class="text-2xl font-bold text-red-400 mb-2 glitch-text" data-text="GAME OVER!">GAME OVER!</h2>
+                <p class="text-white">Anda gagal karena habisan nyawa</p>
+                <p class="text-gray-400 text-sm mt-2">Nyawa: 0/5 ❤️</p>
+            </div>
+            
+            <div class="bg-gray-900 border-2 border-red-400 p-4 mb-6" style="box-shadow: inset 0 0 15px #ef4444;">
+                <div class="text-center">
+                    <div class="text-lg font-bold text-yellow-400 mb-2">Statistik Terakhir:</div>
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-green-400" id="gameOverCorrect">0</div>
+                            <div class="text-xs text-green-400">Benar</div>
+                        </div>
+                        <div class="text-center">
+                            <div class="text-xl font-bold text-red-400" id="gameOverWrong">0</div>
+                            <div class="text-xs text-red-400">Salah</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <button onclick="restartFromGameOver()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
+                Coba Lagi
+            </button>
+        </div>
+    </div>
+
+    <!-- All Explanations Popup -->
+    <div id="allExplanationsPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
+        <div class="bg-black border-4 border-purple-400 p-8 max-w-4xl w-full max-h-[90vh] overflow-y-auto fade-in" style="box-shadow: 0 0 30px #8b5cf6;">
+            <div class="mb-6">
+                <h2 class="text-2xl font-bold text-purple-400 mb-4 text-center">📖 Semua Penjelasan</h2>
+                <div class="flex justify-center mb-4">
+                    <button id="allExplanationsLanguageToggle" onclick="toggleAllExplanationsLanguage()" class="bg-cyan-600 border-2 border-cyan-400 text-white px-4 py-2 hover:bg-cyan-700 transition-all duration-200 text-sm" style="box-shadow: 0 0 8px #06b6d4;">
+                        🇮🇩 ID
+                    </button>
+                </div>
+            </div>
+            
+            <div id="allExplanationsContent" class="space-y-6">
+                <!-- Explanations will be inserted here -->
+            </div>
+            
+            <div class="mt-8 text-center">
+                <button onclick="closeAllExplanations()" class="bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-8 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ef4444;">
+                    Tutup
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Result Screen -->
+    <div id="resultScreen" class="min-h-screen flex items-center justify-center p-4 hidden relative z-10">
+        <div class="bg-black border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
+            <div class="mb-6">
+                <div id="resultIcon" class="text-6xl mb-4">🎉</div>
+                <h2 class="text-2xl font-bold text-cyan-400 mb-2">Kuis Selesai!</h2>
+                <p class="text-green-400">Terima kasih <span id="finalName" class="font-semibold text-yellow-400"></span></p>
+            </div>
+            
+            <div class="bg-gray-900 border-2 border-cyan-400 p-6 mb-6" style="box-shadow: inset 0 0 15px #00ff41;">
+                <div class="grid grid-cols-2 gap-4 mb-4">
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-green-600" id="correctCount">0</div>
+                        <div class="text-sm text-green-400">Benar</div>
+                    </div>
+                    <div class="text-center">
+                        <div class="text-2xl font-bold text-red-600" id="wrongCount">0</div>
+                        <div class="text-sm text-gray-600">Salah</div>
+                    </div>
+                </div>
+                
+                <div class="text-center">
+                    <div class="text-3xl font-bold text-purple-600 mb-1" id="percentage">0%</div>
+                    <div class="text-sm text-gray-600">Tingkat Kebenaran</div>
+                </div>
+            </div>
+            
+            <div class="space-y-3">
+                <button onclick="saveResultImage()" class="w-full bg-blue-600 border-2 border-cyan-400 text-white font-semibold py-3 px-6 hover:bg-cyan-600 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mb-3" style="box-shadow: 0 0 15px #06b6d4;">
+                    <span>💾</span>
+                    <span>Save Image</span>
+                </button>
+                <button onclick="showAllExplanations()" class="w-full bg-purple-600 border-2 border-purple-400 text-white font-semibold py-3 px-6 hover:bg-purple-700 transform hover:scale-105 transition-all duration-200 flex items-center justify-center space-x-2 mb-3" style="box-shadow: 0 0 15px #8b5cf6;">
+                    <span>📖</span>
+                    <span>Explanation</span>
+                </button>
+                <button onclick="restartQuiz()" class="w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200" style="box-shadow: 0 0 15px #ff0040;">
+                    Main Lagi
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Quiz Questions - Indonesian Grammar: "ke" and "di"
+        const questions = [
+  {
+    "question": "Manakah kalimat yang menggunakan imbuhan 'ter-' dengan benar?",
+    "translation": "Which sentence uses the prefix 'ter-' correctly?",
+    "answers": [
+      "A. Buku itu tersimpan rapi di lemari.",
+      "B. Dia terlari ke sekolah.",
+      "C. Kami tersapu lantai.",
+      "D. Ayah termakan nasi."
+    ],
+    "correct": 0,
+    "explanation": "Imbuhan 'ter-' memiliki beberapa fungsi, salah satunya untuk menyatakan keadaan atau hasil dari suatu perbuatan yang tidak disengaja. Kalimat 'Buku itu tersimpan rapi di lemari' menunjukkan bahwa buku tersebut dalam keadaan telah disimpan tanpa perlu diketahui siapa yang menyimpannya, dan ini sesuai dengan penggunaan 'ter-'. Kalimat lainnya tidak tepat: 'terlari' tidak lazim digunakan karena 'lari' adalah aktivitas yang dilakukan secara sadar. 'tersapu lantai' keliru karena struktur subjek dan objek tidak sesuai. 'termakan nasi' juga tidak umum dan secara semantik terdengar janggal.",
+    "explanationJp": "接頭辞「ter-」はさまざまな機能がありますが、その中の一つは、意図的でない動作の結果や状態を表すことです。「Buku itu tersimpan rapi di lemari」（その本は棚にきれいにしまわれている）という文は、本がしまわれた状態にあることを示しており、「ter-」の使い方として適切です。他の選択肢は文法的または意味的に誤りです。「terlari」は自然な表現ではなく、「tersapu lantai」や「termakan nasi」も不自然な構文です。"
+  },
+  {
+    "question": "Imbuhan 'ter-' pada kata 'terbuka' menyatakan...",
+    "translation": "The prefix 'ter-' in the word 'terbuka' indicates...",
+    "answers": [
+      "A. Kesengajaan",
+      "B. Perintah",
+      "C. Keadaan",
+      "D. Kepemilikan"
+    ],
+    "correct": 2,
+    "explanation": "Kata 'terbuka' menunjukkan keadaan suatu benda atau tempat yang berada dalam posisi tidak tertutup. Dalam hal ini, imbuhan 'ter-' menyatakan suatu kondisi atau situasi, bukan suatu tindakan atau perintah. Oleh karena itu, makna yang tepat adalah keadaan. Contoh lain yang serupa adalah 'terkunci', 'terikat', atau 'terisi' yang semuanya menunjukkan suatu kondisi yang telah terjadi.",
+    "explanationJp": "「terbuka」（開いている）は、何かが開いた状態にあることを表します。ここでの「ter-」は、動作ではなく、状態や状況を表す接頭辞として使われています。例えば、「terkunci」（鍵がかかっている）、「terikat」（縛られている）、「terisi」（満たされている）なども同様に状態を表します。"
+  },
+  {
+    "question": "Kalimat berikut yang menyatakan makna tidak sengaja dengan imbuhan 'ter-' adalah...",
+    "translation": "Which of the following sentences expresses an unintentional action using 'ter-'?",
+    "answers": [
+      "A. Saya tertidur di sofa.",
+      "B. Adik terbang di taman.",
+      "C. Ibu tercuci baju.",
+      "D. Dia terlari cepat."
+    ],
+    "correct": 0,
+    "explanation": "Salah satu fungsi imbuhan 'ter-' adalah menyatakan bahwa suatu tindakan terjadi tanpa disengaja. Kalimat 'Saya tertidur di sofa' berarti bahwa seseorang tidak berniat tidur, tetapi akhirnya tertidur. Ini mencerminkan penggunaan 'ter-' untuk makna ketidaksengajaan. Kalimat lainnya tidak tepat: 'terbang' bukan bentuk berimbuhan 'ter-', melainkan kata dasar. 'tercuci' tidak sesuai karena ibu adalah subjek yang seharusnya mencuci, bukan tercuci. 'terlari' tidak digunakan dalam Bahasa Indonesia yang baku.",
+    "explanationJp": "「ter-」の一つの使い方は、意図しない行為を表すことです。「Saya tertidur di sofa」（私はソファで寝てしまった）は、本人が意図せずに眠ってしまったことを示します。他の選択肢は誤りです。「terbang」は語根であり、「ter-」の接頭辞が含まれていません。「terlari」は文法的に不自然で、「tercuci」も主語と動作が合っていません。"
+  },
+  {
+    "question": "Manakah kata yang bukan termasuk bentuk dengan imbuhan 'ter-'?",
+    "translation": "Which of the following is NOT a word with the 'ter-' prefix?",
+    "answers": [
+      "A. Terlihat",
+      "B. Terpukul",
+      "C. Terima",
+      "D. Terbang"
+    ],
+    "correct": 2,
+    "explanation": "Kata 'terima' sering disalahartikan sebagai bentuk dari imbuhan 'ter-', padahal sebenarnya 'terima' adalah kata dasar yang berdiri sendiri dan tidak terbentuk dari imbuhan apapun. Sebaliknya, 'terlihat', 'terpukul', dan 'terbang' adalah kata yang menggunakan atau berasal dari bentuk 'ter-', baik dalam bentuk pasif, keadaan, maupun tidak sengaja.",
+    "explanationJp": "「terima」（受け取る）は、見た目は「ter-」が付いているように見えますが、実際には語根であり、接頭辞「ter-」を持つ派生語ではありません。一方、「terlihat」（見える）、「terpukul」（打たれた）などは、「ter-」が使われた語です。"
+  },
+  {
+    "question": "Makna imbuhan 'ter-' dalam kata 'terpukul' adalah...",
+    "translation": "The meaning of 'ter-' in the word 'terpukul' is...",
+    "answers": [
+      "A. Melakukan pukulan",
+      "B. Dalam keadaan memukul",
+      "C. Tidak sengaja memukul",
+      "D. Mengalami pukulan"
+    ],
+    "correct": 3,
+    "explanation": "Kata 'terpukul' menunjukkan bahwa seseorang mengalami kejadian dipukul atau terkena pukulan. Dalam hal ini, imbuhan 'ter-' menyatakan bahwa subjek menerima tindakan, bukan melakukan. Kata ini juga dapat digunakan dalam arti kiasan, misalnya 'terpukul secara emosional' yang berarti merasa sangat sedih atau terguncang.",
+    "explanationJp": "「terpukul」は、誰かが何かに打たれた、または精神的な衝撃を受けたことを表します。この場合、「ter-」は受け身の意味を持ち、行動を起こすのではなく、それを受ける側を表します。"
+  },
+  {
+    "question": "Manakah kalimat yang menunjukkan makna kemampuan dengan 'ter-'?",
+    "translation": "Which sentence shows the meaning of ability using 'ter-'?",
+    "answers": [
+      "A. Pintu itu terbuka.",
+      "B. Ia tertidur di kelas.",
+      "C. Mobil itu terbalik di jalan.",
+      "D. Soal ini terjawab dengan mudah."
+    ],
+    "correct": 3,
+    "explanation": "Dalam kalimat 'Soal ini terjawab dengan mudah', imbuhan 'ter-' menunjukkan bahwa soal tersebut dapat dijawab. Ini adalah penggunaan 'ter-' untuk menyatakan potensi atau kemampuan. Penggunaan ini umum ditemukan dalam kalimat pasif, terutama ketika menunjukkan bahwa suatu tindakan bisa dilakukan tanpa menyebut pelaku secara eksplisit.",
+    "explanationJp": "「Soal ini terjawab dengan mudah」は、「この問題は簡単に答えられる」という意味で、「ter-」が可能性や能力を示す使い方の一例です。行為者が明示されていない受け身の文でよく使われます。"
+  },
+  {
+    "question": "Manakah kalimat yang menyatakan keadaan dengan imbuhan 'ter-'?",
+    "translation": "Which sentence expresses a state using 'ter-'?",
+    "answers": [
+      "A. Anak itu tertawa lebar.",
+      "B. Baju itu tersetrika rapi.",
+      "C. Dia tertangkap basah.",
+      "D. Ayah termakan nasi."
+    ],
+    "correct": 1,
+    "explanation": "Kalimat 'Baju itu tersetrika rapi' menyatakan keadaan baju yang sudah disetrika dengan baik. Ini termasuk penggunaan imbuhan 'ter-' yang menyatakan kondisi akhir dari suatu tindakan. Meskipun tidak diketahui siapa yang menyetrika, hasilnya sudah terlihat.",
+    "explanationJp": "「Baju itu tersetrika rapi」は、「服がきれいにアイロンがけされている」という状態を示し、「ter-」が完了した結果や状態を示しています。"
+  },
+  {
+    "question": "Kata 'terlihat' berarti...",
+    "translation": "The word 'terlihat' means...",
+    "answers": [
+      "A. Dapat dilihat",
+      "B. Sedang melihat",
+      "C. Melihat dengan jelas",
+      "D. Melihat secara diam-diam"
+    ],
+    "correct": 0,
+    "explanation": "'Terlihat' berarti sesuatu dapat dilihat atau tampak. Ini adalah bentuk pasif dari kata 'lihat' yang menunjukkan bahwa objek tampak tanpa harus ada subjek yang melihat secara eksplisit. Penggunaan ini umum dalam deskripsi visual atau kesan pertama.",
+    "explanationJp": "「terlihat」は「見える」「目に入る」という意味で、能動的に見るのではなく、自然と視界に入る状態を表します。"
+  },
+  {
+    "question": "Manakah yang termasuk dalam penggunaan 'ter-' yang menyatakan hasil?",
+    "translation": "Which of the following uses 'ter-' to express a result?",
+    "answers": [
+      "A. Tertawa",
+      "B. Terluka",
+      "C. Terjatuh",
+      "D. Terdiam"
+    ],
+    "correct": 1,
+    "explanation": "Kata 'terluka' menyatakan bahwa seseorang telah mengalami luka. Ini menunjukkan hasil dari suatu kejadian, misalnya jatuh atau terkena benda tajam. Dalam konteks ini, imbuhan 'ter-' digunakan untuk menyatakan bahwa kondisi tersebut adalah akibat dari suatu tindakan.",
+    "explanationJp": "「terluka」は「けがをしている」という状態を示し、何かの結果として傷を負ったことを表します。このように、「ter-」は結果を表すためにも使用されます。"
+  },
+  {
+    "question": "Kalimat yang menunjukkan ketidaksengajaan dengan tepat adalah...",
+    "translation": "Which sentence clearly shows unintentional action?",
+    "answers": [
+      "A. Saya tertawa keras.",
+      "B. Ia tertidur di kelas.",
+      "C. Dia terlihat senang.",
+      "D. Buku itu terbuka."
+    ],
+    "correct": 1,
+    "explanation": "Kalimat 'Ia tertidur di kelas' menunjukkan bahwa orang tersebut tidak sengaja tidur di kelas. Penggunaan imbuhan 'ter-' dalam 'tertidur' menyiratkan bahwa tindakan tidur itu terjadi tanpa direncanakan atau disadari. Ini adalah salah satu fungsi utama imbuhan 'ter-' dalam Bahasa Indonesia.",
+    "explanationJp": "「Ia tertidur di kelas」は、本人の意図とは無関係に授業中に寝てしまったことを意味し、「tertidur」は意図しない行動を表す典型的な使用例です。"
+  }
+];
+
+        let currentQuestion = 0;
+        let hearts = 5;
+        let correctAnswers = 0;
+        let wrongAnswers = 0;
+        let playerName = "";
+        let backgroundMusic = null;
+        let questionTimer = null;
+        let timeLeft = 60;
+        let currentLanguage = 'id';
+        
+        // Custom Audio Files
+        let correctSound = null;
+        let wrongSound = null;
+        let successSound = null;
+        let failedSound = null;
+
+        window.onload = function() {
+            initCustomAudio();
+            initCustomCursor();
+            initMatrixRain();
+        };
+        
+        function triggerScreenShake() {
+            document.body.classList.add('screen-shake');
+            setTimeout(() => {
+                document.body.classList.remove('screen-shake');
+            }, 600);
+        }
+        
+        function initMatrixRain() {
+            const matrixContainer = document.getElementById('matrixRain');
+            const chars = '01アイウエオカキクケコサシスセソタチツテトナニヌネノハヒフヘホマミムメモヤユヨラリルレロワヲン';
+            
+            function createMatrixChar() {
+                const char = document.createElement('div');
+                char.className = 'matrix-char';
+                char.textContent = chars[Math.floor(Math.random() * chars.length)];
+                char.style.left = Math.random() * 100 + '%';
+                char.style.animationDuration = (Math.random() * 3 + 2) + 's';
+                char.style.animationDelay = Math.random() * 2 + 's';
+                
+                matrixContainer.appendChild(char);
+                
+                setTimeout(() => {
+                    if (char.parentNode) {
+                        char.parentNode.removeChild(char);
+                    }
+                }, 5000);
+            }
+            
+            setInterval(() => {
+                for (let i = 0; i < 3; i++) {
+                    createMatrixChar();
+                }
+            }, 50);
+        }
+        
+        function createPixelExplosion(centerX, centerY) {
+            const colors = ['#ff0040', '#ffff00', '#00ff41', '#00ffff', '#ff4080', '#8040ff'];
+            const shapes = [
+                'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+            ];
+            
+            const pixelCount = Math.random() * 30 + 50;
+            
+            for (let i = 0; i < pixelCount; i++) {
+                const pixel = document.createElement('div');
+                pixel.className = 'pixel-explosion';
+                
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                pixel.style.background = color;
+                pixel.style.clipPath = shape;
+                pixel.style.boxShadow = `0 0 15px ${color}`;
+                
+                const size = Math.random() * 12 + 8;
+                pixel.style.width = size + 'px';
+                pixel.style.height = size + 'px';
+                
+                const angle = Math.random() * Math.PI * 2;
+                const distance = Math.random() * 200 + 50;
+                const startX = centerX + Math.cos(angle) * 50;
+                const startY = centerY + Math.sin(angle) * 50;
+                const endX = centerX + Math.cos(angle) * distance;
+                const endY = centerY + Math.sin(angle) * distance;
+                
+                pixel.style.left = startX + 'px';
+                pixel.style.top = startY + 'px';
+                
+                document.body.appendChild(pixel);
+                
+                pixel.animate([
+                    {
+                        transform: `translate(0, 0) scale(1) rotate(0deg)`,
+                        opacity: 1
+                    },
+                    {
+                        transform: `translate(${endX - startX}px, ${endY - startY}px) scale(0) rotate(${Math.random() * 720}deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 2000,
+                    easing: 'ease-out'
+                });
+                
+                setTimeout(() => {
+                    if (pixel.parentNode) {
+                        pixel.parentNode.removeChild(pixel);
+                    }
+                }, 2000);
+            }
+        }
+
+        function initCustomCursor() {
+            const cursor = document.getElementById('customCursor');
+            
+            document.addEventListener('mousemove', (e) => {
+                cursor.style.left = e.clientX - 12 + 'px';
+                cursor.style.top = e.clientY - 12 + 'px';
+            });
+            
+            document.addEventListener('mousedown', (e) => {
+                cursor.classList.add('cursor-clicking');
+                createClickParticles(e.clientX, e.clientY);
+                
+                setTimeout(() => {
+                    cursor.classList.remove('cursor-clicking');
+                }, 200);
+            });
+            
+            document.addEventListener('mouseleave', () => {
+                cursor.style.opacity = '0';
+            });
+            
+            document.addEventListener('mouseenter', () => {
+                cursor.style.opacity = '1';
+            });
+        }
+
+        function createClickParticles(x, y) {
+            const colors = ['#ff0040', '#ffff00', '#00ff41', '#00ffff', '#ff4080', '#8040ff'];
+            const shapes = [
+                'polygon(0 0, 100% 0, 100% 100%, 0 100%)',
+                'polygon(50% 0%, 100% 50%, 50% 100%, 0% 50%)',
+                'polygon(25% 0%, 75% 0%, 100% 50%, 75% 100%, 25% 100%, 0% 50%)',
+                'polygon(0 0, 100% 0, 100% 75%, 75% 75%, 75% 100%, 50% 100%, 50% 75%, 25% 75%, 25% 50%, 0 50%)'
+            ];
+            
+            const particleCount = Math.random() * 4 + 8;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.className = 'click-particle';
+                
+                const color = colors[Math.floor(Math.random() * colors.length)];
+                const shape = shapes[Math.floor(Math.random() * shapes.length)];
+                
+                particle.style.background = color;
+                particle.style.clipPath = shape;
+                particle.style.boxShadow = `0 0 10px ${color}`;
+                
+                const size = Math.random() * 8 + 6;
+                particle.style.width = size + 'px';
+                particle.style.height = size + 'px';
+                
+                particle.style.left = (x - size/2) + 'px';
+                particle.style.top = (y - size/2) + 'px';
+                
+                const angle = (Math.PI * 2 * i) / particleCount + (Math.random() - 0.5) * 0.5;
+                const distance = Math.random() * 60 + 30;
+                const endX = x + Math.cos(angle) * distance;
+                const endY = y + Math.sin(angle) * distance;
+                
+                document.body.appendChild(particle);
+                
+                particle.animate([
+                    {
+                        transform: `translate(0, 0) scale(1) rotate(0deg)`,
+                        opacity: 1
+                    },
+                    {
+                        transform: `translate(${endX - x}px, ${endY - y}px) scale(0) rotate(${Math.random() * 360}deg)`,
+                        opacity: 0
+                    }
+                ], {
+                    duration: 800,
+                    easing: 'ease-out'
+                });
+                
+                setTimeout(() => {
+                    if (particle.parentNode) {
+                        particle.parentNode.removeChild(particle);
+                    }
+                }, 800);
+            }
+        }
+
+        function initCustomAudio() {
+            // Initialize background music
+            backgroundMusic = new Audio();
+            backgroundMusic.src = 'ryuukoi.mp3'; // Replace with your background music file
+            backgroundMusic.loop = true;
+            backgroundMusic.volume = 0.2;
+            
+            // Initialize sound effects
+            correctSound = new Audio();
+            correctSound.src = 'correct.mp3'; // Replace with your correct sound file
+            correctSound.volume = 0.2;
+            
+            wrongSound = new Audio();
+            wrongSound.src = 'wrong.mp3'; // Replace with your wrong sound file
+            wrongSound.volume = 0.6;
+            
+            successSound = new Audio();
+            successSound.src = 'success.mp3'; // Replace with your success sound file
+            successSound.volume = 0.5;
+            
+            failedSound = new Audio();
+            failedSound.src = 'failed.mp3'; // Replace with your failed sound file
+            failedSound.volume = 0.5;
+            
+            console.log('Custom audio initialized');
+        }
+
+        function playCorrectSound() {
+            try {
+                if (correctSound) {
+                    correctSound.currentTime = 0;
+                    correctSound.play();
+                }
+            } catch (error) {
+                console.log('Correct sound failed:', error);
+            }
+        }
+
+        function playWrongSound() {
+            try {
+                if (wrongSound) {
+                    wrongSound.currentTime = 0;
+                    wrongSound.play();
+                }
+            } catch (error) {
+                console.log('Wrong sound failed:', error);
+            }
+        }
+
+        function playWinningSound() {
+            try {
+                if (successSound) {
+                    successSound.currentTime = 0;
+                    successSound.play();
+                }
+            } catch (error) {
+                console.log('Success sound failed:', error);
+            }
+        }
+
+        function playFailedSound() {
+            try {
+                if (failedSound) {
+                    failedSound.currentTime = 0;
+                    failedSound.play();
+                }
+            } catch (error) {
+                console.log('Failed sound failed:', error);
+            }
+        }
+
+        function playBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    backgroundMusic.play();
+                }
+            } catch (error) {
+                console.log('Background music failed:', error);
+            }
+        }
+
+        function pauseBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    backgroundMusic.pause();
+                }
+            } catch (error) {
+                console.log('Background music pause failed:', error);
+            }
+        }
+
+        function stopBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    backgroundMusic.pause();
+                    backgroundMusic.currentTime = 0;
+                }
+            } catch (error) {
+                console.log('Background music stop failed:', error);
+            }
+        }
+
+        function toggleBackgroundMusic() {
+            try {
+                if (backgroundMusic) {
+                    if (backgroundMusic.paused) {
+                        backgroundMusic.play();
+                        return true;
+                    } else {
+                        backgroundMusic.pause();
+                        return false;
+                    }
+                }
+                return false;
+            } catch (error) {
+                console.log('Background music toggle failed:', error);
+                return false;
+            }
+        }
+
+        function toggleMusicControl() {
+            const musicButton = document.getElementById('musicToggle');
+            const isPlaying = toggleBackgroundMusic();
+            
+            if (isPlaying) {
+                musicButton.innerHTML = '🎵 ON';
+                musicButton.classList.remove('bg-red-600');
+                musicButton.classList.add('bg-blue-600');
+            } else {
+                musicButton.innerHTML = '🔇 OFF';
+                musicButton.classList.remove('bg-blue-600');
+                musicButton.classList.add('bg-red-600');
+            }
+        }
+
+        function startQuestionTimer() {
+            timeLeft = 60;
+            updateTimerDisplay();
+            
+            questionTimer = setInterval(() => {
+                timeLeft--;
+                updateTimerDisplay();
+                
+                const timerDisplay = document.getElementById('timerDisplay');
+                const timerContainer = timerDisplay.parentElement;
+                
+                if (timeLeft <= 10) {
+                    timerContainer.classList.remove('bg-red-600');
+                    timerContainer.classList.add('bg-red-800');
+                    timerDisplay.classList.add('animate-pulse');
+                    timerDisplay.style.color = '#ff0000';
+                } else if (timeLeft <= 30) {
+                    timerContainer.classList.remove('bg-red-600');
+                    timerContainer.classList.add('bg-orange-600');
+                    timerDisplay.style.color = '#ffff00';
+                }
+                
+                if (timeLeft <= 0) {
+                    clearInterval(questionTimer);
+                    handleTimeUp();
+                }
+            }, 1000);
+        }
+
+        function stopQuestionTimer() {
+            if (questionTimer) {
+                clearInterval(questionTimer);
+                questionTimer = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(timeLeft / 60);
+            const seconds = timeLeft % 60;
+            const display = `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+            document.getElementById('timerDisplay').textContent = display;
+        }
+
+        function handleTimeUp() {
+            const buttons = document.querySelectorAll('#answersContainer button');
+            buttons.forEach(btn => btn.disabled = true);
+            
+            const question = questions[currentQuestion];
+            buttons[question.correct].classList.remove('bg-black', 'border-yellow-400');
+            buttons[question.correct].classList.add('bg-green-600', 'border-green-400', 'text-white');
+            buttons[question.correct].style.boxShadow = '0 0 15px #10b981';
+            
+            wrongAnswers++;
+            loseHeart();
+            playWrongSound();
+            triggerScreenShake();
+            
+            const timerDisplay = document.getElementById('timerDisplay');
+            timerDisplay.textContent = 'TIME UP!';
+            timerDisplay.style.color = '#ff0000';
+            
+            setTimeout(() => {
+                showExplanation(false, question);
+            }, 2000);
+        }
+
+        function startQuiz() {
+            const nameInput = document.getElementById('playerName');
+            if (nameInput.value.trim() === '') {
+                alert('Silakan masukkan nama Anda terlebih dahulu!');
+                return;
+            }
+            
+            playerName = nameInput.value.trim();
+            document.getElementById('displayName').textContent = playerName;
+            document.getElementById('startScreen').classList.add('hidden');
+            document.getElementById('quizScreen').classList.remove('hidden');
+            
+            playBackgroundMusic();
+            showQuestion();
+        }
+
+        function toggleExplanationLanguage() {
+            const languageButton = document.getElementById('languageToggle');
+            const explanationText = document.getElementById('explanationText');
+            const currentQuestionData = questions[currentQuestion];
+            
+            if (currentLanguage === 'id') {
+                currentLanguage = 'jp';
+                languageButton.innerHTML = '🇯🇵 JP';
+                explanationText.textContent = currentQuestionData.explanationJp;
+            } else {
+                currentLanguage = 'id';
+                languageButton.innerHTML = '🇮🇩 ID';
+                explanationText.textContent = currentQuestionData.explanation;
+            }
+        }
+
+        function showQuestion() {
+            if (hearts <= 0) {
+                showGameOver();
+                return;
+            }
+            if (currentQuestion >= questions.length) {
+                showResults();
+                return;
+            }
+
+            stopQuestionTimer();
+
+            const question = questions[currentQuestion];
+            document.getElementById('questionText').textContent = question.question;
+            document.getElementById('questionTranslation').textContent = question.translation;
+            document.getElementById('questionNumber').textContent = currentQuestion + 1;
+            document.getElementById('totalQuestions').textContent = questions.length;
+            
+            const timerDisplay = document.getElementById('timerDisplay');
+            const timerContainer = timerDisplay.parentElement;
+            timerContainer.className = 'bg-red-600 border-2 border-yellow-400 px-6 py-3 text-center';
+            timerContainer.style.boxShadow = '0 0 15px #ff0040';
+            timerDisplay.classList.remove('animate-pulse');
+            timerDisplay.style.color = '#ffffff';
+            
+            const container = document.getElementById('answersContainer');
+            container.innerHTML = '';
+            
+            question.answers.forEach((answer, index) => {
+                const button = document.createElement('button');
+                button.className = 'bg-black border-2 border-yellow-400 text-white hover:bg-yellow-600 hover:text-black p-4 text-left font-medium transition-all duration-200 transform hover:scale-105';
+                button.style.boxShadow = '0 0 10px #fbbf24';
+                button.textContent = answer;
+                button.onclick = () => selectAnswer(index);
+                container.appendChild(button);
+            });
+
+            const progress = ((currentQuestion + 1) / questions.length) * 100;
+            document.getElementById('progressBar').style.width = progress + '%';
+            
+            startQuestionTimer();
+        }
+
+        function selectAnswer(selectedIndex) {
+            stopQuestionTimer();
+            
+            const question = questions[currentQuestion];
+            const buttons = document.querySelectorAll('#answersContainer button');
+            
+            buttons.forEach(btn => btn.disabled = true);
+            
+            let isCorrect = false;
+            
+            if (selectedIndex === question.correct) {
+                buttons[selectedIndex].classList.remove('bg-black', 'border-yellow-400');
+                buttons[selectedIndex].classList.add('bg-green-600', 'border-green-400', 'text-white');
+                buttons[selectedIndex].style.boxShadow = '0 0 15px #10b981';
+                correctAnswers++;
+                playCorrectSound();
+                isCorrect = true;
+            } else {
+                buttons[selectedIndex].classList.remove('bg-black', 'border-yellow-400');
+                buttons[selectedIndex].classList.add('bg-red-600', 'border-red-400', 'text-white');
+                buttons[selectedIndex].style.boxShadow = '0 0 15px #ef4444';
+                
+                buttons[question.correct].classList.remove('bg-black', 'border-yellow-400');
+                buttons[question.correct].classList.add('bg-green-600', 'border-green-400', 'text-white');
+                buttons[question.correct].style.boxShadow = '0 0 15px #10b981';
+                
+                wrongAnswers++;
+                loseHeart();
+                playWrongSound();
+                triggerScreenShake();
+                isCorrect = false;
+            }
+            
+            setTimeout(() => {
+                showExplanation(isCorrect, question);
+            }, 1500);
+        }
+
+        function showExplanation(isCorrect, question) {
+            const popup = document.getElementById('explanationPopup');
+            const icon = document.getElementById('explanationIcon');
+            const title = document.getElementById('explanationTitle');
+            const text = document.getElementById('explanationText');
+            const continueBtn = document.getElementById('continueButton');
+            const languageButton = document.getElementById('languageToggle');
+            
+            if (isCorrect) {
+                icon.textContent = '✅';
+                title.textContent = 'Jawaban Benar!';
+                title.className = 'text-2xl font-bold text-green-400 mb-4';
+                continueBtn.className = 'w-full bg-green-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-green-700 transform hover:scale-105 transition-all duration-200';
+                continueBtn.style.boxShadow = '0 0 15px #10b981';
+            } else {
+                icon.textContent = '❌';
+                title.textContent = 'Jawaban Salah!';
+                title.className = 'text-2xl font-bold text-red-400 mb-4';
+                continueBtn.className = 'w-full bg-red-600 border-2 border-yellow-400 text-white font-semibold py-3 px-6 hover:bg-red-700 transform hover:scale-105 transition-all duration-200';
+                continueBtn.style.boxShadow = '0 0 15px #ef4444';
+            }
+            
+            currentLanguage = 'id';
+            languageButton.innerHTML = '🇮🇩 ID';
+            
+            text.textContent = question.explanation;
+            popup.classList.remove('hidden');
+        }
+
+        function continueToNextQuestion() {
+            document.getElementById('explanationPopup').classList.add('hidden');
+            currentQuestion++;
+            showQuestion();
+        }
+
+        function loseHeart() {
+            hearts--;
+            const heartsContainer = document.getElementById('hearts');
+            const heartElements = heartsContainer.children;
+            
+            if (hearts >= 0 && hearts < heartElements.length) {
+                heartElements[heartElements.length - 1 - (4 - hearts)].textContent = '💔';
+                heartElements[heartElements.length - 1 - (4 - hearts)].classList.add('heart-bounce');
+            }
+        }
+
+        function showGameOver() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('gameOverPopup').classList.remove('hidden');
+            
+            stopQuestionTimer();
+            stopBackgroundMusic();
+            
+            document.getElementById('gameOverCorrect').textContent = correctAnswers;
+            document.getElementById('gameOverWrong').textContent = wrongAnswers;
+            
+            playFailedSound();
+        }
+
+        function restartFromGameOver() {
+            document.getElementById('gameOverPopup').classList.add('hidden');
+            restartQuiz();
+        }
+
+        function showResults() {
+            document.getElementById('quizScreen').classList.add('hidden');
+            document.getElementById('resultScreen').classList.remove('hidden');
+            
+            stopQuestionTimer();
+            stopBackgroundMusic();
+            
+            setTimeout(() => {
+                createPixelExplosion(window.innerWidth / 2, window.innerHeight / 2);
+            }, 500);
+            
+            const totalQuestions = correctAnswers + wrongAnswers;
+            const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+            
+            document.getElementById('finalName').textContent = playerName;
+            document.getElementById('correctCount').textContent = correctAnswers;
+            document.getElementById('wrongCount').textContent = wrongAnswers;
+            document.getElementById('percentage').textContent = percentage + '%';
+            
+            const resultIcon = document.getElementById('resultIcon');
+            if (percentage >= 80) {
+                resultIcon.textContent = '🏆';
+                playWinningSound();
+            } else if (percentage >= 60) {
+                resultIcon.textContent = '🎉';
+                playWinningSound();
+            } else if (percentage >= 40) {
+                resultIcon.textContent = '👍';
+            } else {
+                resultIcon.textContent = '💪';
+            }
+        }
+
+        function saveResultImage() {
+            try {
+                const canvas = document.createElement('canvas');
+                const ctx = canvas.getContext('2d');
+                canvas.width = 800;
+                canvas.height = 600;
+                
+                const gradient = ctx.createLinearGradient(0, 0, canvas.width, canvas.height);
+                gradient.addColorStop(0, '#1a1a2e');
+                gradient.addColorStop(0.25, '#16213e');
+                gradient.addColorStop(0.5, '#0f3460');
+                gradient.addColorStop(0.75, '#533483');
+                gradient.addColorStop(1, '#e94560');
+                ctx.fillStyle = gradient;
+                ctx.fillRect(0, 0, canvas.width, canvas.height);
+                
+                ctx.fillStyle = '#00ff41';
+                ctx.fillRect(50, 50, 20, 20);
+                ctx.fillRect(730, 530, 20, 20);
+                
+                ctx.fillStyle = '#ff0040';
+                ctx.fillRect(700, 80, 15, 15);
+                ctx.fillRect(80, 520, 15, 15);
+                
+                ctx.fillStyle = '#ffff00';
+                ctx.fillRect(650, 150, 25, 25);
+                ctx.fillRect(125, 450, 25, 25);
+                
+                ctx.fillStyle = '#00ffff';
+                ctx.font = 'bold 36px monospace';
+                ctx.textAlign = 'center';
+                ctx.fillText('📚 HASIL KUIS Imbuhan Ter-', canvas.width/2, 80);
+                
+                ctx.fillStyle = '#ffff00';
+                ctx.font = 'bold 24px monospace';
+                ctx.fillText(`PLAYER: ${playerName.toUpperCase()}`, canvas.width/2, 130);
+                
+                ctx.fillStyle = '#000000';
+                ctx.fillRect(100, 180, 600, 300);
+                ctx.strokeStyle = '#00ffff';
+                ctx.lineWidth = 4;
+                ctx.strokeRect(100, 180, 600, 300);
+                
+                ctx.fillStyle = '#00ff41';
+                ctx.font = 'bold 20px monospace';
+                ctx.fillText('=== STATISTIK GAME ===', canvas.width/2, 220);
+                
+                ctx.fillStyle = '#ffffff';
+                ctx.font = '18px monospace';
+                ctx.fillText(`JAWABAN BENAR: ${correctAnswers}`, canvas.width/2, 270);
+                ctx.fillText(`JAWABAN SALAH: ${wrongAnswers}`, canvas.width/2, 310);
+                
+                const totalQuestions = correctAnswers + wrongAnswers;
+                const percentage = totalQuestions > 0 ? Math.round((correctAnswers / totalQuestions) * 100) : 0;
+                
+                ctx.fillStyle = '#ffff00';
+                ctx.font = 'bold 24px monospace';
+                ctx.fillText(`SKOR AKHIR: ${percentage}%`, canvas.width/2, 360);
+                
+                let message = '';
+                if (percentage >= 80) message = 'EXCELLENT! 🏆';
+                else if (percentage >= 60) message = 'GOOD JOB! 🎉';
+                else if (percentage >= 40) message = 'NOT BAD! 👍';
+                else message = 'KEEP TRYING! 💪';
+                
+                ctx.fillStyle = '#ff0040';
+                ctx.font = 'bold 16px monospace';
+                ctx.fillText(message, canvas.width/2, 400);
+                
+                ctx.fillStyle = '#888888';
+                ctx.font = '12px monospace';
+                ctx.fillText('Created by Hazu', canvas.width/2, 450);
+                
+                canvas.toBlob(function(blob) {
+                    const link = document.createElement('a');
+                    link.download = `kuis-ke-2-${playerName.replace(/\s+/g, '-')}.png`;
+                    link.href = URL.createObjectURL(blob);
+                    document.body.appendChild(link);
+                    link.click();
+                    document.body.removeChild(link);
+                    URL.revokeObjectURL(link.href);
+                });
+                
+            } catch (error) {
+                console.error('Error saving image:', error);
+                alert('Maaf, terjadi kesalahan saat menyimpan gambar. Silakan coba lagi.');
+            }
+        }
+
+        function showAllExplanations() {
+            const popup = document.getElementById('allExplanationsPopup');
+            const content = document.getElementById('allExplanationsContent');
+            const languageButton = document.getElementById('allExplanationsLanguageToggle');
+            
+            // Reset language to Indonesian
+            currentLanguage = 'id';
+            languageButton.innerHTML = '🇮🇩 ID';
+            
+            content.innerHTML = '';
+            
+            questions.forEach((question, index) => {
+                const explanationDiv = document.createElement('div');
+                explanationDiv.className = 'bg-gray-900 border-2 border-cyan-400 p-4 mb-4';
+                explanationDiv.style.boxShadow = 'inset 0 0 15px #06b6d4';
+                
+                explanationDiv.innerHTML = `
+                    <div class="flex justify-between items-center mb-2">
+                        <div class="text-yellow-400 font-bold">📝 Pertanyaan ${index + 1}:</div>
+                    </div>
+                    <div class="text-white text-sm mb-3">${question.question}</div>
+                    <div class="text-gray-400 text-xs mb-3 italic">${question.translation}</div>
+                    <div class="text-green-400 font-bold mb-2">✅ Jawaban Benar: ${question.answers[question.correct]}</div>
+                    <div class="text-cyan-400 font-bold mb-2">💡 Penjelasan:</div>
+                    <div class="explanation-text text-white text-sm leading-relaxed">${question.explanation}</div>
+                `;
+                
+                content.appendChild(explanationDiv);
+            });
+            
+            popup.classList.remove('hidden');
+        }
+
+        function toggleAllExplanationsLanguage() {
+            const languageButton = document.getElementById('allExplanationsLanguageToggle');
+            const explanationTexts = document.querySelectorAll('.explanation-text');
+            
+            if (currentLanguage === 'id') {
+                currentLanguage = 'jp';
+                languageButton.innerHTML = '🇯🇵 JP';
+                explanationTexts.forEach((text, index) => {
+                    text.textContent = questions[index].explanationJp;
+                });
+            } else {
+                currentLanguage = 'id';
+                languageButton.innerHTML = '🇮🇩 ID';
+                explanationTexts.forEach((text, index) => {
+                    text.textContent = questions[index].explanation;
+                });
+            }
+        }
+
+        function closeAllExplanations() {
+            document.getElementById('allExplanationsPopup').classList.add('hidden');
+        }
+
+        function restartQuiz() {
+            currentQuestion = 0;
+            hearts = 5;
+            correctAnswers = 0;
+            wrongAnswers = 0;
+            
+            stopQuestionTimer();
+            stopBackgroundMusic();
+            
+            const musicButton = document.getElementById('musicToggle');
+            if (musicButton) {
+                musicButton.innerHTML = 'ON';
+                musicButton.classList.remove('bg-red-600');
+                musicButton.classList.add('bg-blue-600');
+            }
+            
+            const heartsContainer = document.getElementById('hearts');
+            Array.from(heartsContainer.children).forEach(heart => {
+                heart.textContent = '❤️';
+                heart.classList.remove('heart-bounce');
+            });
+            
+            document.getElementById('resultScreen').classList.add('hidden');
+            document.getElementById('startScreen').classList.remove('hidden');
+            
+            document.getElementById('playerName').value = '';
+        }
+    </script>
+<script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9671e5b4023ca03f',t:'MTc1Mzg0NzQ4My4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
