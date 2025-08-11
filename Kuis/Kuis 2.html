@@ -12,7 +12,12 @@
             image-rendering: pixelated;
             cursor: none;
         }
-        
+		
+        .bg-black-half {
+    --tw-bg-opacity: 0.2; /* Change this value anytime */
+    background-color: rgb(0 0 0 / var(--tw-bg-opacity));
+}
+
         .custom-cursor {
             position: fixed;
             width: 24px;
@@ -21,7 +26,6 @@
             z-index: 9999;
             transition: transform 0.1s ease;
         }
-        
         .cursor-pointer {
             background: linear-gradient(45deg, 
                 #ff0040 0%, #ff0040 25%, 
@@ -307,7 +311,7 @@
 
     <!-- Start Screen -->
     <div id="startScreen" class="min-h-screen flex items-center justify-center p-4 relative z-10">
-        <div class="bg-black border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
+        <div class="bg-black-half border-4 border-cyan-400 p-8 max-w-md w-full text-center fade-in" style="box-shadow: 0 0 20px #00ff41;">
             <div class="mb-6">
                 <h1 class="text-2xl font-bold text-cyan-400 mb-2">Bahasa Indonesia</h1>
 <p class="text-green-400">Pelajari penggunaan imbuhan "ter-" dalam kalimat bahasa Indonesia</p>
@@ -332,7 +336,7 @@
     <div id="quizScreen" class="min-h-screen p-4 hidden relative z-10">
         <div class="max-w-4xl mx-auto">
             <!-- Header -->
-            <div class="bg-black border-4 border-purple-400 p-6 mb-6" style="box-shadow: 0 0 20px #8b5cf6;">
+            <div class="bg-black-half border-4 border-purple-400 p-6 mb-6" style="box-shadow: 0 0 20px #8b5cf6;">
                 <div class="flex justify-between items-center">
                     <div>
                         <h2 class="text-lg font-bold text-cyan-400">Halo, <span id="displayName" class="text-yellow-400"></span>!</h2>
@@ -360,7 +364,7 @@
             </div>
 
             <!-- Question Card -->
-            <div class="bg-black border-4 border-green-400 p-8 mb-6 fade-in" style="box-shadow: 0 0 20px #10b981;">
+            <div class="bg-black-half border-4 border-green-400 p-8 mb-6 fade-in" style="box-shadow: 0 0 20px #10b981;">
                 <!-- Timer Display -->
                 <div class="flex justify-center mb-6">
                     <div class="bg-red-600 border-2 border-yellow-400 px-6 py-3 text-center" style="box-shadow: 0 0 15px #ff0040;">
@@ -388,7 +392,7 @@
 
     <!-- Explanation Popup -->
     <div id="explanationPopup" class="fixed inset-0 bg-black bg-opacity-80 flex items-center justify-center p-4 hidden z-50">
-        <div class="bg-black border-4 border-cyan-400 p-8 max-w-2xl w-full text-center fade-in" style="box-shadow: 0 0 30px #06b6d4;">
+        <div class="bg-black-half border-4 border-cyan-400 p-8 max-w-2xl w-full text-center fade-in" style="box-shadow: 0 0 30px #06b6d4;">
             <div class="mb-6">
                 <div id="explanationIcon" class="text-6xl mb-4">✅</div>
                 <h2 id="explanationTitle" class="text-2xl font-bold text-cyan-400 mb-4">Jawaban Benar!</h2>
