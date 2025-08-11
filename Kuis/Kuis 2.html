@@ -10,53 +10,13 @@
         body {
             font-family: 'Press Start 2P', monospace;
             image-rendering: pixelated;
-            cursor: none;
+            cursor: true;
         }
 		
         .bg-black-half {
     --tw-bg-opacity: 0.2; /* Change this value anytime */
     background-color: rgb(0 0 0 / var(--tw-bg-opacity));
 }
-
-        .custom-cursor {
-            position: fixed;
-            width: 24px;
-            height: 24px;
-            pointer-events: none;
-            z-index: 9999;
-            transition: transform 0.1s ease;
-        }
-        .cursor-pointer {
-            background: linear-gradient(45deg, 
-                #ff0040 0%, #ff0040 25%, 
-                #ffff00 25%, #ffff00 50%, 
-                #00ff41 50%, #00ff41 75%, 
-                #00ffff 75%, #00ffff 100%);
-            clip-path: polygon(0 0, 70% 0, 100% 30%, 100% 100%, 30% 100%, 0 70%);
-            animation: cursorGlow 1s ease-in-out infinite alternate;
-        }
-        
-        .cursor-clicking {
-            transform: scale(1.5);
-            animation: cursorClick 0.2s ease-out;
-        }
-        
-        @keyframes cursorGlow {
-            0% { 
-                box-shadow: 0 0 10px #ff0040, 0 0 20px #ff0040, 0 0 30px #ff0040;
-                filter: brightness(1);
-            }
-            100% { 
-                box-shadow: 0 0 15px #00ffff, 0 0 25px #00ffff, 0 0 35px #00ffff;
-                filter: brightness(1.2);
-            }
-        }
-        
-        @keyframes cursorClick {
-            0% { transform: scale(1.5); }
-            50% { transform: scale(2); }
-            100% { transform: scale(1.5); }
-        }
         
         .click-particle {
             position: fixed;
@@ -238,9 +198,6 @@
         Your browser does not support the video tag.
     </video>  
    
-   
-   <!-- Custom 8-bit Cursor -->
-    <div id="customCursor" class="custom-cursor cursor-pointer"></div>
     
     <!-- Matrix Rain Effect -->
     <div id="matrixRain" class="matrix-rain"></div>
@@ -665,7 +622,6 @@
 
         window.onload = function() {
             initCustomAudio();
-            initCustomCursor();
             initMatrixRain();
         };
         
@@ -761,32 +717,6 @@
                     }
                 }, 2000);
             }
-        }
-
-        function initCustomCursor() {
-            const cursor = document.getElementById('customCursor');
-            
-            document.addEventListener('mousemove', (e) => {
-                cursor.style.left = e.clientX - 12 + 'px';
-                cursor.style.top = e.clientY - 12 + 'px';
-            });
-            
-            document.addEventListener('mousedown', (e) => {
-                cursor.classList.add('cursor-clicking');
-                createClickParticles(e.clientX, e.clientY);
-                
-                setTimeout(() => {
-                    cursor.classList.remove('cursor-clicking');
-                }, 200);
-            });
-            
-            document.addEventListener('mouseleave', () => {
-                cursor.style.opacity = '0';
-            });
-            
-            document.addEventListener('mouseenter', () => {
-                cursor.style.opacity = '1';
-            });
         }
 
         function createClickParticles(x, y) {
