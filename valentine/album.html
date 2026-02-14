@@ -1,0 +1,342 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Romantic Infinite Carousel</title>
+
+<!-- 💖 mo.js -->
+<script src="https://cdn.jsdelivr.net/npm/@mojs/core"></script>
+
+<style>
+body {
+  margin: 0;
+  overflow: hidden;
+  background: #0f0f1a;
+  font-family: sans-serif;
+}
+
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(255,0,120,0.15), transparent 70%);
+  pointer-events: none;
+}
+
+canvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+}
+
+.scene {
+  width: 100vw;
+  height: 100vh;
+  perspective: 1200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.love-text {
+  position: absolute;
+  top: 12%;
+  color: #ffb6c1;
+  font-size: 28px;
+  letter-spacing: 3px;
+  text-shadow: 0 0 15px hotpink;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%,100% { transform: translateY(0px); }
+  50% { transform: translateY(-10px); }
+}
+
+.carousel {
+  position: relative;
+  width: 220px;
+  height: 320px;
+  transform-style: preserve-3d;
+}
+
+.carousel img {
+  position: absolute;
+  width: 220px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 20px;
+  box-shadow: 0 0 25px rgba(255,105,180,0.6);
+  cursor: grab;
+  transition: transform 0.5s, box-shadow 0.5s;
+}
+
+.carousel img:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 35px rgba(255,105,180,0.9);
+}
+
+/* ===== Loading Screen ===== */
+
+.loading-screen {
+  position: fixed;
+  inset: 0;
+  background: #0f0f1a;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  gap: 25px;
+  z-index: 9999;
+  transition: opacity 0.6s ease;
+}
+
+.loading-screen.fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.loading-title {
+  font-size: 40px;
+  color: #ff69b4;
+  text-shadow: 0 0 20px hotpink, 0 0 40px deeppink;
+  animation: pulse 1.5s infinite alternate;
+}
+
+@keyframes pulse {
+  from { transform: scale(1); }
+  to { transform: scale(1.1); }
+}
+
+.loading-bar-container {
+  width: 300px;
+  height: 6px;
+  background: rgba(255,105,180,0.2);
+  border-radius: 5px;
+  overflow: hidden;
+  border: 1px solid hotpink;
+  box-shadow: 0 0 15px hotpink;
+}
+
+.loading-bar {
+  height: 100%;
+  width: 0%;
+  background: linear-gradient(90deg,#ff69b4,#ff1493,#ff69b4);
+  animation: loadProgress 3.5s ease forwards;
+}
+
+@keyframes loadProgress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
+
+</style>
+</head>
+
+<body>
+
+<!-- Loading Screen -->
+<div class="loading-screen" id="loadingScreen">
+  <div class="loading-title">Hina 💖</div>
+  <div class="loading-bar-container">
+    <div class="loading-bar"></div>
+  </div>
+</div>
+
+<canvas id="bg"></canvas>
+
+<audio id="bgm" loop>
+  <source src="./nightmeet.mp3" type="audio/mpeg">
+</audio>
+
+<div class="scene">
+  <h1 class="love-text">You & Me Forever 💞</h1>
+  <div class="carousel" id="carousel">
+    <img src="./1.jpg">
+    <img src="./2.jpg">
+    <img src="./3.jpg">
+    <img src="./4.jpg">
+    <img src="./5.jpg">
+    <img src="./6.jpg">
+    <img src="./7.jpg">
+    <img src="./8.jpg">
+  </div>
+</div>
+
+<script>
+document.addEventListener("DOMContentLoaded", () => {
+
+/* ===== Loading Fade Logic ===== */
+
+const loadingScreen = document.getElementById("loadingScreen");
+
+setTimeout(() => {
+  loadingScreen.classList.add("fade-out");
+  setTimeout(() => {
+    loadingScreen.style.display = "none";
+  }, 600);
+}, 3500);
+
+/* 🌸 Floating Hearts Background */
+
+const canvas = document.getElementById("bg");
+if (!canvas) return;
+
+const ctx = canvas.getContext("2d");
+
+function resizeCanvas() {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+}
+resizeCanvas();
+window.addEventListener("resize", resizeCanvas);
+
+let particles = [];
+
+class Particle {
+  constructor() { this.reset(); }
+  reset() {
+    this.x = Math.random() * canvas.width;
+    this.y = Math.random() * canvas.height;
+    this.size = Math.random() * 6 + 4;
+    this.speedY = Math.random() * 0.5 + 0.2;
+    this.alpha = Math.random();
+  }
+  update() {
+    this.y -= this.speedY;
+    if (this.y < -20) this.reset();
+  }
+  draw() {
+    ctx.fillStyle = `rgba(255,105,180,${this.alpha})`;
+    ctx.beginPath();
+    ctx.moveTo(this.x, this.y);
+    ctx.bezierCurveTo(this.x - this.size, this.y - this.size,
+                      this.x - this.size*2, this.y + this.size,
+                      this.x, this.y + this.size*2);
+    ctx.bezierCurveTo(this.x + this.size*2, this.y + this.size,
+                      this.x + this.size, this.y - this.size,
+                      this.x, this.y);
+    ctx.fill();
+  }
+}
+
+for (let i = 0; i < 80; i++) particles.push(new Particle());
+
+function animateBg() {
+  ctx.fillStyle = "rgba(15,15,26,0.3)";
+  ctx.fillRect(0, 0, canvas.width, canvas.height);
+  particles.forEach(p => { p.update(); p.draw(); });
+  requestAnimationFrame(animateBg);
+}
+animateBg();
+
+/* 💞 Carousel */
+
+const carousel = document.getElementById("carousel");
+if (!carousel) return;
+
+const images = carousel.getElementsByTagName("img");
+const imageCount = images.length;
+const radius = 420;
+
+let currentRotation = 0;
+let isDragging = false;
+let startX = 0;
+
+function setupCarousel() {
+  const theta = 360 / imageCount;
+  for (let i = 0; i < imageCount; i++) {
+    images[i].style.transform =
+      `rotateY(${theta * i}deg) translateZ(${radius}px)`;
+  }
+}
+setupCarousel();
+
+function animateCarousel() {
+  if (!isDragging) {
+    currentRotation += 0.2;
+    carousel.style.transform = `rotateY(${currentRotation}deg)`;
+  }
+  requestAnimationFrame(animateCarousel);
+}
+animateCarousel();
+
+carousel.addEventListener("mousedown", e => {
+  isDragging = true;
+  startX = e.clientX;
+});
+
+window.addEventListener("mousemove", e => {
+  if (!isDragging) return;
+  const delta = e.clientX - startX;
+  currentRotation += delta * 0.3;
+  carousel.style.transform = `rotateY(${currentRotation}deg)`;
+  startX = e.clientX;
+});
+
+window.addEventListener("mouseup", () => {
+  isDragging = false;
+});
+
+/* 🎵 Music */
+document.body.addEventListener("click", () => {
+  const bgm = document.getElementById("bgm");
+  if (bgm) bgm.play().catch(()=>{});
+}, { once: true });
+
+/* 💖 mo.js */
+
+if (typeof mojs !== "undefined") {
+
+  class Heart extends mojs.CustomShape {
+    getShape () {
+      return '<path d="M50,88.9C25.5,78.2,0.5,54.4,3.8,31.1S41.3,1.8,50,29.9c8.7-28.2,42.8-22.2,46.2,1.2S74.5,78.2,50,88.9z"/>';
+    }
+  }
+  mojs.addShape('heart', Heart);
+
+  function createLove() {
+
+    const heart = new mojs.Shape({
+      shape: 'heart',
+      fill: '#ff3366',
+      width: 100,
+      height: 100,
+      left: '50%',
+      top: '85%',
+      x: '-50%',
+      y: '-50%',
+      scale: { 0: 1 },
+      duration: 1200,
+      easing: 'elastic.out'
+    });
+
+    const burst = new mojs.Burst({
+      left: '50%',
+      top: '85%',
+      x: '-50%',
+      y: '-50%',
+      radius: { 0: 120 },
+      count: 15,
+      children: {
+        shape: 'circle',
+        fill: ['#ff69b4', '#ff1493', '#ff85c1'],
+        scale: { 1: 0 },
+        duration: 1000,
+        easing: 'quad.out'
+      }
+    });
+
+    new mojs.Timeline().add(heart, burst).play();
+  }
+
+  setInterval(createLove, 2500);
+  createLove();
+}
+
+});
+</script>
+</body>
+</html>

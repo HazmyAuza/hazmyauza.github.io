@@ -1,0 +1,648 @@
+<!doctype html>
+<html lang="en" class="h-full">
+ <head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Pixel Valentine</title>
+  <script src="https://cdn.tailwindcss.com/3.4.17"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&amp;display=swap" rel="stylesheet">
+  <script src="/_sdk/element_sdk.js"></script>
+  <style>
+    * {
+      font-family: 'Press Start 2P', cursive;
+    }
+    
+    @keyframes float {
+      0%, 100% { transform: translateY(0px); }
+      50% { transform: translateY(-10px); }
+    }
+    
+    @keyframes pulse-heart {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.1); }
+    }
+    
+    @keyframes sparkle {
+      0%, 100% { opacity: 0; transform: scale(0); }
+      50% { opacity: 1; transform: scale(1); }
+    }
+    
+    @keyframes slide-up {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    @keyframes shake {
+      0%, 100% { transform: rotate(0deg) scale(1); }
+      10% { transform: rotate(-2deg) scale(1.05); }
+      20% { transform: rotate(2deg) scale(1.05); }
+      30% { transform: rotate(-2deg) scale(1.05); }
+      40% { transform: rotate(2deg) scale(1.05); }
+      50% { transform: rotate(0deg) scale(1.05); }
+      60% { transform: rotate(-1deg) scale(1.03); }
+      70% { transform: rotate(1deg) scale(1.03); }
+      80% { transform: rotate(0deg) scale(1); }
+      90% { transform: rotate(0deg) scale(1); }
+    }
+    
+    @keyframes shake-wrong {
+      0%, 100% { transform: translateX(0); }
+      10% { transform: translateX(-10px); }
+      20% { transform: translateX(10px); }
+      30% { transform: translateX(-10px); }
+      40% { transform: translateX(10px); }
+      50% { transform: translateX(0); }
+    }
+    
+    @keyframes fade-in-text {
+      from { opacity: 0; }
+      to { opacity: 1; }
+    }
+
+    @keyframes pop-in {
+      from { 
+        opacity: 0; 
+        transform: scale(0.8);
+      }
+      to { 
+        opacity: 1; 
+        transform: scale(1);
+      }
+    }
+    
+    .float-animation {
+      animation: float 3s ease-in-out infinite;
+    }
+    
+    .pulse-heart {
+      animation: pulse-heart 1s ease-in-out infinite;
+    }
+    
+    .sparkle {
+      animation: sparkle 2s ease-in-out infinite;
+    }
+    
+    .slide-up {
+      animation: slide-up 0.8s ease-out forwards;
+    }
+    
+    .shake-heart {
+      animation: shake 0.6s ease-in-out;
+    }
+    
+    .shake-wrong {
+      animation: shake-wrong 0.5s ease-in-out;
+    }
+    
+    .fade-in-text {
+      animation: fade-in-text 0.8s ease-out;
+    }
+
+    .pop-in {
+      animation: pop-in 0.5s ease-out;
+    }
+    
+    .pixel-border {
+      box-shadow: 
+        4px 0 0 0 currentColor,
+        -4px 0 0 0 currentColor,
+        0 4px 0 0 currentColor,
+        0 -4px 0 0 currentColor;
+    }
+    
+    .pixel-shadow {
+      box-shadow: 
+        4px 4px 0 0 rgba(0,0,0,0.3);
+    }
+    
+    /* Login Screen */
+    .login-screen {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(135deg, #1a0a1f 0%, #2d1b35 50%, #1a0a1f 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 2000;
+      opacity: 1;
+      transition: opacity 0.5s ease-out;
+    }
+    
+    .login-screen.hidden {
+      opacity: 0;
+      pointer-events: none;
+    }
+    
+    .login-container {
+      text-align: center;
+      max-width: 500px;
+      padding: 40px;
+    }
+    
+    .login-input {
+      width: 100%;
+      max-width: 300px;
+      padding: 12px 16px;
+      font-size: 12px;
+      border: 4px solid #ff6b9d;
+      background: white;
+      margin: 20px auto;
+      display: block;
+      box-sizing: border-box;
+    }
+    
+    .login-btn {
+      background: #ff6b9d;
+      color: #1a0a1f;
+      border: 4px solid #ff6b9d;
+      padding: 12px 32px;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+      transition: all 0.2s;
+      margin-top: 20px;
+    }
+    
+    .login-btn:hover {
+      transform: scale(1.05);
+    }
+    
+    .login-btn:active {
+      transform: scale(0.95);
+    }
+    
+    .error-message {
+      color: #ff6b9d;
+      font-size: 12px;
+      margin-top: 20px;
+      min-height: 40px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .menu-link {
+      background: #ff6b9d;
+      color: #1a0a1f;
+      border: 4px solid #ff6b9d;
+      padding: 12px 24px;
+      font-size: 12px;
+      cursor: pointer;
+      box-shadow: 4px 4px 0 rgba(0,0,0,0.3);
+      transition: all 0.2s;
+      font-family: 'Press Start 2P', cursive;
+      text-decoration: none;
+      display: inline-block;
+    }
+
+    .menu-link:hover {
+      transform: scale(1.05);
+    }
+
+    .menu-link:active {
+      transform: scale(0.95);
+    }
+
+    .menu-text {
+      display: inline;
+    }
+  </style>
+  <style>body { box-sizing: border-box; }</style>
+  <script src="/_sdk/data_sdk.js" type="text/javascript"></script>
+ </head>
+ <body class="h-full"><!-- Background Music -->
+  <audio id="background-music" loop><source src="./carryyouhome.mp3" type="audio/mpeg">
+  </audio><!-- Login Screen -->
+  <div id="login-screen" class="login-screen">
+   <div class="login-container slide-up">
+    <svg width="100" height="90" viewbox="0 0 120 110" style="margin: 0 auto 30px; display: block;"><rect x="20" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="30" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="10" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="30" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="40" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="80" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="90" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="100" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="10" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="30" width="10" height="10" fill="#ffc4d6" /> <rect x="30" y="30" width="10" height="10" fill="#ff8fab" /> <rect x="40" y="30" width="10" height="10" fill="#ff8fab" /> <rect x="50" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="100" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="10" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="40" width="10" height="10" fill="#ff8fab" /> <rect x="30" y="40" width="10" height="10" fill="#ff8fab" /> <rect x="40" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="100" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="30" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="30" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="80" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="80" width="10" height="10" fill="#ff6b9d" />
+    </svg>
+    <h1 style="color: #ff6b9d; text-shadow: 4px 4px 0 #2d1b35; margin-bottom: 10px;">WHO ARE YOU?</h1>
+    <p style="color: #ffc4d6; font-size: 10px; margin-bottom: 30px;">ENTER YOUR NAME</p><input id="name-input" type="text" class="login-input" placeholder="Type your name..." autocomplete="off"> <button id="login-btn" class="login-btn">ENTER</button>
+    <div id="error-msg" class="error-message"></div>
+   </div>
+  </div><!-- Main App -->
+  <div id="app-wrapper" class="w-full h-full overflow-auto hidden" style="background: linear-gradient(135deg, #1a0a1f 0%, #2d1b35 50%, #1a0a1f 100%);"><!-- Floating pixel hearts background -->
+   <div class="fixed inset-0 pointer-events-none overflow-hidden">
+    <div class="absolute top-[10%] left-[10%] text-4xl float-animation" style="animation-delay: 0s; color: #ff6b9d;">
+     ♥
+    </div>
+    <div class="absolute top-[20%] right-[15%] text-2xl float-animation" style="animation-delay: 0.5s; color: #ff8fab;">
+     ♥
+    </div>
+    <div class="absolute top-[60%] left-[5%] text-3xl float-animation" style="animation-delay: 1s; color: #ff6b9d;">
+     ♥
+    </div>
+    <div class="absolute top-[40%] right-[8%] text-xl float-animation" style="animation-delay: 1.5s; color: #ffc4d6;">
+     ♥
+    </div>
+    <div class="absolute top-[80%] left-[20%] text-2xl float-animation" style="animation-delay: 2s; color: #ff8fab;">
+     ♥
+    </div>
+    <div class="absolute top-[15%] left-[50%] text-xl float-animation" style="animation-delay: 0.3s; color: #ffc4d6;">
+     ♥
+    </div>
+    <div class="absolute top-[70%] right-[25%] text-3xl float-animation" style="animation-delay: 1.2s; color: #ff6b9d;">
+     ♥
+    </div><!-- Sparkles -->
+    <div class="absolute top-[25%] left-[30%] text-yellow-300 text-lg sparkle" style="animation-delay: 0s;">
+     ✦
+    </div>
+    <div class="absolute top-[45%] right-[20%] text-yellow-300 text-sm sparkle" style="animation-delay: 0.7s;">
+     ✦
+    </div>
+    <div class="absolute top-[75%] left-[40%] text-yellow-300 text-lg sparkle" style="animation-delay: 1.4s;">
+     ✦
+    </div>
+    <div class="absolute top-[35%] left-[70%] text-yellow-300 text-sm sparkle" style="animation-delay: 2.1s;">
+     ✦
+    </div>
+   </div><!-- Main content -->
+   <div class="relative z-10 flex flex-col items-center justify-center min-h-full px-4 py-8"><!-- Big pixel heart -->
+    <div id="main-heart" class="pulse-heart mb-6 slide-up" style="animation-delay: 0.1s;">
+     <svg width="120" height="110" viewbox="0 0 120 110" class="drop-shadow-lg"><rect x="20" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="30" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="10" width="10" height="10" fill="#ff6b9d" /> <rect x="10" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="30" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="40" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="80" y="20" width="10" height="10" fill="#ff8fab" /> <rect x="90" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="100" y="20" width="10" height="10" fill="#ff6b9d" /> <rect x="10" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="30" width="10" height="10" fill="#ffc4d6" /> <rect x="30" y="30" width="10" height="10" fill="#ff8fab" /> <rect x="40" y="30" width="10" height="10" fill="#ff8fab" /> <rect x="50" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="100" y="30" width="10" height="10" fill="#ff6b9d" /> <rect x="10" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="40" width="10" height="10" fill="#ff8fab" /> <rect x="30" y="40" width="10" height="10" fill="#ff8fab" /> <rect x="40" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="100" y="40" width="10" height="10" fill="#ff6b9d" /> <rect x="20" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="30" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="90" y="50" width="10" height="10" fill="#ff6b9d" /> <rect x="30" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="80" y="60" width="10" height="10" fill="#ff6b9d" /> <rect x="40" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="70" y="70" width="10" height="10" fill="#ff6b9d" /> <rect x="50" y="80" width="10" height="10" fill="#ff6b9d" /> <rect x="60" y="80" width="10" height="10" fill="#ff6b9d" />
+     </svg>
+    </div><!-- Title -->
+    <h1 id="main-title" class="text-2xl md:text-4xl text-center mb-4 slide-up" style="color: #ff6b9d; text-shadow: 4px 4px 0 #2d1b35; animation-delay: 0.2s;">HAPPY VALENTINE'S DAY</h1><!-- Subtitle -->
+    <p id="lover-name" class="text-sm md:text-lg text-center mb-4 slide-up" style="color: #ffc4d6; animation-delay: 0.25s;"></p><!-- Message -->
+    <p id="love-message" class="text-xs md:text-sm text-center max-w-md mb-8 leading-relaxed slide-up" style="color: #ffc4d6; animation-delay: 0.3s;">You've unlocked a special level in my heart! 💕</p><!-- Pixel art divider -->
+    <div class="flex items-center gap-2 mb-8 slide-up" style="animation-delay: 0.4s;"><span style="color: #ff8fab;">◆</span> <span style="color: #ff6b9d;">♥</span> <span style="color: #ffc4d6;">◆</span> <span style="color: #ff6b9d;">♥</span> <span style="color: #ff8fab;">◆</span>
+    </div><!-- Story Text Box -->
+    <div id="story-box" class="w-full max-w-md mb-8 p-6 slide-up" style="animation-delay: 0.45s; background: rgba(45, 27, 53, 0.8); border: 4px solid #ff6b9d; min-height: 120px; display: flex; align-items: center; justify-content: center;">
+     <p id="story-text" class="text-xs leading-relaxed" style="color: #ffc4d6; text-align: center;">Hi Hina my love.</p>
+    </div><!-- Love Note Box -->
+    <div id="love-note-box" class="w-full max-w-md mb-8 p-6 slide-up" style="animation-delay: 0.47s; background: rgba(45, 27, 53, 0.8); border: 4px solid #ff8fab; min-height: 100px; display: flex; align-items: center; justify-content: center;">
+     <p id="love-note-text" class="text-xs leading-relaxed" style="color: #ffc4d6; text-align: center; font-style: italic;">💌 Love note coming... 💌</p>
+    </div><!-- Love meter -->
+    <div class="w-full max-w-xs mb-8 slide-up" style="animation-delay: 0.5s;">
+     <p class="text-xs text-center mb-3" style="color: #ffc4d6;">LOVE METER</p>
+     <div class="w-full h-6 pixel-border relative" style="background: #2d1b35; color: #ff6b9d;">
+      <div id="love-bar" class="h-full transition-all duration-1000" style="width: 0%; background: linear-gradient(90deg, #ff6b9d, #ff8fab);"></div>
+     </div>
+     <p id="love-percent" class="text-xs text-center mt-2" style="color: #ff8fab;">0%</p>
+    </div><!-- Button --> <button id="love-btn" class="px-6 py-4 text-xs transition-all duration-200 hover:scale-105 active:scale-95 pixel-shadow slide-up" style="background: rgb(255, 107, 157); color: rgb(26, 10, 31); animation-delay: 0.6s; font-size: 12px; border: none; cursor: pointer; font-family: 'Press Start 2P', cursive;"> PRESS TO SEND LOVE </button> <!-- Achievement popup (hidden initially) -->
+    <div id="achievement" class="fixed top-4 left-1/2 -translate-x-1/2 px-6 py-4 text-center opacity-0 transition-all duration-500 pointer-events-none" style="background: #2d1b35; border: 4px solid #ff6b9d;">
+     <p class="text-xs" style="color: #ffc4d6;">🏆 ACHIEVEMENT UNLOCKED!</p>
+     <p id="achievement-text" class="text-xs mt-2" style="color: #ff6b9d;"></p>
+    </div><!-- Footer -->
+    <p class="mt-8 text-xs text-center slide-up" style="color: #ff8fab; opacity: 0.7; animation-delay: 0.8s;">MADE WITH ♥ AND PIXELS</p>
+   </div>
+  </div>
+  <script>
+    const defaultConfig = {
+      main_title: "HAPPY VALENTINE'S DAY",
+      love_message: "You've unlocked a special level in my heart! 💕",
+      button_text: "SEND LOVE",
+      song_url: "",
+      correct_name: "Hina",
+      primary_color: "#ff6b9d",
+      secondary_color: "#2d1b35",
+      text_color: "#ffc4d6",
+      accent_color: "#ff8fab",
+      background_color: "#1a0a1f",
+      font_family: "Press Start 2P",
+      font_size: 16
+    };
+    
+    const storyTexts = [
+      "Happy Valentine’s Day to the most beautiful soul I know. From the very beginning, you’ve brought a kind of warmth into my life that I didn’t even realize I was missing. Every conversation with you feels special, every smile you give feels like a gift, and every moment we share becomes a memory I treasure deeply. 💗",
+      "There’s something about you that makes everything brighter. When I think about my day, the best parts always somehow connect back to you, your laugh, your kindness, your gentle way of caring. You make ordinary days feel magical without even trying. 🌸",
+      "I admire your strength, your patience, and the way your heart is always so genuine. You inspire me to be better, to try harder, and to love more deeply. Just knowing you believe in me gives me more confidence than anything else ever could. ✨",
+      "If I could, I would wrap every good thing in this world and give it to you. You deserve happiness that never fades, love that never weakens, and dreams that always come true. I promise to always stand beside you, support you, and protect your heart the best I can. 💖",
+      "Thank you for being my comfort, my happiness, and my favorite person. No matter where life takes us, I hope we keep choosing each other every single day. Happy Valentine’s Day, Hina. You mean more to me than words could ever fully express. 🎀",
+      "Love you forever 💝"
+    ];
+
+    const loveNotes = [
+      "You make my heart skip a beat every single day! 💗",
+      "You're my favorite person in the whole world! 🌟",
+      "I love the way you smile... it lights up my life! ✨",
+      "You're my greatest adventure! 🗺️💕",
+      "Every moment with you feels like a dream! 🌙",
+      "You're the most beautiful thing in my life! 🌹",
+      "I'm so lucky to have you by my side! 🍀",
+      "You make everything better just by being you! 💖",
+      "My heart belongs completely to you! 💝",
+      "You're my favorite notification to receive! 📱💕",
+      "Life with you is my favorite story! 📖✨",
+      "You're the reason I believe in forever! ♾️💗",
+      "Every day with you is a blessing! 🙏💕",
+      "You're my happy place! 😊💖",
+      "You make my heart feel full! 💕",
+      "You're my person, always and forever! 👯💕",
+      "I fall for you more every single day! 🌹",
+      "You're the best thing that happened to me! ⭐",
+      "Your love is my favorite game I never want to lose! 🎮💕",
+      "You're my happily ever after! 👑💕",
+      "I love everything about you! 💯💕",
+      "You're my reason to smile! 😊💕",
+      "Every heartbeat of mine whispers your name! 💗",
+      "You're my forever person! 💍💕",
+      "Being with you is my greatest joy! 🎆💕"
+    ];
+    
+    let score = 0;
+    let loveLevel = 0;
+    let correctName = defaultConfig.correct_name;
+    let isLoggedIn = false;
+    let lastTextLevel = -1;
+    let albumUnlocked = false;
+    let usedNotes = new Set();
+    let loveNoteInterval = null;
+    
+    const achievements = [
+      { threshold: 1, text: "FIRST LOVE!" },
+      { threshold: 5, text: "LOVE NOVICE" },
+      { threshold: 10, text: "CUPID'S HELPER" },
+      { threshold: 25, text: "LOVE MASTER" },
+      { threshold: 50, text: "LEGEND OF LOVE" }
+    ];
+    let earnedAchievements = new Set();
+    
+    async function onConfigChange(config) {
+      correctName = config.correct_name || defaultConfig.correct_name;
+      const mainTitle = document.getElementById('main-title');
+      const loveMessage = document.getElementById('love-message');
+      const loveBtn = document.getElementById('love-btn');
+      const appWrapper = document.getElementById('app-wrapper');
+      
+      const primaryColor = config.primary_color || defaultConfig.primary_color;
+      const secondaryColor = config.secondary_color || defaultConfig.secondary_color;
+      const textColor = config.text_color || defaultConfig.text_color;
+      const accentColor = config.accent_color || defaultConfig.accent_color;
+      const backgroundColor = config.background_color || defaultConfig.background_color;
+      const fontFamily = config.font_family || defaultConfig.font_family;
+      const fontSize = config.font_size || defaultConfig.font_size;
+      
+      mainTitle.textContent = config.main_title || defaultConfig.main_title;
+      loveMessage.textContent = config.love_message || defaultConfig.love_message;
+      
+      appWrapper.style.background = `linear-gradient(135deg, ${backgroundColor} 0%, ${secondaryColor} 50%, ${backgroundColor} 100%)`;
+      mainTitle.style.color = primaryColor;
+      mainTitle.style.textShadow = `4px 4px 0 ${secondaryColor}`;
+      loveMessage.style.color = textColor;
+      loveBtn.style.background = primaryColor;
+      loveBtn.style.color = backgroundColor;
+      
+      const loveBar = document.getElementById('love-bar');
+      loveBar.style.background = `linear-gradient(90deg, ${primaryColor}, ${accentColor})`;
+      document.getElementById('love-percent').style.color = accentColor;
+      
+      document.querySelectorAll('.float-animation').forEach((heart, i) => {
+        heart.style.color = i % 2 === 0 ? primaryColor : accentColor;
+      });
+      
+      const baseFontStack = 'cursive';
+      document.querySelectorAll('*').forEach(el => {
+        el.style.fontFamily = `${fontFamily}, ${baseFontStack}`;
+      });
+      
+      mainTitle.style.fontSize = `${fontSize * 2}px`;
+      loveMessage.style.fontSize = `${fontSize * 0.75}px`;
+    }
+    
+    function mapToCapabilities(config) {
+      return {
+        recolorables: [
+          {
+            get: () => config.background_color || defaultConfig.background_color,
+            set: (value) => {
+              config.background_color = value;
+              window.elementSdk.setConfig({ background_color: value });
+            }
+          },
+          {
+            get: () => config.secondary_color || defaultConfig.secondary_color,
+            set: (value) => {
+              config.secondary_color = value;
+              window.elementSdk.setConfig({ secondary_color: value });
+            }
+          },
+          {
+            get: () => config.text_color || defaultConfig.text_color,
+            set: (value) => {
+              config.text_color = value;
+              window.elementSdk.setConfig({ text_color: value });
+            }
+          },
+          {
+            get: () => config.primary_color || defaultConfig.primary_color,
+            set: (value) => {
+              config.primary_color = value;
+              window.elementSdk.setConfig({ primary_color: value });
+            }
+          },
+          {
+            get: () => config.accent_color || defaultConfig.accent_color,
+            set: (value) => {
+              config.accent_color = value;
+              window.elementSdk.setConfig({ accent_color: value });
+            }
+          }
+        ],
+        borderables: [],
+        fontEditable: {
+          get: () => config.font_family || defaultConfig.font_family,
+          set: (value) => {
+            config.font_family = value;
+            window.elementSdk.setConfig({ font_family: value });
+          }
+        },
+        fontSizeable: {
+          get: () => config.font_size || defaultConfig.font_size,
+          set: (value) => {
+            config.font_size = value;
+            window.elementSdk.setConfig({ font_size: value });
+          }
+        }
+      };
+    }
+    
+    function mapToEditPanelValues(config) {
+      return new Map([
+        ["main_title", config.main_title || defaultConfig.main_title],
+        ["love_message", config.love_message || defaultConfig.love_message],
+        ["button_text", config.button_text || defaultConfig.button_text],
+        ["song_url", config.song_url || defaultConfig.song_url],
+        ["correct_name", config.correct_name || defaultConfig.correct_name]
+      ]);
+    }
+    
+    function checkLogin() {
+      const nameInput = document.getElementById('name-input').value.trim().toLowerCase();
+      const errorMsg = document.getElementById('error-msg');
+      
+      if (nameInput === correctName.toLowerCase()) {
+        isLoggedIn = true;
+        document.getElementById('login-screen').classList.add('hidden');
+        document.getElementById('app-wrapper').classList.remove('hidden');
+        document.getElementById('lover-name').textContent = `👋 ${nameInput.toUpperCase()}!`;
+        
+        // Play background music
+        const audio = document.getElementById('background-music');
+        if (audio) {
+          audio.volume = 0.3;
+          audio.play().catch(err => console.log('Music autoplay prevented'));
+        }
+
+        // Start auto-rotating love notes
+        showLoveNote();
+        loveNoteInterval = setInterval(showLoveNote, 5000);
+      } else {
+        errorMsg.textContent = "you're not my lover!!!";
+        const loginScreen = document.getElementById('login-screen');
+        loginScreen.classList.add('shake-wrong');
+        setTimeout(() => {
+          loginScreen.classList.remove('shake-wrong');
+          document.getElementById('name-input').value = '';
+        }, 500);
+      }
+    }
+    
+    function updateStoryText() {
+      const storyBox = document.getElementById('story-box');
+      const storyText = document.getElementById('story-text');
+      let textLevel = 0;
+      
+      if (loveLevel >= 20) textLevel = 1;
+      if (loveLevel >= 40) textLevel = 2;
+      if (loveLevel >= 60) textLevel = 3;
+      if (loveLevel >= 80) textLevel = 4;
+      if (loveLevel >= 90) textLevel = 5;
+      
+      if (loveLevel >= 100 && !albumUnlocked) {
+        albumUnlocked = true;
+        // Clear and show album unlock button with menu-link structure
+        storyBox.innerHTML = '';
+        const unlockLink = document.createElement('a');
+        unlockLink.href = 'album.html';
+        unlockLink.className = 'menu-link';
+        
+        const menuText = document.createElement('span');
+        menuText.className = 'menu-text';
+        menuText.textContent = 'ALBUM UNLOCKED';
+        
+        unlockLink.appendChild(menuText);
+        storyBox.appendChild(unlockLink);
+      } else if (textLevel !== lastTextLevel && loveLevel < 100) {
+        lastTextLevel = textLevel;
+        storyText.classList.remove('fade-in-text');
+        void storyText.offsetWidth;
+        storyText.classList.add('fade-in-text');
+        storyText.textContent = storyTexts[textLevel];
+      }
+    }
+
+    function getRandomLoveNote() {
+      if (usedNotes.size === loveNotes.length) {
+        usedNotes.clear();
+      }
+
+      let randomIndex;
+      do {
+        randomIndex = Math.floor(Math.random() * loveNotes.length);
+      } while (usedNotes.has(randomIndex));
+
+      usedNotes.add(randomIndex);
+      return loveNotes[randomIndex];
+    }
+
+    function showLoveNote() {
+      const noteText = document.getElementById('love-note-text');
+      const newNote = getRandomLoveNote();
+
+      noteText.classList.remove('pop-in');
+      void noteText.offsetWidth;
+      noteText.classList.add('pop-in');
+      noteText.textContent = newNote;
+    }
+    
+    function showAchievement(text) {
+      const achievement = document.getElementById('achievement');
+      const achievementText = document.getElementById('achievement-text');
+      achievementText.textContent = text;
+      achievement.style.opacity = '1';
+      achievement.style.transform = 'translateX(-50%) translateY(0)';
+      
+      setTimeout(() => {
+        achievement.style.opacity = '0';
+        achievement.style.transform = 'translateX(-50%) translateY(-20px)';
+      }, 2500);
+    }
+    
+    function updateLoveLevel() {
+      loveLevel = Math.min(100, Math.floor(score * 2));
+      const loveBar = document.getElementById('love-bar');
+      const lovePercent = document.getElementById('love-percent');
+      
+      loveBar.style.width = loveLevel + '%';
+      lovePercent.textContent = loveLevel + '%';
+      
+      updateStoryText();
+    }
+    
+    function checkAchievements() {
+      for (const achievement of achievements) {
+        if (score >= achievement.threshold && !earnedAchievements.has(achievement.threshold)) {
+          earnedAchievements.add(achievement.threshold);
+          showAchievement(achievement.text);
+          break;
+        }
+      }
+    }
+    
+    function sendLove() {
+      score++;
+      updateLoveLevel();
+      checkAchievements();
+      
+      const mainHeart = document.getElementById('main-heart');
+      mainHeart.classList.remove('shake-heart');
+      void mainHeart.offsetWidth;
+      mainHeart.classList.add('shake-heart');
+      
+      const heart = document.createElement('div');
+      heart.textContent = '♥';
+      heart.style.cssText = `
+        position: fixed;
+        left: ${Math.random() * 80 + 10}%;
+        bottom: 20%;
+        font-size: ${Math.random() * 20 + 20}px;
+        color: ${window.elementSdk?.config?.primary_color || '#ff6b9d'};
+        pointer-events: none;
+        z-index: 100;
+        animation: floatUp 1.5s ease-out forwards;
+      `;
+      document.body.appendChild(heart);
+      
+      setTimeout(() => heart.remove(), 1500);
+    }
+    
+    const style = document.createElement('style');
+    style.textContent = `
+      @keyframes floatUp {
+        0% { transform: translateY(0) scale(1); opacity: 1; }
+        100% { transform: translateY(-200px) scale(0.5); opacity: 0; }
+      }
+    `;
+    document.head.appendChild(style);
+    
+    if (window.elementSdk) {
+      window.elementSdk.init({
+        defaultConfig,
+        onConfigChange,
+        mapToCapabilities,
+        mapToEditPanelValues
+      });
+    }
+    
+    document.getElementById('love-btn').addEventListener('click', sendLove);
+    document.getElementById('login-btn').addEventListener('click', checkLogin);
+    document.getElementById('name-input').addEventListener('keypress', (e) => {
+      if (e.key === 'Enter') {
+        checkLogin();
+      }
+    });
+  </script>
+ <script>(function(){function c(){var b=a.contentDocument||a.contentWindow.document;if(b){var d=b.createElement('script');d.innerHTML="window.__CF$cv$params={r:'9cda70cfb6ee8746',t:'MTc3MTA0OTgyOC4wMDAwMDA='};var a=document.createElement('script');a.nonce='';a.src='/cdn-cgi/challenge-platform/scripts/jsd/main.js';document.getElementsByTagName('head')[0].appendChild(a);";b.getElementsByTagName('head')[0].appendChild(d)}}if(document.body){var a=document.createElement('iframe');a.height=1;a.width=1;a.style.position='absolute';a.style.top=0;a.style.left=0;a.style.border='none';a.style.visibility='hidden';document.body.appendChild(a);if('loading'!==document.readyState)c();else if(window.addEventListener)document.addEventListener('DOMContentLoaded',c);else{var e=document.onreadystatechange||function(){};document.onreadystatechange=function(b){e(b);'loading'!==document.readyState&&(document.onreadystatechange=e,c())}}}})();</script></body>
+</html>
